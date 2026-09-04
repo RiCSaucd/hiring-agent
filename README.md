@@ -1,6 +1,6 @@
 # Hiring Agent
 
-<p align="center"><strong>Resume-to-Score pipeline</strong> that extracts structured data from PDFs, enriches with GitHub signals, and outputs a fair, explainable evaluation.</p>
+<p align="center"><strong>Job-seeker desk + recruiter scorer.</strong> Review your own application, match public listings, prepare packets you approve before applying — and still score candidate PDFs with the original LLM pipeline.</p>
 
 <p align="center">
   <a href="https://www.python.org/downloads/release/python-3110/">
@@ -18,6 +18,7 @@
 
 ## Contents
 
+- [Application desk (job seeker)](#application-desk-job-seeker)
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Installation and Setup](#installation-and-setup)
@@ -34,9 +35,36 @@
 
 ---
 
+## Application desk (job seeker)
+
+Use this when **you** are applying: the agent reviews *your* resume, ranks roles, drafts a cover letter, and tracks applications. It will not POST your materials to Greenhouse, Lever, LinkedIn, or any other employer until you confirm, and even then it only opens their apply URL and records the attempt locally.
+
+The desk runs with the Python standard library plus packages already in this repo (`requests`, `Jinja2`). No LLM is required. If Ollama or Gemini is configured, the original recruiter evaluator is used as an extra signal.
+
+```bash
+# Review a resume (markdown, text, or a simple PDF)
+python3 -m job_agent review job_agent/data/sample_resume.md --role "senior backend engineer"
+
+# Search the bundled catalog (live Remotive/Jobicy/Arbeitnow are used when reachable)
+python3 -m job_agent search --query "python fastapi" --no-live
+
+# Draft a packet, then mark applied after you submit on the employer site
+python3 -m job_agent prepare fieldnote-python
+python3 -m job_agent apply 1 --confirm
+
+# Local UI
+python3 -m job_agent serve --port 8765
+```
+
+Open `http://127.0.0.1:8765`. Drop your resume, set a target role, find jobs, prepare a packet, and confirm apply.
+
+Paste any posting the catalog misses. Live job APIs are optional; this environment may block them, which is why a local catalog ships in `job_agent/data/jobs.json`.
+
+---
+
 ## Overview
 
-Hiring Agent parses a resume PDF to Markdown, extracts sectioned JSON using a local or hosted LLM, augments the data with GitHub profile and repository signals, then produces an objective evaluation with category scores, evidence, bonus points, and deductions. You can run fully local with Ollama or use Google Gemini.
+The original recruiter pipeline parses a resume PDF to Markdown, extracts sectioned JSON using a local or hosted LLM, augments the data with GitHub profile and repository signals, then produces an objective evaluation with category scores, evidence, bonus points, and deductions. You can run fully local with Ollama or use Google Gemini.
 
 ---
 
@@ -221,32 +249,14 @@ What happens:
 
 ```text
 .
-├── .env.example
-├── .python-version
-├── config.py
+├── job_agent/          # job-seeker desk (review, match, apply tracker, UI)
+│   ├── data/           # sample resume + bundled job catalog
+│   ├── web/            # Application Desk UI
+│   └── ...
+├── tests/
+├── score.py            # original recruiter CLI
 ├── evaluator.py
-├── github.py
-├── llm_utils.py
-├── models.py
-├── pdf.py
-├── prompt.py
-├── prompts/
-│   ├── template_manager.py
-│   └── templates/
-│       ├── awards.jinja
-│       ├── basics.jinja
-│       ├── education.jinja
-│       ├── github_project_selection.jinja
-│       ├── projects.jinja
-│       ├── resume_evaluation_criteria.jinja
-│       ├── resume_evaluation_system_message.jinja
-│       ├── skills.jinja
-│       ├── system_message.jinja
-│       └── work.jinja
-├── pymupdf_rag.py
-├── requirements.txt
-├── score.py
-└── transform.py
+└── ...
 ```
 
 ---
