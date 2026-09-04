@@ -19,6 +19,7 @@
 ## Contents
 
 - [Application desk (job seeker)](#application-desk-job-seeker)
+- [Nexus Lead Engine](#nexus-lead-engine)
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Installation and Setup](#installation-and-setup)
@@ -59,6 +60,38 @@ python3 -m job_agent serve --port 8765
 Open `http://127.0.0.1:8765`. Drop your resume, set a target role, find jobs, prepare a packet, and confirm apply.
 
 Paste any posting the catalog misses. Live job APIs are optional; this environment may block them, which is why a local catalog ships in `job_agent/data/jobs.json`.
+
+---
+
+## Nexus Lead Engine
+
+Verified B2B desk for **Nexus Life Technologies** (Hatch Property Maintenance, LLC). Ported from `nexus-lead-engine.zip` / the First Coast hunt-score-deliver product: hunt property managers, run an 8-gate pipeline, export CSV. **Emails are never invented.** Only a ZeroBounce-style `valid` address is marked safe to email.
+
+```bash
+# Hunt the bundled Firecrawl + RocketReach First Coast set
+python3 -m lead_engine hunt --title "Property Manager" --location Jacksonville --import-all
+
+# Score / verify / drop disposable inboxes (Hot ≥ 75, cap 100)
+python3 -m lead_engine pipeline
+
+# Local UI
+python3 -m lead_engine serve --port 8770
+```
+
+Open `http://127.0.0.1:8770`. Run a hunt, import targets, **Engine → Run pipeline**, export CSV. Paste a company URL to extract printed contacts only.
+
+| Gate | What it does |
+| --- | --- |
+| Intake | Read prospects (hunt cache, CSV, scrape) |
+| Enrich | Pull printed email / phone / socials from a URL |
+| Email? | Has an address at all |
+| Verify | valid / role / disposable / missing — never guessed |
+| Score | ICP title + First Coast county + phone + email |
+| Dedupe | Email, place id, or name+company |
+| CRM | Upsert lead + account |
+| Deliver | Client pack + CSV |
+
+Optional env: `FIRECRAWL_API_KEY` for live URL scrape. Without keys the desk still hunts the cached Jacksonville set and scores locally.
 
 ---
 
@@ -252,6 +285,9 @@ What happens:
 ├── job_agent/          # job-seeker desk (review, match, apply tracker, UI)
 │   ├── data/           # sample resume + bundled job catalog
 │   ├── web/            # Application Desk UI
+│   └── ...
+├── lead_engine/        # Nexus Lead Engine (hunt, 8-gate score, deliver)
+│   ├── web/            # Lead desk UI
 │   └── ...
 ├── tests/
 ├── score.py            # original recruiter CLI

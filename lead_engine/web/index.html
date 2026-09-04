@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexus Lead Engine</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="brand">
+        <span class="mark">N</span>
+        <div>
+          <p class="kicker">Nexus Life Technologies</p>
+          <h1>Lead Engine</h1>
+        </div>
+      </div>
+      <p class="lede">
+        Hunt First Coast property managers, HOAs, and facilities operators.
+        Score them. Deliver a clean pack. <strong>Emails are never invented</strong> —
+        only a verified <code>valid</code> address is safe to email.
+        Sibling desk: <a href="http://127.0.0.1:8765">Application Desk</a>.
+      </p>
+      <nav class="tabs" aria-label="Desk">
+        <button type="button" class="tab on" data-tab="hunt">Hunt</button>
+        <button type="button" class="tab" data-tab="engine">Engine</button>
+        <button type="button" class="tab" data-tab="leads">Leads</button>
+        <button type="button" class="tab" data-tab="inbox">Inbox</button>
+        <button type="button" class="tab" data-tab="deliver">Deliver</button>
+      </nav>
+    </header>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="view" id="view-hunt">
+      <div class="grid two">
+        <article class="card">
+          <h2>First Coast hunt</h2>
+          <p class="hint">Bundled Firecrawl + RocketReach set. Paste a company URL to extract printed contacts only.</p>
+          <div class="row">
+            <label>Role
+              <input id="hunt-title" value="Property Manager" />
+            </label>
+            <label>Location
+              <input id="hunt-location" value="Jacksonville" list="city-list" autocomplete="off" />
+            </label>
+          </div>
+          <datalist id="city-list"></datalist>
+          <label>Keywords
+            <input id="hunt-query" placeholder="HOA, BTR, facilities…" />
+          </label>
+          <div class="presets">
+            <button type="button" class="ghost" data-preset="pm">Property managers</button>
+            <button type="button" class="ghost" data-preset="hoa">HOA / community</button>
+            <button type="button" class="ghost" data-preset="fac">Facilities / asset</button>
+          </div>
+          <div class="actions">
+            <button type="button" id="hunt-run">Run hunt</button>
+            <button type="button" class="ghost" id="hunt-import">Import selected</button>
+          </div>
+          <p class="meta" id="hunt-meta"></p>
+          <ol class="hits" id="hunt-hits"></ol>
+        </article>
+        <article class="card">
+          <h2>Map · Northeast Florida</h2>
+          <div class="map" id="map" aria-label="First Coast lead map">
+            <div class="map-label jax">JAX</div>
+            <div class="map-label staug">St. Augustine</div>
+            <div class="map-label nassau">Nassau</div>
+            <div class="map-label clay">Clay</div>
+          </div>
+          <h3>Scrape a company URL</h3>
+          <div class="row">
+            <input id="scrape-url" placeholder="https://company.com" />
+            <button type="button" id="scrape-btn">Extract</button>
+          </div>
+          <pre class="letter" id="scrape-out">Printed emails only. Empty means none was on the page.</pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="view hidden" id="view-engine">
+      <article class="card">
+        <div class="panel-head">
+          <h2>Eight gates</h2>
+          <button type="button" id="pipeline-run">Run pipeline</button>
+        </div>
+        <ol class="gates" id="gates"></ol>
+        <p class="hint">Intake → enrich → email? → verify → score → dedupe → CRM → deliver. Score cap 100. Hot ≥ 75. Disposable inboxes are dropped.</p>
+        <p class="meta" id="pipeline-meta"></p>
+      </article>
+    </section>
+
+    <section class="view hidden" id="view-leads">
+      <article class="card">
+        <div class="panel-head">
+          <h2>Lead ledger</h2>
+          <div class="actions">
+            <select id="temp-filter">
+              <option value="">All temps</option>
+              <option>Hot</option>
+              <option>Warm</option>
+              <option>Cold</option>
+            </select>
+            <button type="button" class="ghost" id="export-csv">Export CSV</button>
+            <button type="button" class="ghost" id="export-safe">Safe to email CSV</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Title / company</th>
+                <th>Email</th>
+                <th>Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="lead-body"></tbody>
+          </table>
+        </div>
+        <details class="paste">
+          <summary>Import CSV</summary>
+          <textarea id="csv-text" rows="6" placeholder="full_name,title,company,email,phone,county,url,source"></textarea>
+          <div class="actions">
+            <button type="button" id="csv-import">Import CSV</button>
+            <button type="button" class="ghost" id="csv-sample">Load sample rows</button>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <section class="view hidden" id="view-inbox">
+      <div class="grid two">
+        <article class="card">
+          <h2>Property inbound</h2>
+          <label>Name <input id="cap-name" /></label>
+          <label>Email <input id="cap-email" /></label>
+          <label>Service <input id="cap-service" placeholder="HOA common-area package" /></label>
+          <label>Message <textarea id="cap-message" rows="4"></textarea></label>
+          <button type="button" id="cap-add">Log capture</button>
+        </article>
+        <article class="card">
+          <h2>Inbox</h2>
+          <ol class="captures" id="captures"></ol>
+        </article>
+      </div>
+    </section>
+
+    <section class="view hidden" id="view-deliver">
+      <article class="card">
+        <h2>Client pack</h2>
+        <p class="hint">Deliver selected leads from the ledger. Safe-to-email is still the only send rule.</p>
+        <div class="row">
+          <label>Client
+            <input id="client-name" placeholder="Harborline desk pack" />
+          </label>
+          <label>Notes
+            <input id="client-notes" placeholder="Hot, First Coast, verified" />
+          </label>
+        </div>
+        <button type="button" id="deliver-btn">Deliver selected</button>
+        <h3>Batches</h3>
+        <ol class="batches" id="batches"></ol>
+        <h3>Activity</h3>
+        <ol class="activity" id="activity"></ol>
+        <div class="actions">
+          <button type="button" class="ghost" id="reset-demo">Reset demo desk</button>
+        </div>
+      </article>
+    </section>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
