@@ -76,6 +76,9 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(applied["status"], "applied")
         page = urlopen(f"http://127.0.0.1:{self.port}/", timeout=10).read().decode("utf-8")
         self.assertIn("Application Desk", page)
+        sample = self._json("/api/sample-resume")
+        self.assertIn("Alex Rivera", sample["text"])
+        self.assertIn("FastAPI", sample["text"])
 
 
 if __name__ == "__main__":

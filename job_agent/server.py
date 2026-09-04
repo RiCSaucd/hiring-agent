@@ -103,6 +103,18 @@ class DeskHandler(BaseHTTPRequestHandler):
             if path == "/api/status":
                 self._send(*json_bytes(self.desk.status()))
                 return
+            if path == "/api/sample-resume":
+                sample = Path(__file__).resolve().parent / "data" / "sample_resume.md"
+                self._send(
+                    *json_bytes(
+                        {
+                            "filename": "sample_resume.md",
+                            "text": sample.read_text(encoding="utf-8"),
+                            "target_role": "Senior backend engineer",
+                        }
+                    )
+                )
+                return
             self._send(*error_payload("Not found", 404))
         except ValueError as exc:
             self._send(*error_payload(str(exc), 400))
@@ -226,7 +238,7 @@ def make_server(
 
 def serve_forever(host: str = "0.0.0.0", port: int = 8765, db_path: str | Path = DEFAULT_DB) -> None:
     server = make_server(host=host, port=port, db_path=db_path)
-    print(f"Hiring desk on http://{host}:{port}")
+    print(f"Hiring desk on http://{host}:{port}", flush=True)
     try:
         server.serve_forever()
     finally:

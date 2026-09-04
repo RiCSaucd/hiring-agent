@@ -4,7 +4,7 @@ alex.rivera@example.com | +1-415-555-0142 | San Francisco, CA
 https://github.com/alexrivera | https://linkedin.com/in/alexrivera | https://alexrivera.dev
 
 SUMMARY
-Backend engineer with 6 years building APIs, data pipelines, and developer tooling in Python. Comfortable owning services from design through production, including observability, on-call, and cost control.
+Backend engineer with 6 years building APIs, data pipelines, and developer tooling in Python. Comfortable owning services from design through production, including observability, on-call, and cost control. I write pytest suites, review incidents, and mentor teammates on API design so the next person on call is not guessing.
 
 SKILLS
 Python, FastAPI, Django, PostgreSQL, Redis, AWS, Docker, Kubernetes, Terraform, Git, CI/CD, React, TypeScript, pytest, Kafka, Grafana, SQL

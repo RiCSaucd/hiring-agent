@@ -130,9 +130,17 @@ async function confirmApply() {
     method: "POST",
     body: JSON.stringify({ confirm: true }),
   });
-  $("apply-note").textContent = `Logged as applied. Open ${application.job.apply_url}`;
-  if (application.job && application.job.apply_url) {
-    window.open(application.job.apply_url, "_blank", "noopener");
+  const applyUrl = (application.job && application.job.apply_url) || "";
+  const note = $("apply-note");
+  note.textContent = "Logged as applied. ";
+  if (applyUrl) {
+    const link = document.createElement("a");
+    link.href = applyUrl;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = "Open employer application";
+    note.appendChild(link);
+    window.open(applyUrl, "_blank", "noopener");
   }
   await refreshLedger();
 }
@@ -208,35 +216,11 @@ drop.addEventListener("drop", (event) => {
 });
 
 $("load-sample").addEventListener("click", async () => {
-  const sample = `Alex Rivera
-Backend Engineer
-alex.rivera@example.com | +1-415-555-0142 | San Francisco, CA
-https://github.com/alexrivera | https://linkedin.com/in/alexrivera
-
-SUMMARY
-Backend engineer with 6 years building APIs, data pipelines, and developer tooling in Python.
-
-SKILLS
-Python, FastAPI, Django, PostgreSQL, Redis, AWS, Docker, Kubernetes, Terraform, Git, CI/CD, React, TypeScript, pytest, Kafka, Grafana, SQL
-
-EXPERIENCE
-Senior Software Engineer — Northwind Labs (2022–Present)
-- Cut API p95 latency 42% by introducing Redis caching and rewriting the slowest PostgreSQL queries
-- Shipped a FastAPI billing service that processes 1.2M events/day on AWS ECS
-- Led the Terraform migration of 14 services onto ECS and reduced monthly compute cost 18%
-
-Software Engineer — Harbor Analytics (2019–2022)
-- Designed Kafka consumers that backfilled 4 years of usage data into PostgreSQL
-- Implemented Django REST endpoints used by a React dashboard for 80+ B2B customers
-
-EDUCATION
-B.S. Computer Science, University of Washington, 2018
-
-PROJECTS
-PipelineKit — open-source ETL toolkit in Python (https://github.com/alexrivera/pipelinekit)
-`;
-  $("target-role").value = $("target-role").value || "Senior backend engineer";
-  await uploadText("sample_resume.md", sample);
+  const sample = await api("/api/sample-resume");
+  if (!$("target-role").value) {
+    $("target-role").value = sample.target_role || "Senior backend engineer";
+  }
+  await uploadText(sample.filename, sample.text);
   await searchJobs();
 });
 
