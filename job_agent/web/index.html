@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Application Desk — Hiring Agent</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="pad">
+    <header class="masthead">
+      <div>
+        <p class="kicker">Local hiring agent</p>
+        <h1>Application Desk</h1>
+      </div>
+      <p class="lede">
+        Review your resume the way a recruiter would, match it to roles,
+        then apply with a packet you approve. Nothing is submitted to an
+        employer until you confirm.
+      </p>
+    </header>
+
+    <section class="prefs">
+      <label>
+        Target role
+        <input id="target-role" placeholder="Senior backend engineer" />
+      </label>
+      <label>
+        Location
+        <input id="target-location" placeholder="Remote or city" />
+      </label>
+      <label class="check">
+        <input id="remote-only" type="checkbox" checked />
+        Remote first
+      </label>
+      <button id="save-prefs" type="button" class="ghost">Save brief</button>
+    </section>
+
+    <main class="desk">
+      <section class="panel dossier" aria-labelledby="dossier-title">
+        <h2 id="dossier-title">Dossier</h2>
+        <label class="drop" id="drop">
+          <input id="file" type="file" accept=".md,.txt,.text,.pdf,text/plain,application/pdf" hidden />
+          <strong>Drop resume</strong>
+          <span>.md, .txt, or PDF</span>
+        </label>
+        <p class="hint">No file handy? <button type="button" id="load-sample" class="linkish">Load the sample backend resume</button></p>
+        <div id="person" class="person" hidden></div>
+        <div id="score-row" class="score-row" hidden>
+          <div class="stamp" id="stamp">—</div>
+          <p id="score-caption"></p>
+        </div>
+        <ul id="findings" class="findings"></ul>
+      </section>
+
+      <section class="panel listings" aria-labelledby="listings-title">
+        <div class="panel-head">
+          <h2 id="listings-title">Listings</h2>
+          <button type="button" id="search-btn">Find jobs</button>
+        </div>
+        <input id="query" placeholder="python fastapi  ·  or leave blank to use your brief" />
+        <p id="search-meta" class="meta"></p>
+        <ol id="jobs" class="jobs"></ol>
+        <details class="paste">
+          <summary>Paste a posting</summary>
+          <input id="paste-title" placeholder="Title" />
+          <input id="paste-company" placeholder="Company" />
+          <input id="paste-url" placeholder="Apply URL" />
+          <textarea id="paste-desc" rows="5" placeholder="Job description"></textarea>
+          <button type="button" id="paste-btn" class="ghost">Add posting</button>
+        </details>
+      </section>
+
+      <section class="panel packet" aria-labelledby="packet-title">
+        <h2 id="packet-title">Packet</h2>
+        <div id="packet-empty" class="empty">Select a listing to draft a letter and bullets.</div>
+        <div id="packet-body" hidden>
+          <p class="job-line" id="packet-job"></p>
+          <p class="fit-line" id="packet-fit"></p>
+          <h3>Cover letter</h3>
+          <pre id="cover" class="letter"></pre>
+          <h3>Bullets to paste</h3>
+          <ul id="bullets"></ul>
+          <h3>Before you send</h3>
+          <ul id="checklist" class="checklist"></ul>
+          <div class="actions">
+            <button type="button" id="prepare-btn">Prepare packet</button>
+            <button type="button" id="apply-btn" class="danger" disabled>Confirm apply</button>
+          </div>
+          <p id="apply-note" class="meta"></p>
+        </div>
+      </section>
+    </main>
+
+    <section class="ledger" aria-labelledby="ledger-title">
+      <h2 id="ledger-title">Application ledger</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Role</th>
+            <th>Company</th>
+            <th>Fit</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="ledger-body">
+          <tr><td colspan="5">No applications yet.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

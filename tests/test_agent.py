@@ -1,0 +1,84 @@
+"""Review, match, search, materials, and tracker tests."""
+
+from __future__ import annotations
+
+import tempfile
+import unittest
+from pathlib import Path
+
+from job_agent.match import rank_jobs, score_fit
+from job_agent.materials import build_packet
+from job_agent.parser import parse_resume_text
+from job_agent.review import review_application
+from job_agent.search import filter_jobs, load_catalog, search_jobs
+from job_agent.tracker import Tracker
+
+SAMPLE = Path("job_agent/data/sample_resume.md").read_text(encoding="utf-8")
+
+
+class ReviewTests(unittest.TestCase):
+    def test_sample_scores_well_for_backend(self) -> None:
+        parsed = parse_resume_text(SAMPLE)
+        review = review_application(parsed, target_role="Senior backend engineer python fastapi")
+        self.assertGreaterEqual(review.overall, 70)
+        self.assertTrue(any(item.code == "email" and item.severity == "pass" for item in review.findings))
+        self.assertIn("python", review.matched_keywords)
+
+    def test_thin_resume_warns(self) -> None:
+        parsed = parse_resume_text("Sam Only\nsam@example.com\n")
+        review = review_application(parsed, target_role="python")
+        self.assertLess(review.overall, 70)
+        codes = {item.code for item in review.findings}
+        self.assertIn("skills", codes)
+
+
+class SearchMatchTests(unittest.TestCase):
+    def test_catalog_loads(self) -> None:
+        jobs = load_catalog()
+        self.assertGreaterEqual(len(jobs), 15)
+
+    def test_python_query_returns_backend_roles(self) -> None:
+        result = search_jobs(query="python fastapi", include_live=False)
+        ids = [job["id"] for job in result["jobs"]]
+        self.assertIn("fieldnote-python", ids)
+        self.assertIn("northstar-backend-python", ids)
+
+    def test_remote_filter(self) -> None:
+        jobs = load_catalog()
+        remote = filter_jobs(jobs, remote_only=True)
+        self.assertTrue(all(job.remote for job in remote))
+        self.assertTrue(any(not job.remote for job in jobs))
+
+    def test_backend_resume_ranks_python_above_go(self) -> None:
+        parsed = parse_resume_text(SAMPLE)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(parsed, [jobs["fieldnote-python"], jobs["keel-go-backend"]])
+        self.assertEqual(ranked[0][0].id, "fieldnote-python")
+        self.assertGreater(ranked[0][1].score, ranked[1][1].score)
+
+
+class MaterialsAndTrackerTests(unittest.TestCase):
+    def test_cover_letter_uses_facts(self) -> None:
+        parsed = parse_resume_text(SAMPLE)
+        job = next(job for job in load_catalog() if job.id == "fieldnote-python")
+        fit = score_fit(parsed, job, target_role="backend")
+        packet = build_packet(parsed, job, fit)
+        self.assertIn("Alex Rivera", packet.cover_letter)
+        self.assertIn("Fieldnote", packet.cover_letter)
+        self.assertGreaterEqual(len(packet.tailored_bullets), 1)
+
+    def test_apply_requires_confirm(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tracker = Tracker(Path(tmp) / "t.db")
+            tracker.upsert_job({"id": "job-1", "title": "Eng", "company": "X"})
+            app = tracker.create_application("job-1", {"cover_letter": "hi"}, {"score": 80})
+            with self.assertRaises(ValueError):
+                tracker.mark_applied(app["id"], confirm=False)
+            done = tracker.mark_applied(app["id"], confirm=True, notes="submitted")
+            self.assertEqual(done["status"], "applied")
+            self.assertIsNotNone(done["applied_at"])
+            tracker.close()
+
+
+if __name__ == "__main__":
+    unittest.main()
