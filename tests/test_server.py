@@ -79,6 +79,9 @@ class ServerTests(unittest.TestCase):
         sample = self._json("/api/sample-resume")
         self.assertIn("Alex Rivera", sample["text"])
         self.assertIn("FastAPI", sample["text"])
+        profile = self._json("/api/profile")
+        self.assertTrue(profile["has_resume"])
+        self.assertEqual(profile["resume"]["name"], "Alex Rivera")
 
 
 if __name__ == "__main__":
