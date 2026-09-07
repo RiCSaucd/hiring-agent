@@ -267,4 +267,17 @@ $("paste-btn").addEventListener("click", async () => {
   renderJobs({ jobs: state.jobs, count: state.jobs.length, live_count: 0, skipped_sources: [] });
 });
 
-refreshLedger().catch(() => {});
+async function restoreDesk() {
+  const profile = await api("/api/profile");
+  if (profile.target_role) $("target-role").value = profile.target_role;
+  if (profile.target_location) $("target-location").value = profile.target_location;
+  $("remote-only").checked = !!profile.remote_only;
+  if (profile.has_resume) {
+    const reviewed = await api("/api/review");
+    renderPerson(reviewed.resume, reviewed.review);
+    await searchJobs();
+  }
+  await refreshLedger();
+}
+
+restoreDesk().catch(() => refreshLedger().catch(() => {}));
