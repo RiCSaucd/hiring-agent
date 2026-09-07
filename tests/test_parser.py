@@ -38,6 +38,38 @@ class ParserTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_resume_text("   ")
 
+    def test_professional_headings(self) -> None:
+        text = """
+ERIC HATCH
+hatcheric950@example.com
+Remote
+
+PROFESSIONAL SUMMARY
+CompTIA-certified automation specialist using Claude and Salesforce.
+
+CERTIFICATIONS & LICENSES
+CompTIA Certified
+AI Automation Certified
+
+PROFESSIONAL EXPERIENCE
+Founder — NEXUS AI Agency (2024–Present)
+- Built Claude workflows and documented SOPs
+- Rebuilt a follow-up system and cut 3 hours to 30 minutes
+
+TECHNICAL & PROFESSIONAL SKILLS
+Claude, ChatGPT, prompt engineering, Salesforce, workflow automation, compliance, PII, help desk
+
+EDUCATION
+Bachelor's Degree — Nichols College
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.name, "ERIC HATCH")
+        self.assertTrue(parsed.summary)
+        self.assertGreaterEqual(len(parsed.experience), 1)
+        self.assertIn("salesforce", parsed.skills)
+        self.assertIn("workflow automation", parsed.skills)
+        self.assertIn("prompt engineering", parsed.skills)
+
 
 class PdfTests(unittest.TestCase):
     def test_round_trip(self) -> None:

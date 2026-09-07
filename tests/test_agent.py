@@ -36,6 +36,9 @@ class SearchMatchTests(unittest.TestCase):
     def test_catalog_loads(self) -> None:
         jobs = load_catalog()
         self.assertGreaterEqual(len(jobs), 15)
+        ids = {job.id for job in jobs}
+        self.assertIn("harborlight-ai-automation", ids)
+        self.assertIn("watchpoint-soc-junior", ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)

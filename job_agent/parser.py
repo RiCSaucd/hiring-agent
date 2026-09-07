@@ -13,22 +13,25 @@ PHONE_RE = re.compile(r"(?:\+?\d{1,3}[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\
 URL_RE = re.compile(r"https?://[^\s)>\]]+", re.IGNORECASE)
 HEADING_RE = re.compile(
     r"^(?:"
-    r"summary|profile|about(?: me)?|"
-    r"experience|work(?: experience)?|employment|"
+    r"(?:professional\s+)?summary|profile|about(?: me)?|"
+    r"(?:professional\s+)?experience|work(?: experience)?|employment|"
     r"education|academics|"
-    r"skills|technical skills|technologies|"
+    r"(?:technical\s+(?:and|&)\s+professional\s+)?skills|technical skills|technologies|"
     r"projects|selected projects|"
     r"awards|achievements|"
-    r"certifications|certificates"
+    r"certifications?(?:\s+(?:and|&)\s+licenses?)?|certificates|"
+    r"licenses?"
     r")\s*:?\s*$",
     re.IGNORECASE,
 )
 SECTION_ALIASES = {
     "summary": "summary",
+    "professional summary": "summary",
     "profile": "summary",
     "about": "summary",
     "about me": "summary",
     "experience": "experience",
+    "professional experience": "experience",
     "work": "experience",
     "work experience": "experience",
     "employment": "experience",
@@ -36,13 +39,20 @@ SECTION_ALIASES = {
     "academics": "education",
     "skills": "skills",
     "technical skills": "skills",
+    "technical and professional skills": "skills",
+    "technical & professional skills": "skills",
     "technologies": "skills",
     "projects": "projects",
     "selected projects": "projects",
     "awards": "awards",
     "achievements": "awards",
+    "certification": "awards",
     "certifications": "awards",
+    "certifications and licenses": "awards",
+    "certifications & licenses": "awards",
     "certificates": "awards",
+    "licenses": "awards",
+    "license": "awards",
 }
 ACTION_VERBS = (
     "led",
@@ -63,6 +73,16 @@ ACTION_VERBS = (
     "scaled",
     "cut",
     "delivered",
+    "audited",
+    "documented",
+    "mapped",
+    "managed",
+    "maintained",
+    "applied",
+    "deployed",
+    "identified",
+    "rebuilt",
+    "wrote",
 )
 
 
@@ -136,13 +156,28 @@ def _clean_lines(text: str) -> list[str]:
     return [line for line in lines if line]
 
 
+def _heading_key(line: str) -> str | None:
+    """Map a short heading line to a resume section, including 'Professional Summary'."""
+    if re.match(r"^[\-•*]\s+", line):
+        return None
+    stripped = line.strip(" -:•")
+    cleaned = re.sub(r"[^a-z& ]+", " ", stripped.lower())
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    if not cleaned or len(cleaned.split()) > 8:
+        return None
+    if cleaned in SECTION_ALIASES:
+        return SECTION_ALIASES[cleaned]
+    if HEADING_RE.match(stripped):
+        return SECTION_ALIASES.get(cleaned)
+    return None
+
+
 def _sectionize(lines: list[str]) -> dict[str, list[str]]:
     sections: dict[str, list[str]] = {"header": []}
     current = "header"
     for line in lines:
-        heading_match = HEADING_RE.match(line.strip(" -"))
-        if heading_match:
-            key = SECTION_ALIASES.get(heading_match.group(0).strip(": ").lower(), "header")
+        key = _heading_key(line)
+        if key:
             current = key
             sections.setdefault(current, [])
             continue
@@ -157,7 +192,7 @@ def _guess_name(header_lines: list[str], email: str) -> str:
             continue
         if line.lower() in skip:
             continue
-        if 2 <= len(line.split()) <= 5 and not HEADING_RE.match(line):
+        if 2 <= len(line.split()) <= 5 and not _heading_key(line):
             if any(ch.isdigit() for ch in line):
                 continue
             return line
