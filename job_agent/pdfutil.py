@@ -10,42 +10,76 @@ def escape_pdf_text(text: str) -> str:
     return text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
 
 
-def write_simple_pdf(path: str | Path, lines: list[str], title: str = "Resume") -> Path:
-    """Write a single-page Helvetica PDF from plain-text lines."""
-    dest = Path(path)
-    dest.parent.mkdir(parents=True, exist_ok=True)
+def wrap_pdf_lines(lines: list[str], width: int = 96) -> list[str]:
+    """Word-wrap plain lines so they fit a letter page."""
+    wrapped: list[str] = []
+    for raw in lines:
+        text = (raw or "").replace("\t", "    ")
+        if not text:
+            wrapped.append("")
+            continue
+        while len(text) > width:
+            cut = text.rfind(" ", 0, width)
+            if cut < width // 3:
+                cut = width
+            wrapped.append(text[:cut])
+            text = text[cut:].lstrip()
+        wrapped.append(text)
+    return wrapped
 
-    content_lines = ["BT", "/F1 11 Tf", "14 TL", "72 760 Td"]
+
+def _page_stream(lines: list[str]) -> bytes:
+    ops = ["BT", "/F1 10 Tf", "13 TL", "54 740 Td"]
     first = True
     for raw in lines:
-        line = (raw or "").replace("\t", "    ")
-        if len(line) > 110:
-            line = line[:107] + "..."
-        escaped = escape_pdf_text(line)
+        escaped = escape_pdf_text(raw)
         if first:
-            content_lines.append(f"({escaped}) Tj")
+            ops.append(f"({escaped}) Tj")
             first = False
         else:
-            content_lines.append("T*")
-            content_lines.append(f"({escaped}) Tj")
-    content_lines.append("ET")
-    stream = "\n".join(content_lines).encode("latin-1", errors="replace")
+            ops.append("T*")
+            ops.append(f"({escaped}) Tj")
+    if first:
+        ops.append("() Tj")
+    ops.append("ET")
+    return "\n".join(ops).encode("latin-1", errors="replace")
 
-    objects = []
+
+def write_simple_pdf(path: str | Path, lines: list[str], title: str = "Resume") -> Path:
+    """Write a Helvetica PDF from plain-text lines, paginating as needed."""
+    dest = Path(path)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    wrapped = wrap_pdf_lines(lines)
+    chunks = [wrapped[i : i + 46] for i in range(0, max(len(wrapped), 1), 46)]
+    streams = [_page_stream(chunk) for chunk in chunks]
+    page_count = len(streams)
+    font_id = 3 + page_count * 2
+    info_id = font_id + 1
+    kid_refs = " ".join(f"{3 + i * 2} 0 R" for i in range(page_count))
+
+    objects: list[bytes] = []
 
     def add(payload: bytes) -> int:
         objects.append(payload)
         return len(objects)
 
     add(b"<< /Type /Catalog /Pages 2 0 R >>")
-    add(b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>")
-    add(
-        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
-        b"/Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>"
-    )
-    add(b"<< /Length %d >>\nstream\n" % len(stream) + stream + b"\nendstream")
+    add(f"<< /Type /Pages /Kids [{kid_refs}] /Count {page_count} >>".encode("ascii"))
+    for index, stream in enumerate(streams):
+        page_id = 3 + index * 2
+        content_id = page_id + 1
+        add(
+            (
+                f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
+                f"/Contents {content_id} 0 R /Resources << /Font << /F1 {font_id} 0 R >> >> >>"
+            ).encode("ascii")
+        )
+        add(b"<< /Length %d >>\nstream\n" % len(stream) + stream + b"\nendstream")
     add(b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
-    add(b"<< /Title (%s) /Producer (hiring-agent) >>" % escape_pdf_text(title).encode("latin-1", errors="replace"))
+    add(
+        b"<< /Title (%s) /Producer (hiring-agent) >>"
+        % escape_pdf_text(title).encode("latin-1", errors="replace")
+    )
 
     out = bytearray(b"%PDF-1.4\n")
     offsets = [0]
@@ -61,7 +95,7 @@ def write_simple_pdf(path: str | Path, lines: list[str], title: str = "Resume") 
         out.extend(f"{offset:010d} 00000 n \n".encode("ascii"))
     out.extend(
         (
-            f"trailer << /Size {len(objects) + 1} /Root 1 0 R /Info 6 0 R >>\n"
+            f"trailer << /Size {len(objects) + 1} /Root 1 0 R /Info {info_id} 0 R >>\n"
             f"startxref\n{xref_pos}\n%%EOF\n"
         ).encode("ascii")
     )

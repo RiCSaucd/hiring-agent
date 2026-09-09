@@ -197,8 +197,11 @@ def filter_jobs(
     for job in jobs:
         if remote_only and not job.remote:
             continue
-        if location_l and location_l not in job.location.lower() and not (job.remote and location_l in {"remote", "anywhere"}):
-            continue
+        if location_l:
+            loc_hit = location_l in job.location.lower()
+            remote_pref = "remote" in location_l or location_l in {"anywhere", "usa", "united states"}
+            if not loc_hit and not (job.remote and remote_pref):
+                continue
         if query_tokens:
             hay = tokenize(f"{job.title} {job.company} {job.description} {' '.join(job.tags)}")
             if not query_tokens.issubset(hay) and not (query_tokens & hay):

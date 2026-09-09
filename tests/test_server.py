@@ -61,6 +61,8 @@ class ServerTests(unittest.TestCase):
         )
         self.assertEqual(ingested["resume"]["name"], "Alex Rivera")
         self.assertGreaterEqual(ingested["review"]["overall"], 70)
+        person_phone = ingested["resume"].get("phone")
+        self.assertTrue(person_phone)
         jobs = self._json("/api/jobs/search", {"query": "python", "include_live": False, "remote_only": True})
         self.assertGreater(jobs["count"], 3)
         job_id = jobs["jobs"][0]["id"]
@@ -79,6 +81,9 @@ class ServerTests(unittest.TestCase):
         sample = self._json("/api/sample-resume")
         self.assertIn("Alex Rivera", sample["text"])
         self.assertIn("FastAPI", sample["text"])
+        profile = self._json("/api/profile")
+        self.assertTrue(profile["has_resume"])
+        self.assertEqual(profile["resume"]["name"], "Alex Rivera")
 
 
 if __name__ == "__main__":

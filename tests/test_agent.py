@@ -36,6 +36,9 @@ class SearchMatchTests(unittest.TestCase):
     def test_catalog_loads(self) -> None:
         jobs = load_catalog()
         self.assertGreaterEqual(len(jobs), 15)
+        ids = {job.id for job in jobs}
+        self.assertIn("harborlight-ai-automation", ids)
+        self.assertIn("watchpoint-soc-junior", ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)
@@ -49,12 +52,51 @@ class SearchMatchTests(unittest.TestCase):
         self.assertTrue(all(job.remote for job in remote))
         self.assertTrue(any(not job.remote for job in jobs))
 
+    def test_remote_united_states_pref_keeps_remote_jobs(self) -> None:
+        jobs = load_catalog()
+        matched = filter_jobs(jobs, query="automation", remote_only=True, location="Remote / United States")
+        ids = {job.id for job in matched}
+        self.assertIn("harborlight-ai-automation", ids)
+        self.assertIn("lumen-ai-ops", ids)
+
     def test_backend_resume_ranks_python_above_go(self) -> None:
         parsed = parse_resume_text(SAMPLE)
         jobs = {job.id: job for job in load_catalog()}
         ranked = rank_jobs(parsed, [jobs["fieldnote-python"], jobs["keel-go-backend"]])
         self.assertEqual(ranked[0][0].id, "fieldnote-python")
         self.assertGreater(ranked[0][1].score, ranked[1][1].score)
+
+    def test_security_plus_ops_resume_beats_go_backend(self) -> None:
+        text = """
+ERIC HATCH
+hatcheric950@example.com
+(207) 468-6688
+Remote / United States
+
+SUMMARY
+AI automation specialist with CompTIA Network+ and Security+, n8n, Zapier, Neon, and Supabase.
+
+SKILLS
+workflow automation, prompt engineering, n8n, Zapier, Neon, Supabase, Verbal, Salesforce, CRM, PII, help desk, Network+, Security+
+
+EXPERIENCE
+Founder — NEXUS AI Agency (2024–Present)
+- Built Claude workflows in n8n and Zapier
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [jobs["lumen-ai-ops"], jobs["cedar-it-support-security"], jobs["keel-go-backend"]],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        cedar = next(fit for job, fit in ranked if job.id == "cedar-it-support-security")
+        lumen = next(fit for job, fit in ranked if job.id == "lumen-ai-ops")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(cedar.score, keel.score)
+        self.assertGreater(lumen.score, keel.score)
+        self.assertIn("security+", cedar.matched_skills)
+        self.assertIn("n8n", lumen.matched_skills)
 
 
 class MaterialsAndTrackerTests(unittest.TestCase):
