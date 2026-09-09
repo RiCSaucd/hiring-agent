@@ -52,6 +52,13 @@ class SearchMatchTests(unittest.TestCase):
         self.assertTrue(all(job.remote for job in remote))
         self.assertTrue(any(not job.remote for job in jobs))
 
+    def test_remote_united_states_pref_keeps_remote_jobs(self) -> None:
+        jobs = load_catalog()
+        matched = filter_jobs(jobs, query="automation", remote_only=True, location="Remote / United States")
+        ids = {job.id for job in matched}
+        self.assertIn("harborlight-ai-automation", ids)
+        self.assertIn("lumen-ai-ops", ids)
+
     def test_backend_resume_ranks_python_above_go(self) -> None:
         parsed = parse_resume_text(SAMPLE)
         jobs = {job.id: job for job in load_catalog()}
