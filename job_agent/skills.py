@@ -111,10 +111,25 @@ SKILL_ALIASES: dict[str, tuple[str, ...]] = {
     "salesforce": ("salesforce crm",),
     "crm": (),
     "comptia": ("comptia certified",),
+    "network+": (
+        "network plus",
+        "comptia network+",
+        "comptia network plus",
+        "comptia network",
+    ),
+    "security+": (
+        "security plus",
+        "comptia security+",
+        "comptia security plus",
+        "comptia security",
+    ),
     "help desk": ("helpdesk",),
     "workflow automation": ("business process automation", "ai automation"),
     "zapier": (),
     "n8n": (),
+    "neon": ("neon postgres", "neon postgresql"),
+    "supabase": ("super base", "supabase postgres"),
+    "verbal": (),
     "compliance": ("regulatory compliance",),
     "grc": ("governance risk",),
     "pii": ("personally identifiable information", "customer data"),
@@ -140,6 +155,12 @@ def _alias_lookup() -> dict[str, str]:
 
 
 _LOOKUP = _alias_lookup()
+
+# Holding a more specific cert or product should also satisfy broader job tags.
+SKILL_IMPLIES: dict[str, tuple[str, ...]] = {
+    "network+": ("comptia",),
+    "security+": ("comptia", "security"),
+}
 
 
 def normalize_skill(raw: str) -> str | None:
@@ -176,6 +197,11 @@ def extract_skills(text: str) -> list[str]:
             if canonical not in seen:
                 seen.add(canonical)
                 found.append(canonical)
+    for skill in list(found):
+        for implied in SKILL_IMPLIES.get(skill, ()):
+            if implied not in seen:
+                seen.add(implied)
+                found.append(implied)
     return found
 
 

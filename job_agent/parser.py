@@ -151,6 +151,16 @@ class ParsedResume:
         }
 
 
+def _format_phone(raw: str) -> str:
+    """Normalize a US-style number so the dossier shows a readable phone."""
+    digits = re.sub(r"\D", "", raw or "")
+    if len(digits) == 11 and digits.startswith("1"):
+        digits = digits[1:]
+    if len(digits) == 10:
+        return f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
+    return (raw or "").strip()
+
+
 def _clean_lines(text: str) -> list[str]:
     lines = [re.sub(r"[ \t]+", " ", line).strip() for line in text.replace("\r\n", "\n").split("\n")]
     return [line for line in lines if line]
@@ -200,15 +210,18 @@ def _guess_name(header_lines: list[str], email: str) -> str:
 
 
 def _guess_location(header_lines: list[str]) -> str:
+    parts: list[str] = []
     for line in header_lines:
-        if EMAIL_RE.search(line) or URL_RE.search(line):
+        parts.extend(bit.strip() for bit in re.split(r"\s*\|\s*", line) if bit.strip())
+    for part in parts:
+        if EMAIL_RE.search(part) or URL_RE.search(part) or PHONE_RE.search(part):
             continue
-        if re.search(r"\b([A-Z][a-z]+,\s*[A-Z]{2})\b", line):
-            match = re.search(r"([A-Z][a-zA-Z .]+,\s*[A-Z]{2}(?:\s+\d{5})?)", line)
+        if re.search(r"\b([A-Z][a-z]+,\s*[A-Z]{2})\b", part):
+            match = re.search(r"([A-Z][a-zA-Z .]+,\s*[A-Z]{2}(?:\s+\d{5})?)", part)
             if match:
                 return match.group(1)
-        if re.search(r"\b(remote|united states|usa|uk|canada|germany|india)\b", line, re.I):
-            return line
+        if re.search(r"\b(remote|united states|usa|uk|canada|germany|india)\b", part, re.I):
+            return part
     return ""
 
 
@@ -225,7 +238,10 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
     entries: list[WorkEntry] = []
     current: WorkEntry | None = None
     date_re = re.compile(
-        r"((?:19|20)\d{2}|\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*)"
+        r"((?:19|20)\d{2}|"
+        r"\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
+        r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+        r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b)"
         r".{0,24}(present|(?:19|20)\d{2})",
         re.IGNORECASE,
     )
@@ -293,7 +309,7 @@ def parse_resume_text(text: str, filename: str = "") -> ParsedResume:
     sections = _sectionize(lines)
     header = sections.get("header", [])
     emails = EMAIL_RE.findall(text)
-    phones = PHONE_RE.findall(text)
+    phones = [_format_phone(match) for match in PHONE_RE.findall(text)]
     urls = URL_RE.findall(text)
     github = next((url for url in urls if "github.com" in url.lower()), "")
     linkedin = next((url for url in urls if "linkedin.com" in url.lower()), "")

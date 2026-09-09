@@ -268,9 +268,9 @@
     "url": "https://boards.greenhouse.io/example/jobs/2101",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2101",
     "seniority": "mid",
-    "tags": ["workflow automation", "prompt engineering", "crm", "salesforce", "llm", "compliance"],
+    "tags": ["workflow automation", "prompt engineering", "crm", "salesforce", "llm", "compliance", "n8n", "zapier"],
     "how_to_apply": "Greenhouse. Paste a short note on one workflow you automated.",
-    "description": "Harborlight Ops is hiring an AI Automation Specialist to audit manual processes, design Claude and ChatGPT workflows, and document SOPs so sales and ops teams can run them. You will integrate CRM tools such as Salesforce, keep a human in the loop on customer-facing messages, and treat customer data as PII. Prompt engineering and workflow automation matter more than writing production Python. Remote United States."
+    "description": "Harborlight Ops is hiring an AI Automation Specialist to audit manual processes, design Claude and ChatGPT workflows, and document SOPs so sales and ops teams can run them. You will integrate CRM tools such as Salesforce, keep a human in the loop on customer-facing messages, and treat customer data as PII. Prompt engineering and workflow automation matter more than shipping backend services. Remote United States."
   },
   {
     "id": "northline-revops-automation",
@@ -294,7 +294,7 @@
     "url": "https://boards.greenhouse.io/example/jobs/2103",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2103",
     "seniority": "junior",
-    "tags": ["help desk", "comptia", "ticketing", "security awareness", "iam"],
+    "tags": ["help desk", "comptia", "network+", "security+", "ticketing", "security awareness", "iam"],
     "how_to_apply": "Greenhouse. Name your CompTIA exam if you have one.",
     "description": "Cedar Helpdesk is hiring an IT Support Analyst. CompTIA-style troubleshooting, ticket hygiene, and security awareness are required. You will reset access with least privilege, document repeatable fixes, and escalate suspected phishing. Help desk experience with CRM or line-of-business systems is welcome. Remote US."
   },
@@ -307,7 +307,7 @@
     "url": "https://jobs.lever.co/example/2104",
     "apply_url": "https://jobs.lever.co/example/2104",
     "seniority": "junior",
-    "tags": ["soc", "siem", "incident response", "security", "ticketing"],
+    "tags": ["soc", "siem", "incident response", "security", "security+", "ticketing"],
     "how_to_apply": "Lever. Be honest about SIEM time; we train tools.",
     "description": "Watchpoint Security is hiring a Junior SOC Analyst for alert triage, SIEM investigations, and incident response notes. CompTIA Security+ or equivalent foundations help. You will work a ticket queue, escalate true positives, and write clear incident documentation. This is an operations role, not a software engineering role. Remote US."
   },
@@ -333,7 +333,7 @@
     "url": "https://jobs.lever.co/example/2106",
     "apply_url": "https://jobs.lever.co/example/2106",
     "seniority": "mid",
-    "tags": ["llm", "prompt engineering", "workflow automation", "n8n", "crm"],
+    "tags": ["llm", "prompt engineering", "workflow automation", "n8n", "zapier", "neon", "supabase", "crm"],
     "how_to_apply": "Lever. Include one prompt or SOP excerpt with secrets removed.",
     "description": "Lumen Workflows runs AI operations for service businesses. The AI Operations Specialist designs agentic workflows, prompt libraries, and n8n-style automations on top of CRMs. You must know when not to send customer data to a public model and how to keep a human approval step. Remote US."
   },

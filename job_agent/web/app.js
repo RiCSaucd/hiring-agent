@@ -47,8 +47,11 @@ async function refreshLedger() {
 function renderPerson(resume, review) {
   const person = $("person");
   person.hidden = false;
+  const contact = [resume.email || "no email", resume.phone, resume.location || "location unknown"]
+    .filter(Boolean)
+    .join(" · ");
   person.innerHTML = `<strong>${resume.name || "Candidate"}</strong>
-    <div>${resume.email || "no email"} · ${resume.location || "location unknown"}</div>
+    <div>${contact}</div>
     <div>${(resume.skills || []).slice(0, 8).join(" · ")}</div>`;
 
   $("score-row").hidden = false;

@@ -21,6 +21,30 @@ class SkillTests(unittest.TestCase):
         self.assertNotIn("go", extract_skills("good documentation"))
         self.assertIn("go", extract_skills("Wrote gRPC services in Go and Kubernetes"))
 
+    def test_comptia_plus_certs_and_ops_tools(self) -> None:
+        skills = extract_skills(
+            "CompTIA Network+ and Security plus. I use n8n, Neon, Zapier, super base, Verbal."
+        )
+        for expected in (
+            "network+",
+            "security+",
+            "comptia",
+            "security",
+            "n8n",
+            "neon",
+            "zapier",
+            "supabase",
+            "verbal",
+        ):
+            self.assertIn(expected, skills)
+        self.assertNotIn("java", skills)
+
+    def test_security_plus_does_not_require_siem(self) -> None:
+        skills = extract_skills("CompTIA Security+")
+        self.assertIn("security+", skills)
+        self.assertNotIn("siem", skills)
+        self.assertNotIn("soc", skills)
+
 
 class ParserTests(unittest.TestCase):
     def test_sample_resume(self) -> None:
@@ -37,6 +61,28 @@ class ParserTests(unittest.TestCase):
     def test_rejects_empty(self) -> None:
         with self.assertRaises(ValueError):
             parse_resume_text("   ")
+
+    def test_formats_ten_digit_phone(self) -> None:
+        parsed = parse_resume_text(
+            "ERIC HATCH\nhatcheric950@example.com\n2074686688\nRemote\n\nSKILLS\nPython\n"
+        )
+        self.assertEqual(parsed.phone, "(207) 468-6688")
+
+    def test_pipe_header_location_and_augustine_dates(self) -> None:
+        text = """
+ERIC HATCH
+hatcheric950@example.com | (207) 468-6688 | Remote / United States | Open to full-time
+
+EXPERIENCE
+Vehicle Experience Specialist — Volkswagen of St. Augustine (Jan 2023–Present)
+St. Augustine, FL
+- Managed the customer lifecycle in CRM
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.location, "Remote / United States")
+        self.assertEqual(parsed.experience[0].organization, "Volkswagen of St. Augustine")
+        self.assertRegex(parsed.experience[0].dates, r"Jan 2023")
+        self.assertNotIn("Augustine (Jan", parsed.experience[0].dates)
 
     def test_professional_headings(self) -> None:
         text = """
