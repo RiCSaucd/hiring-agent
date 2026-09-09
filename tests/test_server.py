@@ -61,6 +61,8 @@ class ServerTests(unittest.TestCase):
         )
         self.assertEqual(ingested["resume"]["name"], "Alex Rivera")
         self.assertGreaterEqual(ingested["review"]["overall"], 70)
+        person_phone = ingested["resume"].get("phone")
+        self.assertTrue(person_phone)
         jobs = self._json("/api/jobs/search", {"query": "python", "include_live": False, "remote_only": True})
         self.assertGreater(jobs["count"], 3)
         job_id = jobs["jobs"][0]["id"]

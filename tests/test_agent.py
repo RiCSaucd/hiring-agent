@@ -59,6 +59,38 @@ class SearchMatchTests(unittest.TestCase):
         self.assertEqual(ranked[0][0].id, "fieldnote-python")
         self.assertGreater(ranked[0][1].score, ranked[1][1].score)
 
+    def test_security_plus_ops_resume_beats_go_backend(self) -> None:
+        text = """
+ERIC HATCH
+hatcheric950@example.com
+(207) 468-6688
+Remote / United States
+
+SUMMARY
+AI automation specialist with CompTIA Network+ and Security+, n8n, Zapier, Neon, and Supabase.
+
+SKILLS
+workflow automation, prompt engineering, n8n, Zapier, Neon, Supabase, Verbal, Salesforce, CRM, PII, help desk, Network+, Security+
+
+EXPERIENCE
+Founder — NEXUS AI Agency (2024–Present)
+- Built Claude workflows in n8n and Zapier
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [jobs["lumen-ai-ops"], jobs["cedar-it-support-security"], jobs["keel-go-backend"]],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        cedar = next(fit for job, fit in ranked if job.id == "cedar-it-support-security")
+        lumen = next(fit for job, fit in ranked if job.id == "lumen-ai-ops")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(cedar.score, keel.score)
+        self.assertGreater(lumen.score, keel.score)
+        self.assertIn("security+", cedar.matched_skills)
+        self.assertIn("n8n", lumen.matched_skills)
+
 
 class MaterialsAndTrackerTests(unittest.TestCase):
     def test_cover_letter_uses_facts(self) -> None:
