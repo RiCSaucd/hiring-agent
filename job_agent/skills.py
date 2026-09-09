@@ -219,6 +219,12 @@ def extract_skills(text: str) -> list[str]:
             if implied not in seen:
                 seen.add(implied)
                 found.append(implied)
+    # Do not treat an in-progress credential as held.
+    if "cpsm" in seen and re.search(
+        r"cpsm.{0,80}in progress|in progress.{0,80}cpsm",
+        lowered,
+    ):
+        found = [item for item in found if item != "cpsm"]
     return found
 
 

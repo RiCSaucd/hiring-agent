@@ -59,6 +59,13 @@ class SkillTests(unittest.TestCase):
         ):
             self.assertIn(expected, skills)
 
+    def test_cpsm_in_progress_is_not_held(self) -> None:
+        self.assertNotIn(
+            "cpsm",
+            extract_skills("Certified Professional in Supply Management (CPSM) — in progress"),
+        )
+        self.assertIn("cpsm", extract_skills("CPSM, 2024"))
+
 
 class ParserTests(unittest.TestCase):
     def test_sample_resume(self) -> None:
