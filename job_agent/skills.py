@@ -140,6 +140,23 @@ SKILL_ALIASES: dict[str, tuple[str, ...]] = {
     "vulnerability management": (),
     "security awareness": (),
     "ticketing": ("servicenow",),
+    "procurement": ("procure to pay", "procure-to-pay", "purchasing", "purchaser"),
+    "sourcing": ("strategic sourcing",),
+    "vendor management": (
+        "supplier management",
+        "supplier evaluation",
+        "vendor negotiation",
+        "supplier negotiation",
+    ),
+    "supply chain": ("supply-chain",),
+    "logistics": ("international logistics",),
+    "customs": ("customs compliance", "import export", "import/export"),
+    "invoice auditing": ("invoice audit", "invoice review", "invoice-audit"),
+    "contract management": ("purchase order management", "purchase orders"),
+    "cost analysis": ("rate analysis", "spend analysis", "cost reduction"),
+    "demand planning": ("demand planner",),
+    "microsoft project": ("ms project", "microsoft project management"),
+    "cpsm": ("certified professional in supply management",),
 }
 
 _TOKEN_RE = re.compile(r"[a-z0-9+#./]+", re.IGNORECASE)

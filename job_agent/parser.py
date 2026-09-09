@@ -14,13 +14,14 @@ URL_RE = re.compile(r"https?://[^\s)>\]]+", re.IGNORECASE)
 HEADING_RE = re.compile(
     r"^(?:"
     r"(?:professional\s+)?summary|profile|about(?: me)?|"
-    r"(?:professional\s+)?experience|work(?: experience)?|employment|"
+    r"(?:professional\s+|relevant\s+)?experience|work(?: experience)?|employment|"
     r"education|academics|"
-    r"(?:technical\s+(?:and|&)\s+professional\s+)?skills|technical skills|technologies|"
+    r"(?:core\s+|technical\s+(?:and|&)\s+professional\s+)?skills|technical skills|technologies|"
     r"projects|selected projects|"
     r"awards|achievements|"
     r"certifications?(?:\s+(?:and|&)\s+licenses?)?|certificates|"
-    r"licenses?"
+    r"licenses?|"
+    r"languages?"
     r")\s*:?\s*$",
     re.IGNORECASE,
 )
@@ -32,12 +33,14 @@ SECTION_ALIASES = {
     "about me": "summary",
     "experience": "experience",
     "professional experience": "experience",
+    "relevant experience": "experience",
     "work": "experience",
     "work experience": "experience",
     "employment": "experience",
     "education": "education",
     "academics": "education",
     "skills": "skills",
+    "core skills": "skills",
     "technical skills": "skills",
     "technical and professional skills": "skills",
     "technical & professional skills": "skills",
@@ -53,6 +56,8 @@ SECTION_ALIASES = {
     "certificates": "awards",
     "licenses": "awards",
     "license": "awards",
+    "language": "awards",
+    "languages": "awards",
 }
 ACTION_VERBS = (
     "led",
@@ -83,6 +88,18 @@ ACTION_VERBS = (
     "identified",
     "rebuilt",
     "wrote",
+    "promoted",
+    "analyzed",
+    "coordinated",
+    "negotiated",
+    "reconciled",
+    "streamlined",
+    "tracked",
+    "supported",
+    "optimized",
+    "ensured",
+    "partnered",
+    "conducted",
 )
 
 
@@ -213,13 +230,18 @@ def _guess_location(header_lines: list[str]) -> str:
     parts: list[str] = []
     for line in header_lines:
         parts.extend(bit.strip() for bit in re.split(r"\s*\|\s*", line) if bit.strip())
+    city_state = re.compile(
+        r"([A-Z][A-Za-z. ]+,\s*(?:[A-Z]{2}|Florida|Georgia|California|Texas|"
+        r"New York|North Carolina|South Carolina|Panama|Panam[aá])(?:\s+\d{5})?)"
+    )
     for part in parts:
         if EMAIL_RE.search(part) or URL_RE.search(part) or PHONE_RE.search(part):
             continue
-        if re.search(r"\b([A-Z][a-z]+,\s*[A-Z]{2})\b", part):
-            match = re.search(r"([A-Z][a-zA-Z .]+,\s*[A-Z]{2}(?:\s+\d{5})?)", part)
-            if match:
-                return match.group(1)
+        if re.search(r"bilingual", part, re.I):
+            continue
+        match = city_state.search(part)
+        if match:
+            return match.group(1).strip()
         if re.search(r"\b(remote|united states|usa|uk|canada|germany|india)\b", part, re.I):
             return part
     return ""
@@ -238,15 +260,30 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
     entries: list[WorkEntry] = []
     current: WorkEntry | None = None
     date_re = re.compile(
-        r"((?:19|20)\d{2}|"
+        r"((?:\d{1,2}/)?(?:19|20)\d{2}|"
         r"\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
         r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
         r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b)"
-        r".{0,24}(present|(?:19|20)\d{2})",
+        r".{0,24}(present|(?:\d{1,2}/)?(?:19|20)\d{2})",
+        re.IGNORECASE,
+    )
+    date_only_re = re.compile(
+        r"^(?:\d{1,2}/\d{4}|(?:19|20)\d{2}|"
+        r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
+        r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+        r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{4})"
+        r"\s*[–\-]\s*"
+        r"(?:present|\d{1,2}/\d{4}|(?:19|20)\d{2}|"
+        r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
+        r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+        r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{4})\s*$",
         re.IGNORECASE,
     )
     for line in lines:
         is_bullet = bool(re.match(r"^[\-•*]\s+", line))
+        if not is_bullet and current is not None and date_only_re.match(line):
+            current.dates = date_only_re.match(line).group(0)
+            continue
         if not is_bullet and (date_re.search(line) or " — " in line or " - " in line or " at " in line.lower()):
             if current:
                 entries.append(current)
@@ -254,8 +291,13 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
             title = ""
             org = ""
             if " — " in line:
-                left, right = line.split(" — ", 1)
-                title, org = left.strip(), re.split(r"\s+\(", right, maxsplit=1)[0].strip()
+                chunks = [part.strip() for part in line.split(" — ")]
+                title = chunks[0]
+                org = chunks[1] if len(chunks) > 1 else ""
+                if org:
+                    org = re.split(r"\s+\(", org, maxsplit=1)[0].strip()
+                    org = date_re.sub("", org)
+                    org = re.sub(r"\(\s*\)", "", org).strip(" ,–-")
             elif " at " in line.lower():
                 parts = re.split(r"\bat\b", line, maxsplit=1, flags=re.I)
                 title, org = parts[0].strip(" -"), parts[1].strip()

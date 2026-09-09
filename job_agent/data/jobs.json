@@ -362,5 +362,83 @@
     "tags": ["crm", "salesforce", "workflow automation", "help desk", "compliance"],
     "how_to_apply": "Lever. Walk through one process you mapped.",
     "description": "Orbit Field Services wants a Business Systems and Automation Analyst to own CRM process, workflow automation, and operator SOPs. You will sit between sales, IT, and vendors. Help desk instincts and compliance documentation from a regulated or high-volume customer environment are useful. Remote US."
+  },
+  {
+    "id": "tidewater-procurement",
+    "title": "Procurement Specialist",
+    "company": "Tidewater Build",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2201",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2201",
+    "seniority": "mid",
+    "tags": ["procurement", "vendor management", "sourcing", "contract management", "cost analysis", "excel"],
+    "how_to_apply": "Greenhouse. Name one vendor negotiation and the savings you can document.",
+    "description": "Tidewater Build is hiring a Procurement Specialist to run the procure-to-pay cycle on construction and facilities spend. You will evaluate suppliers, negotiate rates, manage purchase orders, and keep audit-ready files. Excel cost analysis and vendor performance tracking matter more than ERP programming. Remote US; Spanish is useful for Latin America vendors."
+  },
+  {
+    "id": "gulfstream-supply-chain",
+    "title": "Supply Chain Analyst",
+    "company": "Gulfstream Commerce",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2202",
+    "apply_url": "https://jobs.lever.co/example/2202",
+    "seniority": "mid",
+    "tags": ["supply chain", "logistics", "cost analysis", "excel", "demand planning"],
+    "how_to_apply": "Lever. Attach a sample spend or rate analysis with secrets removed.",
+    "description": "Gulfstream Commerce wants a Supply Chain Analyst to map inbound freight, compare carrier rates, and flag margin leaks. You will reconcile invoices to purchase orders, report in Excel, and partner with operations on forecast vs actual. Jacksonville hub with remote US option. Construction or retail import experience is a plus."
+  },
+  {
+    "id": "isthmus-import-compliance",
+    "title": "Import and Customs Compliance Coordinator",
+    "company": "Isthmus Trade",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2203",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2203",
+    "seniority": "mid",
+    "tags": ["customs", "compliance", "logistics", "invoice auditing", "procurement"],
+    "how_to_apply": "Greenhouse. Describe how you caught a billing or classification error.",
+    "description": "Isthmus Trade is hiring an Import and Customs Compliance Coordinator. You will review commercial invoices against shipment records, keep Harmonized Tariff and customs files audit-ready, and stop incorrect charges before payment. International construction, retail, or logistics documentation is the bar. Remote US. Bilingual Spanish/English is valued."
+  },
+  {
+    "id": "coral-logistics-ops",
+    "title": "Logistics Operations Coordinator",
+    "company": "Coral Lane Logistics",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2204",
+    "apply_url": "https://jobs.lever.co/example/2204",
+    "seniority": "mid",
+    "tags": ["logistics", "vendor management", "excel", "supply chain"],
+    "how_to_apply": "Lever. Walk through a shipment exception you closed.",
+    "description": "Coral Lane Logistics needs a Logistics Operations Coordinator to track shipments, resolve carrier discrepancies, and keep delivery records organized. You will work purchase orders, communicate status in English and Spanish when needed, and protect on-time delivery without extra freight spend. Remote US."
+  },
+  {
+    "id": "palmetto-purchasing",
+    "title": "Purchasing and Vendor Manager",
+    "company": "Palmetto Materials",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2205",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2205",
+    "seniority": "mid",
+    "tags": ["procurement", "vendor management", "cost analysis", "contract management", "sourcing"],
+    "how_to_apply": "Greenhouse. Quantify a rate or import-cost win.",
+    "description": "Palmetto Materials is hiring a Purchasing and Vendor Manager to select vendors and carriers, negotiate rates, and settle orders. Invoice auditing against contracted tariffs is daily work. Experience cutting import or freight cost with documented analysis is the signal. Remote US."
+  },
+  {
+    "id": "bayfront-ops-coordinator",
+    "title": "Operations Coordinator (Supply Chain)",
+    "company": "Bayfront Field Services",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2206",
+    "apply_url": "https://jobs.lever.co/example/2206",
+    "seniority": "mid",
+    "tags": ["logistics", "procurement", "excel", "compliance", "vendor management"],
+    "how_to_apply": "Lever. Show how you coordinated finance and logistics on one close.",
+    "description": "Bayfront Field Services wants an Operations Coordinator to sit between finance, logistics, and vendors. You will audit invoices, keep spend inside contract terms, and document processes so handoffs are not tribal knowledge. Northeast Florida presence is useful; remote US is allowed. Construction or import operations preferred."
   }
 ]

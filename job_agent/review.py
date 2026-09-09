@@ -104,7 +104,11 @@ def review_application(resume: ParsedResume, target_role: str = "") -> Applicati
         findings.append(Finding("pass", "github", "GitHub profile", resume.github))
         score += 6
         strengths.append("Public GitHub profile makes projects verifiable.")
-    else:
+    elif re.search(
+        r"\b(engineer|developer|software|backend|frontend|fullstack|sre|devops)\b",
+        f"{target_role} {resume.summary}",
+        re.I,
+    ):
         findings.append(
             Finding(
                 "warn",

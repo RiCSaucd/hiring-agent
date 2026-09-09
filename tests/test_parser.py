@@ -45,6 +45,20 @@ class SkillTests(unittest.TestCase):
         self.assertNotIn("siem", skills)
         self.assertNotIn("soc", skills)
 
+    def test_supply_chain_tools(self) -> None:
+        skills = extract_skills(
+            "Procure-to-pay, vendor negotiation, customs compliance, invoice audit, Excel, demand planner."
+        )
+        for expected in (
+            "procurement",
+            "vendor management",
+            "customs",
+            "invoice auditing",
+            "excel",
+            "demand planning",
+        ):
+            self.assertIn(expected, skills)
+
 
 class ParserTests(unittest.TestCase):
     def test_sample_resume(self) -> None:
@@ -115,6 +129,39 @@ Bachelor's Degree — Nichols College
         self.assertIn("salesforce", parsed.skills)
         self.assertIn("workflow automation", parsed.skills)
         self.assertIn("prompt engineering", parsed.skills)
+
+    def test_core_skills_and_relevant_experience(self) -> None:
+        text = """
+Hiram Castillo
+supply@example.com | (904) 555-0100 | St. Augustine, Florida 32080 | Bilingual: Spanish/English
+
+PROFESSIONAL SUMMARY
+Supply chain professional managing procure-to-pay.
+
+CORE SKILLS
+Procurement, vendor negotiation, customs compliance, Microsoft Excel
+
+RELEVANT EXPERIENCE
+Purchaser — Example Builders — Panama 09/2020 – 04/2023
+- Managed the full procurement-to-payment lifecycle
+- Negotiated carrier rates
+
+Logistics Specialist — Example Builders — Panama
+06/2018 – 09/2020
+- Coordinated shipments and audited invoices
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.name, "Hiram Castillo")
+        self.assertEqual(parsed.phone, "(904) 555-0100")
+        self.assertIn("Florida", parsed.location)
+        self.assertGreaterEqual(len(parsed.experience), 2)
+        self.assertEqual(parsed.experience[0].title, "Purchaser")
+        self.assertIn("Example Builders", parsed.experience[0].organization)
+        self.assertRegex(parsed.experience[0].dates, r"09/2020")
+        self.assertEqual(parsed.experience[1].title, "Logistics Specialist")
+        self.assertIn("2018", parsed.experience[1].dates)
+        self.assertIn("procurement", parsed.skills)
+        self.assertTrue(parsed.summary)
 
 
 class PdfTests(unittest.TestCase):
