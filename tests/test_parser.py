@@ -147,7 +147,7 @@ Wade Wahy
     def test_wrapped_pipe_dates_yield_two_jobs(self) -> None:
         text = """
 ERIC HATCH
-Saint Augustine, FL 32080 • hatcheric950@gmail.com • (207) 468-6688
+Saint Augustine, FL 32080 • hatcheric950@example.com • (207) 468-6688
 
 PROFESSIONAL EXPERIENCE
 Vehicle Experience Specialist (Top 1% Regional Performer) | Volkswagen of St. Augustine | Saint Augustine, FL |
