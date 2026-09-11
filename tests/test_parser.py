@@ -53,6 +53,23 @@ class SkillTests(unittest.TestCase):
         ):
             self.assertIn(expected, skills)
 
+    def test_medical_sales_competency_aliases(self) -> None:
+        skills = extract_skills(
+            "Consultative and solution selling. Outside/field sales territory management. "
+            "Eager to pivot into medical sales and prescription drug supplies. Contract negotiation. "
+            "Salesforce CRM and pipeline forecasting."
+        )
+        for expected in (
+            "consultative selling",
+            "outside sales",
+            "territory management",
+            "medical sales",
+            "contract negotiation",
+            "pipeline",
+            "client communication",
+        ):
+            self.assertIn(expected, skills)
+
     def test_security_plus_does_not_require_siem(self) -> None:
         skills = extract_skills("CompTIA Security+")
         self.assertIn("security+", skills)
@@ -97,6 +114,61 @@ St. Augustine, FL
         self.assertEqual(parsed.experience[0].organization, "Volkswagen of St. Augustine")
         self.assertRegex(parsed.experience[0].dates, r"Jan 2023")
         self.assertNotIn("Augustine (Jan", parsed.experience[0].dates)
+
+    def test_pipe_job_lines_and_core_competencies(self) -> None:
+        text = """
+ERIC HATCH
+Saint Augustine, FL 32080 • hatcheric950@example.com • (207) 468-6688
+
+PROFESSIONAL SUMMARY
+Top-performing sales professional pivoting into medical sales.
+
+PROFESSIONAL EXPERIENCE
+Vehicle Experience Specialist | Volkswagen of St. Augustine | Saint Augustine, FL | 2023 – Present
+- Closed an average of 12-15 vehicles per month
+
+EDUCATION
+Bachelor of Science in Business Marketing | Nichols College | Expected May 2025
+
+CORE COMPETENCIES
+Consultative & Solution Selling • Salesforce CRM • Contract Negotiation
+
+REFERENCES
+Wade Wahy
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.location, "Saint Augustine, FL 32080")
+        self.assertEqual(parsed.experience[0].title, "Vehicle Experience Specialist")
+        self.assertEqual(parsed.experience[0].organization, "Volkswagen of St. Augustine")
+        self.assertIn("salesforce", parsed.skills)
+        self.assertIn("consultative selling", parsed.skills)
+        self.assertEqual(len(parsed.experience), 1)
+
+    def test_wrapped_pipe_dates_yield_two_jobs(self) -> None:
+        text = """
+ERIC HATCH
+Saint Augustine, FL 32080 • hatcheric950@gmail.com • (207) 468-6688
+
+PROFESSIONAL EXPERIENCE
+Vehicle Experience Specialist (Top 1% Regional Performer) | Volkswagen of St. Augustine | Saint Augustine, FL |
+2023 – Present
+- Ranked #1 salesperson (5x) and closed 12-15 vehicles per month
+
+Outside Sales Associate | Shultz and Lyman | Augusta, ME | 2021 – 2022
+- Achieved a 98% on-time order fulfillment rate
+
+REFERENCES
+Wade Wahy
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(len(parsed.experience), 2)
+        self.assertEqual(parsed.experience[0].organization, "Volkswagen of St. Augustine")
+        self.assertRegex(parsed.experience[0].dates, r"2023")
+        self.assertIn("Present", parsed.experience[0].dates)
+        self.assertEqual(parsed.experience[1].organization, "Shultz and Lyman")
+        self.assertRegex(parsed.experience[1].dates, r"2021")
+        self.assertNotIn("Wade", parsed.experience[0].title)
+        self.assertNotIn("Wade", parsed.experience[1].title)
 
     def test_professional_headings(self) -> None:
         text = """

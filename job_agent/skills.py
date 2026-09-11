@@ -156,6 +156,14 @@ SKILL_ALIASES: dict[str, tuple[str, ...]] = {
     "vulnerability management": (),
     "security awareness": (),
     "ticketing": ("servicenow",),
+    "consultative selling": ("solution selling", "consultative sales", "solution-selling"),
+    "outside sales": ("field sales", "outside/field sales"),
+    "inside sales": (),
+    "territory management": ("sales territory",),
+    "medical sales": ("pharmaceutical sales", "prescription supplies", "prescription drug supplies"),
+    "contract negotiation": ("negotiating contracts",),
+    "pipeline": ("sales pipeline", "pipeline forecasting", "pipeline development", "pipeline hygiene"),
+    "microsoft office": ("ms office", "microsoft office suite"),
 }
 
 _TOKEN_RE = re.compile(r"[a-z0-9+#./]+", re.IGNORECASE)
@@ -178,6 +186,7 @@ SKILL_IMPLIES: dict[str, tuple[str, ...]] = {
     "security+": ("comptia", "security"),
     "salesforce": ("crm",),
     "customer success": ("customer service", "client communication"),
+    "consultative selling": ("client communication",),
 }
 
 
