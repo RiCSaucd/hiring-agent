@@ -39,6 +39,8 @@ class SearchMatchTests(unittest.TestCase):
         ids = {job.id for job in jobs}
         self.assertIn("harborlight-ai-automation", ids)
         self.assertIn("watchpoint-soc-junior", ids)
+        self.assertIn("pinecrest-customer-support", ids)
+        self.assertIn("harbor-policy-service", ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)
@@ -97,6 +99,42 @@ Founder — NEXUS AI Agency (2024–Present)
         self.assertGreater(lumen.score, keel.score)
         self.assertIn("security+", cedar.matched_skills)
         self.assertIn("n8n", lumen.matched_skills)
+
+    def test_customer_service_resume_ranks_cs_above_go(self) -> None:
+        text = """
+ERIC HATCH
+hatcheric950@example.com
+(207) 468-6688
+Remote / United States
+
+SUMMARY
+Customer service and client operations. Salesforce CRM, customer lifecycle, insurance policy service.
+
+SKILLS
+customer service, customer experience, Salesforce, CRM, client communication, insurance
+
+EXPERIENCE
+Vehicle Experience Specialist — Volkswagen of St. Augustine (Jan 2023–Present)
+- Managed the customer lifecycle in CRM
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [
+                jobs["pinecrest-customer-support"],
+                jobs["harbor-policy-service"],
+                jobs["keel-go-backend"],
+            ],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        pine = next(fit for job, fit in ranked if job.id == "pinecrest-customer-support")
+        policy = next(fit for job, fit in ranked if job.id == "harbor-policy-service")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(pine.score, keel.score)
+        self.assertGreater(policy.score, keel.score)
+        self.assertIn("customer service", pine.matched_skills)
+        self.assertIn("insurance", policy.matched_skills)
 
 
 class MaterialsAndTrackerTests(unittest.TestCase):

@@ -362,5 +362,83 @@
     "tags": ["crm", "salesforce", "workflow automation", "help desk", "compliance"],
     "how_to_apply": "Lever. Walk through one process you mapped.",
     "description": "Orbit Field Services wants a Business Systems and Automation Analyst to own CRM process, workflow automation, and operator SOPs. You will sit between sales, IT, and vendors. Help desk instincts and compliance documentation from a regulated or high-volume customer environment are useful. Remote US."
+  },
+  {
+    "id": "pinecrest-customer-support",
+    "title": "Customer Support Specialist",
+    "company": "Pinecrest Service Co",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2301",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2301",
+    "seniority": "mid",
+    "tags": ["customer service", "crm", "salesforce", "client communication", "pii"],
+    "how_to_apply": "Greenhouse. Walk through one customer follow-up you owned in a CRM.",
+    "description": "Pinecrest Service Co is hiring a remote Customer Support Specialist to own inbound and outbound customer questions in a CRM. You will keep records accurate, explain products and process in plain language, and follow documented communication rules when customer data is involved. Salesforce or similar CRM experience matters more than a call-center platform name. Remote US."
+  },
+  {
+    "id": "seaboard-cx-specialist",
+    "title": "Customer Experience Specialist",
+    "company": "Seaboard Retail Ops",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2302",
+    "apply_url": "https://jobs.lever.co/example/2302",
+    "seniority": "mid",
+    "tags": ["customer service", "crm", "client communication", "compliance"],
+    "how_to_apply": "Lever. Describe how you handled a customer from first contact through delivery.",
+    "description": "Seaboard Retail Ops wants a Customer Experience Specialist for a high-volume customer book. You will manage the customer lifecycle in a CRM, answer product and financing questions, and keep required documentation complete. Automotive, retail, or other in-person-to-remote customer experience is welcome. Remote US."
+  },
+  {
+    "id": "harbor-policy-service",
+    "title": "Insurance Policy Service Representative",
+    "company": "Harbor Policy Group",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2303",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2303",
+    "seniority": "mid",
+    "tags": ["customer service", "insurance", "salesforce", "crm", "client communication"],
+    "how_to_apply": "Greenhouse. Name the insurance licenses you hold and one Salesforce hygiene habit.",
+    "description": "Harbor Policy Group is hiring a remote Insurance Policy Service Representative. You will answer B2B and B2C policy questions, keep quotes and binds documented in Salesforce, and translate policy language into decisions customers can act on. Life & Health or Property & Casualty licensing is a plus. Remote US."
+  },
+  {
+    "id": "northwind-customer-success",
+    "title": "Customer Success Associate",
+    "company": "Northwind Accounts",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2304",
+    "apply_url": "https://jobs.lever.co/example/2304",
+    "seniority": "mid",
+    "tags": ["customer success", "customer service", "crm", "salesforce", "client communication"],
+    "how_to_apply": "Lever. Show one retention or follow-up system you ran.",
+    "description": "Northwind Accounts wants a Customer Success Associate to keep a book of customers informed, scheduled, and documented in Salesforce. You will run proactive follow-up, write simple SOPs so handoffs are not tribal knowledge, and escalate only after you have the facts. Remote US. This is client operations, not software engineering."
+  },
+  {
+    "id": "lantern-remote-csr",
+    "title": "Remote Customer Service Representative",
+    "company": "Lantern Help Line",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2305",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2305",
+    "seniority": "junior",
+    "tags": ["customer service", "crm", "client communication", "pii"],
+    "how_to_apply": "Greenhouse. Give one example of cutting follow-up time without dropping customers.",
+    "description": "Lantern Help Line is hiring a Remote Customer Service Representative to handle a high-volume queue of customer questions. You will use a CRM, keep PII handling documented, and turn repeat questions into a short written process. Experience reducing daily follow-up grind with a still-human review step is useful. Remote US."
+  },
+  {
+    "id": "ridgeway-client-ops",
+    "title": "Client Operations Coordinator",
+    "company": "Ridgeway Client Ops",
+    "location": "Remote — United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2306",
+    "apply_url": "https://jobs.lever.co/example/2306",
+    "seniority": "mid",
+    "tags": ["customer service", "crm", "salesforce", "workflow automation", "client communication"],
+    "how_to_apply": "Lever. Walk through a CRM or follow-up process you documented.",
+    "description": "Ridgeway Client Ops needs a Client Operations Coordinator to keep customer records clean, run follow-up queues, and document how client messages go out. Salesforce CRM and a human-in-the-loop habit on customer-facing communication matter more than engineering. Zapier-style workflow automation is a plus. Remote US."
   }
 ]

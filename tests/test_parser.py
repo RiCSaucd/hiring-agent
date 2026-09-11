@@ -39,6 +39,20 @@ class SkillTests(unittest.TestCase):
             self.assertIn(expected, skills)
         self.assertNotIn("java", skills)
 
+    def test_customer_service_aliases(self) -> None:
+        skills = extract_skills(
+            "Customer support and customer experience in Salesforce CRM. "
+            "Life & Health and Property & Casualty licenses. Client success follow-up."
+        )
+        for expected in (
+            "customer service",
+            "customer success",
+            "salesforce",
+            "crm",
+            "insurance",
+        ):
+            self.assertIn(expected, skills)
+
     def test_security_plus_does_not_require_siem(self) -> None:
         skills = extract_skills("CompTIA Security+")
         self.assertIn("security+", skills)

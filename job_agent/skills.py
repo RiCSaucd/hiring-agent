@@ -110,6 +110,22 @@ SKILL_ALIASES: dict[str, tuple[str, ...]] = {
     "security": ("appsec", "infosec", "cybersecurity", "cyber security"),
     "salesforce": ("salesforce crm",),
     "crm": (),
+    "customer service": (
+        "customer support",
+        "customer experience",
+        "client service",
+        "client support",
+        "customer-facing",
+    ),
+    "customer success": ("client success",),
+    "client communication": ("customer communication", "client-facing"),
+    "insurance": (
+        "life & health",
+        "life and health",
+        "property & casualty",
+        "property and casualty",
+        "p&c",
+    ),
     "comptia": ("comptia certified",),
     "network+": (
         "network plus",
@@ -160,6 +176,8 @@ _LOOKUP = _alias_lookup()
 SKILL_IMPLIES: dict[str, tuple[str, ...]] = {
     "network+": ("comptia",),
     "security+": ("comptia", "security"),
+    "salesforce": ("crm",),
+    "customer success": ("customer service", "client communication"),
 }
 
 
