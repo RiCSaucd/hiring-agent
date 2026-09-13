@@ -274,7 +274,7 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
         r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
         r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
         r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{4})"
-        r"\s*[–\-]\s*"
+        r"\s*[—–\-]\s*"
         r"(?:present|\d{1,2}/\d{4}|(?:19|20)\d{2}|"
         r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
         r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
