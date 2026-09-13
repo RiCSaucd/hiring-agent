@@ -174,6 +174,33 @@ Logistics Specialist — Example Builders — Panama
         self.assertIn("procurement", parsed.skills)
         self.assertTrue(parsed.summary)
 
+    def test_references_are_not_jobs(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA
+hcastb@example.com | (904) 555-0100
+St. Augustine, Florida 32080
+
+RELEVANT EXPERIENCE
+Purchaser — Example Builders — Panama 09/2020 – 04/2023
+- Managed the full procurement-to-payment lifecycle
+
+Logistics Specialist — Example Builders — Panama 06/2018 – 09/2020
+- Coordinated shipments and audited invoices
+
+REFERENCES
+Carolina Sanchez — professional reference; contact details available upon request
+Michelle Guleth — professional reference; contact details available upon request
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.email, "hcastb@example.com")
+        self.assertEqual(len(parsed.experience), 2)
+        blob = " ".join(
+            f"{item.title} {item.organization} {item.raw}" for item in parsed.experience
+        )
+        self.assertNotIn("Sanchez", blob)
+        self.assertNotIn("Guleth", blob)
+        self.assertNotIn("Carolina", blob)
+
 
 class PdfTests(unittest.TestCase):
     def test_round_trip(self) -> None:

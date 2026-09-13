@@ -21,7 +21,8 @@ HEADING_RE = re.compile(
     r"awards|achievements|"
     r"certifications?(?:\s+(?:and|&)\s+licenses?)?|certificates|"
     r"licenses?|"
-    r"languages?"
+    r"languages?|"
+    r"references"
     r")\s*:?\s*$",
     re.IGNORECASE,
 )
@@ -58,6 +59,7 @@ SECTION_ALIASES = {
     "license": "awards",
     "language": "awards",
     "languages": "awards",
+    "references": "awards",
 }
 ACTION_VERBS = (
     "led",
