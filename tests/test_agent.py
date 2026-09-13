@@ -180,6 +180,49 @@ Purchaser — Example Construction — Panama 09/2020 – 04/2023
         self.assertGreater(customs.score, keel.score)
         self.assertIn("customs", customs.matched_skills)
 
+    def test_thirty_apply_catalog_ranks_above_go(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA
+supply@example.com
+(904) 555-0100
+St. Augustine, Florida 32080
+
+PROFESSIONAL SUMMARY
+Procure-to-pay, freight invoice audit, landed cost, and bilingual vendor coordination.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, invoice auditing, Excel, cost analysis
+
+RELEVANT EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Issued purchase orders and audited freight invoices against contracted rates
+- Reduced import costs through rate analysis and invoice review
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        for job_id in (
+            "anastasia-po-admin",
+            "aviles-freight-billing",
+            "riberia-landed-cost",
+            "lighthouse-spend",
+        ):
+            self.assertIn(job_id, jobs)
+        ranked = rank_jobs(
+            parsed,
+            [
+                jobs["anastasia-po-admin"],
+                jobs["aviles-freight-billing"],
+                jobs["riberia-landed-cost"],
+                jobs["keel-go-backend"],
+            ],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        po_admin = next(fit for job, fit in ranked if job.id == "anastasia-po-admin")
+        freight = next(fit for job, fit in ranked if job.id == "aviles-freight-billing")
+        self.assertGreater(po_admin.score, keel.score)
+        self.assertGreater(freight.score, keel.score)
+
 
 class MaterialsAndTrackerTests(unittest.TestCase):
     def test_cover_letter_uses_facts(self) -> None:
