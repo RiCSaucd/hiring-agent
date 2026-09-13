@@ -58,6 +58,10 @@ class SkillTests(unittest.TestCase):
             "demand planning",
         ):
             self.assertIn(expected, skills)
+        self.assertIn(
+            "customs",
+            extract_skills("Classified goods on the Harmonized Tariff Schedule and HTS line items."),
+        )
 
     def test_cpsm_in_progress_is_not_held(self) -> None:
         self.assertNotIn(

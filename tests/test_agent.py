@@ -51,6 +51,8 @@ class SearchMatchTests(unittest.TestCase):
         self.assertIn("harborlight-ai-automation", ids)
         self.assertIn("watchpoint-soc-junior", ids)
         self.assertIn("tidewater-procurement", ids)
+        self.assertIn("keystone-construction-buyer", ids)
+        self.assertIn("cedarkey-customs-docs", ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)
@@ -141,6 +143,42 @@ Purchaser — Example Construction — Panama 09/2020 – 04/2023
         self.assertGreater(proc.score, keel.score)
         self.assertGreater(customs.score, keel.score)
         self.assertIn("procurement", proc.matched_skills)
+
+    def test_expanded_procurement_catalog_ranks_above_go(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA
+supply@example.com
+(904) 555-0100
+St. Augustine, Florida 32080
+
+PROFESSIONAL SUMMARY
+Procurement-to-payment, import cost analysis, and customs documentation.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, invoice auditing, Excel, cost analysis
+
+RELEVANT EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Cut import costs through rate analysis and invoice review
+- Classified goods on the Harmonized Tariff Schedule
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [
+                jobs["keystone-construction-buyer"],
+                jobs["cedarkey-customs-docs"],
+                jobs["keel-go-backend"],
+            ],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        buyer = next(fit for job, fit in ranked if job.id == "keystone-construction-buyer")
+        customs = next(fit for job, fit in ranked if job.id == "cedarkey-customs-docs")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(buyer.score, keel.score)
+        self.assertGreater(customs.score, keel.score)
+        self.assertIn("customs", customs.matched_skills)
 
 
 class MaterialsAndTrackerTests(unittest.TestCase):
