@@ -9,7 +9,7 @@
 # (PyMuPDF, ollama, pydantic, pymupdf4llm, google-generativeai, python-dotenv).
 # We try to install everything in requirements.txt, but treat a blocked PyPI as
 # a soft failure so setup still completes and the desk stays usable.
-set -uo pipefail
+set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
