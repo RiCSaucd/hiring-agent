@@ -31,6 +31,17 @@ class ReviewTests(unittest.TestCase):
         codes = {item.code for item in review.findings}
         self.assertIn("skills", codes)
 
+    def test_supply_chain_review_skips_github_warn(self) -> None:
+        parsed = parse_resume_text(
+            "Hiram Castillo\nsupply@example.com\n(904) 555-0100\nSt. Augustine, Florida\n\n"
+            "SUMMARY\nProcurement and logistics operations.\n\n"
+            "CORE SKILLS\nprocurement, logistics, excel\n\n"
+            "RELEVANT EXPERIENCE\nPurchaser — Example (2020–2023)\n- Managed vendor invoices\n"
+        )
+        review = review_application(parsed, target_role="supply chain procurement")
+        codes = {item.code: item.severity for item in review.findings}
+        self.assertNotEqual(codes.get("github"), "warn")
+
 
 class SearchMatchTests(unittest.TestCase):
     def test_catalog_loads(self) -> None:
@@ -39,6 +50,7 @@ class SearchMatchTests(unittest.TestCase):
         ids = {job.id for job in jobs}
         self.assertIn("harborlight-ai-automation", ids)
         self.assertIn("watchpoint-soc-junior", ids)
+        self.assertIn("tidewater-procurement", ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)
@@ -97,6 +109,38 @@ Founder — NEXUS AI Agency (2024–Present)
         self.assertGreater(lumen.score, keel.score)
         self.assertIn("security+", cedar.matched_skills)
         self.assertIn("n8n", lumen.matched_skills)
+
+    def test_supply_chain_resume_ranks_procurement_above_go(self) -> None:
+        text = """
+Hiram Castillo
+supply@example.com
+(904) 555-0100
+St. Augustine, Florida 32080
+
+PROFESSIONAL SUMMARY
+Supply chain, procurement and operations professional with invoice auditing and customs compliance.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, Excel, cost analysis, sourcing
+
+RELEVANT EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Negotiated vendor rates and managed the procure-to-pay lifecycle
+- Reconciled invoices against purchase orders
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [jobs["tidewater-procurement"], jobs["isthmus-import-compliance"], jobs["keel-go-backend"]],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        proc = next(fit for job, fit in ranked if job.id == "tidewater-procurement")
+        customs = next(fit for job, fit in ranked if job.id == "isthmus-import-compliance")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(proc.score, keel.score)
+        self.assertGreater(customs.score, keel.score)
+        self.assertIn("procurement", proc.matched_skills)
 
 
 class MaterialsAndTrackerTests(unittest.TestCase):
