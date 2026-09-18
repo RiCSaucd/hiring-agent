@@ -11,10 +11,12 @@ from job_agent.skills import extract_skills
 EMAIL_RE = re.compile(r"[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}", re.IGNORECASE)
 PHONE_RE = re.compile(r"(?:\+?\d{1,3}[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\-]?\d{4}")
 URL_RE = re.compile(r"https?://[^\s)>\]]+", re.IGNORECASE)
+BULLET_RE = re.compile(r"^[\-\*\u2022\u2023\u25cf\u25e6\u2219\uf0b7\u00b7\u25aa]+\s+")
+PAGE_HEADER_RE = re.compile(r"^.+\|\s*\d+\s*$")
 HEADING_RE = re.compile(
     r"^(?:"
     r"(?:professional\s+)?summary|profile|about(?: me)?|"
-    r"(?:professional\s+|relevant\s+)?experience|work(?: experience)?|employment|"
+    r"(?:professional\s+|relevant\s+)?experience(?:\s+continued)?|work(?: experience)?|employment|"
     r"education|academics|"
     r"(?:core\s+|technical\s+(?:and|&)\s+professional\s+)?skills|technical skills|technologies|"
     r"projects|selected projects|"
@@ -34,7 +36,10 @@ SECTION_ALIASES = {
     "about me": "summary",
     "experience": "experience",
     "professional experience": "experience",
+    "professional experience continued": "experience",
+    "experience continued": "experience",
     "relevant experience": "experience",
+    "relevant experience continued": "experience",
     "work": "experience",
     "work experience": "experience",
     "employment": "experience",
@@ -187,7 +192,7 @@ def _clean_lines(text: str) -> list[str]:
 
 def _heading_key(line: str) -> str | None:
     """Map a short heading line to a resume section, including 'Professional Summary'."""
-    if re.match(r"^[\-•*]\s+", line):
+    if BULLET_RE.match(line):
         return None
     stripped = line.strip(" -:•")
     cleaned = re.sub(r"[^a-z& ]+", " ", stripped.lower())
@@ -252,10 +257,23 @@ def _guess_location(header_lines: list[str]) -> str:
 def _split_bullets(lines: list[str]) -> list[str]:
     bullets: list[str] = []
     for line in lines:
-        cleaned = re.sub(r"^[\-•*]\s*", "", line).strip()
+        cleaned = BULLET_RE.sub("", line).strip()
         if cleaned:
             bullets.append(cleaned)
     return bullets
+
+
+def _looks_like_job_title(line: str) -> bool:
+    """Short capitalized heading used as a stacked title above Company | Loc | Dates."""
+    if not line or len(line) > 80 or line.endswith("."):
+        return False
+    words = line.split()
+    if not 1 <= len(words) <= 6:
+        return False
+    first = words[0].lower().strip(".,")
+    if first in ACTION_VERBS:
+        return False
+    return words[0][:1].isupper()
 
 
 def _parse_experience(lines: list[str]) -> list[WorkEntry]:
@@ -281,14 +299,50 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
         r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{4})\s*$",
         re.IGNORECASE,
     )
+
+    def close() -> None:
+        nonlocal current
+        if current:
+            entries.append(current)
+            current = None
+
     for line in lines:
-        is_bullet = bool(re.match(r"^[\-•*]\s+", line))
-        if not is_bullet and current is not None and date_only_re.match(line):
+        if PAGE_HEADER_RE.match(line):
+            continue
+        is_bullet = bool(BULLET_RE.match(line))
+        if is_bullet:
+            text = BULLET_RE.sub("", line).strip()
+            if current is None:
+                current = WorkEntry(raw=line, title="", highlights=[text] if text else [])
+            elif text:
+                current.highlights.append(text)
+            continue
+        if current is not None and date_only_re.match(line):
             current.dates = date_only_re.match(line).group(0)
             continue
-        if not is_bullet and (date_re.search(line) or " — " in line or " - " in line or " at " in line.lower()):
-            if current:
-                entries.append(current)
+        stacked_company = (
+            current is not None
+            and not current.highlights
+            and line.count("|") >= 2
+            and date_re.search(line)
+        )
+        if stacked_company and current is not None:
+            current.organization = current.organization or line.split("|", 1)[0].strip()
+            current.dates = date_re.search(line).group(0)
+            current.raw = f"{current.raw} — {line}" if current.raw else line
+            continue
+        title_pipe = "|" in line and date_re.search(line) is None
+        title_only = _looks_like_job_title(line) and current is not None and bool(current.highlights)
+        looks_new = bool(
+            date_re.search(line)
+            or " — " in line
+            or " - " in line
+            or " at " in line.lower()
+            or title_pipe
+            or title_only
+        )
+        if not is_bullet and looks_new:
+            close()
             dates = date_re.search(line)
             title = ""
             org = ""
@@ -303,6 +357,8 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
             elif " at " in line.lower():
                 parts = re.split(r"\bat\b", line, maxsplit=1, flags=re.I)
                 title, org = parts[0].strip(" -"), parts[1].strip()
+            elif title_pipe:
+                title = line.split("|", 1)[0].strip()
             else:
                 title = line
             current = WorkEntry(
@@ -313,11 +369,10 @@ def _parse_experience(lines: list[str]) -> list[WorkEntry]:
                 highlights=[],
             )
         elif current is not None:
-            current.highlights.append(re.sub(r"^[\-•*]\s*", "", line))
+            current.highlights.append(BULLET_RE.sub("", line).strip())
         else:
             current = WorkEntry(raw=line, title=line, highlights=[])
-    if current:
-        entries.append(current)
+    close()
     return entries
 
 

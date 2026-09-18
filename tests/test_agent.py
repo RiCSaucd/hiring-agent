@@ -6,14 +6,34 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from job_agent.match import rank_jobs, score_fit
+from job_agent.match import SUPPLY_CHAIN_TAGS, rank_jobs, score_fit
 from job_agent.materials import build_packet
 from job_agent.parser import parse_resume_text
 from job_agent.review import review_application
 from job_agent.search import filter_jobs, load_catalog, search_jobs
+from job_agent.service import HiringDesk
 from job_agent.tracker import Tracker
 
 SAMPLE = Path("job_agent/data/sample_resume.md").read_text(encoding="utf-8")
+
+HIRAMIS_BATCH_RESUME = """
+HIRAMIS CASTILLO BARRAZA
+hcastb@example.com
+(904) 580-1586
+St. Augustine, Florida
+
+PROFESSIONAL SUMMARY
+Procure-to-pay, freight invoice audit, landed cost, and bilingual vendor coordination.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, invoice auditing, Excel, cost analysis, sourcing
+
+PROFESSIONAL EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Issued purchase orders and audited freight invoices against contracted rates
+- Reduced import costs through rate analysis and invoice review
+- Selected vendors and carriers and negotiated rates
+"""
 
 
 class ReviewTests(unittest.TestCase):
@@ -53,6 +73,20 @@ class SearchMatchTests(unittest.TestCase):
         self.assertIn("tidewater-procurement", ids)
         self.assertIn("keystone-construction-buyer", ids)
         self.assertIn("cedarkey-customs-docs", ids)
+
+    def test_fifty_supply_chain_catalog_roles(self) -> None:
+        jobs = load_catalog()
+        supply = [job for job in jobs if set(job.tags) & SUPPLY_CHAIN_TAGS]
+        self.assertGreaterEqual(len(supply), 50)
+        ids = {job.id for job in jobs}
+        for job_id in (
+            "flagler-facilities-buyer",
+            "towncenter-buyer",
+            "mayport-customs-ops",
+            "shands-bilingual-buyer",
+            "orchard-property-ops",
+        ):
+            self.assertIn(job_id, ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)
@@ -245,6 +279,35 @@ class MaterialsAndTrackerTests(unittest.TestCase):
             self.assertEqual(done["status"], "applied")
             self.assertIsNotNone(done["applied_at"])
             tracker.close()
+
+    def test_apply_batch_marks_fifty_supply_chain_jobs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            desk = HiringDesk(db_path=Path(tmp) / "t.db")
+            desk.ingest_resume_text(
+                filename="hiramis.md",
+                text=HIRAMIS_BATCH_RESUME,
+                target_role="logistics procurement vendor operations",
+                target_location="Remote / United States",
+                remote_only=True,
+            )
+            drafts = desk.apply_batch(limit=50, min_score=40, confirm=False, include_live=False)
+            self.assertEqual(drafts["count"], 50)
+            self.assertTrue(all(row["status"] == "draft" for row in drafts["applications"]))
+            applied = desk.apply_batch(limit=50, min_score=40, confirm=True, include_live=False)
+            self.assertEqual(applied["count"], 50)
+            self.assertTrue(all(row["status"] == "applied" for row in applied["applications"]))
+            applied_ids = {row["job_id"] for row in applied["applications"]}
+            self.assertNotIn("keel-go-backend", applied_ids)
+            self.assertTrue(
+                applied_ids
+                & {
+                    "tidewater-procurement",
+                    "flagler-facilities-buyer",
+                    "towncenter-buyer",
+                    "mayport-customs-ops",
+                }
+            )
+            desk.close()
 
 
 class PortalCliTests(unittest.TestCase):

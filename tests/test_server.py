@@ -76,8 +76,21 @@ class ServerTests(unittest.TestCase):
             {"confirm": True, "notes": "pasted into greenhouse"},
         )
         self.assertEqual(applied["status"], "applied")
+        batch_denied = False
+        try:
+            self._json("/api/applications/batch", {"limit": 3, "confirm": False, "include_live": False})
+        except Exception:
+            batch_denied = True
+        self.assertTrue(batch_denied)
+        batched = self._json(
+            "/api/applications/batch",
+            {"limit": 3, "min_score": 20, "confirm": True, "include_live": False, "query": "python"},
+        )
+        self.assertGreaterEqual(batched["count"], 1)
+        self.assertTrue(all(row["status"] == "applied" for row in batched["applications"]))
         page = urlopen(f"http://127.0.0.1:{self.port}/", timeout=10).read().decode("utf-8")
         self.assertIn("Application Desk", page)
+        self.assertIn("Apply top 50", page)
         sample = self._json("/api/sample-resume")
         self.assertIn("Alex Rivera", sample["text"])
         self.assertIn("FastAPI", sample["text"])
