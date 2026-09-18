@@ -17,10 +17,12 @@ HEADING_RE = re.compile(
     r"(?:professional\s+)?experience|work(?: experience)?|employment|"
     r"education|academics|"
     r"(?:technical\s+(?:and|&)\s+professional\s+)?skills|technical skills|technologies|"
+    r"core competencies|competencies|"
     r"projects|selected projects|"
     r"awards|achievements|"
     r"certifications?(?:\s+(?:and|&)\s+licenses?)?|certificates|"
-    r"licenses?"
+    r"licenses?|"
+    r"references"
     r")\s*:?\s*$",
     re.IGNORECASE,
 )
@@ -38,6 +40,8 @@ SECTION_ALIASES = {
     "education": "education",
     "academics": "education",
     "skills": "skills",
+    "core competencies": "skills",
+    "competencies": "skills",
     "technical skills": "skills",
     "technical and professional skills": "skills",
     "technical & professional skills": "skills",
@@ -53,6 +57,7 @@ SECTION_ALIASES = {
     "certificates": "awards",
     "licenses": "awards",
     "license": "awards",
+    "references": "awards",
 }
 ACTION_VERBS = (
     "led",
@@ -212,7 +217,11 @@ def _guess_name(header_lines: list[str], email: str) -> str:
 def _guess_location(header_lines: list[str]) -> str:
     parts: list[str] = []
     for line in header_lines:
-        parts.extend(bit.strip() for bit in re.split(r"\s*\|\s*", line) if bit.strip())
+        parts.extend(
+            bit.strip()
+            for bit in re.split(r"\s*[\|•·]\s*", line)
+            if bit.strip()
+        )
     for part in parts:
         if EMAIL_RE.search(part) or URL_RE.search(part) or PHONE_RE.search(part):
             continue
@@ -234,28 +243,68 @@ def _split_bullets(lines: list[str]) -> list[str]:
     return bullets
 
 
+_MONTH = (
+    r"jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
+    r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+    r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?"
+)
+_DATE_SPAN_RE = re.compile(
+    r"((?:19|20)\d{2}|"
+    rf"\b(?:{_MONTH})\b)"
+    r".{0,24}(present|(?:19|20)\d{2})",
+    re.IGNORECASE,
+)
+
+
+def _is_date_only_line(line: str) -> bool:
+    """True when the line is only a date span such as '2023 – Present'."""
+    stripped = line.strip().strip("|").strip()
+    match = _DATE_SPAN_RE.search(stripped)
+    if not match:
+        return False
+    remainder = _DATE_SPAN_RE.sub("", stripped)
+    remainder = re.sub(r"[\s|/,.–\-—to]+", "", remainder, flags=re.I)
+    return remainder == ""
+
+
+def _looks_like_job_header(line: str) -> bool:
+    if _DATE_SPAN_RE.search(line):
+        return True
+    if " — " in line or " - " in line or " at " in line.lower():
+        return True
+    return " | " in line or line.rstrip().endswith("|")
+
+
+def _split_pipe_job_line(line: str) -> tuple[str, str]:
+    bits = [bit.strip(" |") for bit in line.split("|") if bit.strip(" |")]
+    title = bits[0] if bits else line
+    org = bits[1] if len(bits) > 1 else ""
+    if org and _is_date_only_line(org):
+        org = ""
+    return title, org
+
+
 def _parse_experience(lines: list[str]) -> list[WorkEntry]:
     entries: list[WorkEntry] = []
     current: WorkEntry | None = None
-    date_re = re.compile(
-        r"((?:19|20)\d{2}|"
-        r"\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
-        r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
-        r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b)"
-        r".{0,24}(present|(?:19|20)\d{2})",
-        re.IGNORECASE,
-    )
     for line in lines:
         is_bullet = bool(re.match(r"^[\-•*]\s+", line))
-        if not is_bullet and (date_re.search(line) or " — " in line or " - " in line or " at " in line.lower()):
+        dates = _DATE_SPAN_RE.search(line)
+        if not is_bullet and current is not None and _is_date_only_line(line):
+            if not current.dates and dates:
+                current.dates = dates.group(0)
+            current.raw = f"{current.raw} {line}".strip()
+            continue
+        if not is_bullet and _looks_like_job_header(line):
             if current:
                 entries.append(current)
-            dates = date_re.search(line)
             title = ""
             org = ""
             if " — " in line:
                 left, right = line.split(" — ", 1)
                 title, org = left.strip(), re.split(r"\s+\(", right, maxsplit=1)[0].strip()
+            elif "|" in line:
+                title, org = _split_pipe_job_line(line)
             elif " at " in line.lower():
                 parts = re.split(r"\bat\b", line, maxsplit=1, flags=re.I)
                 title, org = parts[0].strip(" -"), parts[1].strip()
