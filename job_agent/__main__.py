@@ -56,6 +56,21 @@ def build_parser() -> argparse.ArgumentParser:
     paste = sub.add_parser("paste-job", parents=[shared], help="Add a job from JSON file")
     paste.add_argument("json_path")
 
+    portal = sub.add_parser(
+        "portal-search",
+        help="Run a vendored Bun job-portal CLI (linkedin, freehire, or a Danish board)",
+    )
+    portal.add_argument(
+        "portal",
+        choices=["jobbank", "jobdanmark", "jobindex", "jobnet", "linkedin", "freehire"],
+        help="linkedin and freehire are country-agnostic; the others search Denmark",
+    )
+    portal.add_argument(
+        "cli_args",
+        nargs=argparse.REMAINDER,
+        help="Arguments forwarded to the portal CLI, e.g. search -q buyer -l 'Jacksonville, Florida'",
+    )
+
     serve = sub.add_parser("serve", parents=[shared], help="Run the local hiring desk UI")
     serve.add_argument("--host", default="0.0.0.0")
     serve.add_argument("--port", type=int, default=8765)
@@ -65,6 +80,16 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.command == "portal-search":
+        from job_agent.portals import run_portal
+
+        try:
+            proc = run_portal(args.portal, list(args.cli_args or []), check=False)
+        except (ValueError, FileNotFoundError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        return int(proc.returncode or 0)
+
     desk = HiringDesk(db_path=args.db)
     try:
         if args.command == "review":

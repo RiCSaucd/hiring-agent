@@ -247,5 +247,37 @@ class MaterialsAndTrackerTests(unittest.TestCase):
             tracker.close()
 
 
+class PortalCliTests(unittest.TestCase):
+    def test_cli_path_and_unknown_portal(self) -> None:
+        from job_agent.portals import cli_path
+
+        path = cli_path("linkedin")
+        self.assertTrue(path.is_file())
+        self.assertTrue(path.as_posix().endswith("linkedin-search/cli/src/cli.ts"))
+        with self.assertRaises(ValueError):
+            cli_path("indeed")
+
+    def test_missing_bun_is_a_clear_error(self) -> None:
+        from unittest.mock import patch
+
+        from job_agent.portals import bun_binary, run_portal
+
+        with patch("job_agent.portals.shutil.which", return_value=None):
+            with self.assertRaises(FileNotFoundError) as ctx:
+                bun_binary()
+            self.assertIn("bun.sh", str(ctx.exception))
+            with self.assertRaises(FileNotFoundError):
+                run_portal("linkedin", ["search", "-q", "buyer", "-l", "Remote"])
+
+    def test_portal_search_command_without_bun(self) -> None:
+        from unittest.mock import patch
+
+        from job_agent.__main__ import main
+
+        with patch("job_agent.portals.shutil.which", return_value=None):
+            code = main(["portal-search", "linkedin", "search", "-q", "buyer", "-l", "Remote"])
+        self.assertEqual(code, 1)
+
+
 if __name__ == "__main__":
     unittest.main()
