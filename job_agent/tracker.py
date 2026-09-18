@@ -138,14 +138,16 @@ class Tracker:
 
     def create_application(self, job_id: str, packet: dict[str, Any], fit: dict[str, Any]) -> dict[str, Any]:
         existing = self._conn.execute(
-            "SELECT id FROM applications WHERE job_id = ? AND status != 'withdrawn' ORDER BY id DESC LIMIT 1",
+            "SELECT id, status FROM applications WHERE job_id = ? AND status != 'withdrawn' ORDER BY id DESC LIMIT 1",
             (job_id,),
         ).fetchone()
         now = time.time()
         if existing:
+            # Refreshing the packet must not undo an application already applied.
+            status = "applied" if existing["status"] == "applied" else "draft"
             self._conn.execute(
-                "UPDATE applications SET packet = ?, fit = ?, status = 'draft', created_at = ? WHERE id = ?",
-                (json.dumps(packet), json.dumps(fit), now, existing["id"]),
+                "UPDATE applications SET packet = ?, fit = ?, status = ?, created_at = ? WHERE id = ?",
+                (json.dumps(packet), json.dumps(fit), status, now, existing["id"]),
             )
             self._conn.commit()
             return self.get_application(int(existing["id"]))
