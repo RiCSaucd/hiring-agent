@@ -268,6 +268,24 @@ class MaterialsAndTrackerTests(unittest.TestCase):
         self.assertIn("Fieldnote", packet.cover_letter)
         self.assertGreaterEqual(len(packet.tailored_bullets), 1)
 
+    def test_procurement_letter_uses_purchaser_not_property_manager(self) -> None:
+        parsed = parse_resume_text(
+            "HIRAMIS CASTILLO BARRAZA\nhcastb@example.com\nSt. Augustine, FL\n\n"
+            "CORE SKILLS\nprocurement, logistics, excel\n\n"
+            "PROFESSIONAL EXPERIENCE\n"
+            "Property Manager | Promoted from Sales\n"
+            "Isla Antigua | St. Augustine, FL | 2023 - Present\n"
+            "- Coordinate vendor relationships and purchasing needs\n\n"
+            "Purchaser\n"
+            "Example Builders | Panama | Sep 2020 - Apr 2023\n"
+            "- Negotiated vendor rates and ran procure-to-pay\n"
+        )
+        job = next(job for job in load_catalog() if job.id == "tidewater-procurement")
+        fit = score_fit(parsed, job, target_role="procurement")
+        packet = build_packet(parsed, job, fit)
+        self.assertIn("Purchaser", packet.cover_letter)
+        self.assertNotIn("I am a Property Manager candidate", packet.cover_letter)
+
     def test_apply_requires_confirm(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             tracker = Tracker(Path(tmp) / "t.db")

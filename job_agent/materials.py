@@ -10,12 +10,34 @@ from job_agent.parser import ParsedResume
 from job_agent.search import Job
 
 
-def _headline_title(resume: ParsedResume) -> str:
-    """First role title without pipe annotations; never default to 'software'."""
-    for job in resume.experience:
-        title = (job.title or "").split("|", 1)[0].strip()
-        if title:
-            return title
+_PROCUREMENT_TITLE_HINTS = (
+    "purchas",
+    "procur",
+    "logistic",
+    "import",
+    "buyer",
+    "customs",
+    "vendor",
+    "traffic",
+    "expedit",
+)
+
+
+def _headline_title(resume: ParsedResume, job: Job | None = None) -> str:
+    """Prefer a supply-chain title when the posting is one; never default to 'software'."""
+    titles = [
+        (item.title or "").split("|", 1)[0].strip()
+        for item in resume.experience
+        if (item.title or "").split("|", 1)[0].strip()
+    ]
+    if job and titles:
+        hay = f"{job.title} {' '.join(job.tags)}".lower()
+        if any(hint in hay for hint in _PROCUREMENT_TITLE_HINTS):
+            for title in titles:
+                if any(hint in title.lower() for hint in _PROCUREMENT_TITLE_HINTS):
+                    return title
+    if titles:
+        return titles[0]
     return "procurement and logistics"
 
 
@@ -103,7 +125,7 @@ def build_packet(resume: ParsedResume, job: Job, fit: JobFit) -> ApplicationPack
             )
         letter = (
             f"Dear {job.company} hiring team,\n\n"
-            f"I am applying for the {job.title} role. I am a {_headline_title(resume)} "
+            f"I am applying for the {job.title} role. I am a {_headline_title(resume, job)} "
             f"candidate with experience across {', '.join(resume.skills[:6]) or 'procurement, logistics, and vendor operations'}. "
             f"{resume.summary or ''}\n\n"
             f"A few facts from my work that map to this posting:\n{highlight_lines}\n\n"
