@@ -201,6 +201,52 @@ Michelle Guleth — professional reference; contact details available upon reque
         self.assertNotIn("Guleth", blob)
         self.assertNotIn("Carolina", blob)
 
+    def test_stacked_title_company_dates_and_continued_heading(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA | 1
+HIRAMIS CASTILLO BARRAZA
+hcastb@icloud.com | 904-580-1586 | St. Augustine, FL
+
+PROFESSIONAL SUMMARY
+Bilingual logistics and procurement professional.
+
+CORE SKILLS
+Procure-to-pay, vendor negotiation, customs compliance, Microsoft Excel
+
+PROFESSIONAL EXPERIENCE
+Property Manager | Promoted from Sales
+Isla Antigua | St. Augustine, FL | 2023 - Present
+- Coordinate vendor relationships and purchasing needs
+- Combined customer-facing sales experience with vendor communication
+
+Purchaser
+Bouygues Bâtiment International | Panama | Sep 2020 - Apr 2023
+- Selected vendors and carriers and negotiated rates
+
+HIRAMIS CASTILLO BARRAZA | 2
+PROFESSIONAL EXPERIENCE CONTINUED
+Imports Coordinator
+Office Depot Panama | Panama | Oct 2017 - Jun 2018
+- Reduced import costs by up to 50% through supplier negotiations
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.name, "HIRAMIS CASTILLO BARRAZA")
+        self.assertEqual(parsed.email, "hcastb@icloud.com")
+        self.assertEqual(parsed.phone, "(904) 580-1586")
+        self.assertIn("Augustine", parsed.location)
+        titles = [item.title for item in parsed.experience]
+        orgs = [item.organization for item in parsed.experience]
+        self.assertEqual(titles[0], "Property Manager")
+        self.assertEqual(orgs[0], "Isla Antigua")
+        self.assertRegex(parsed.experience[0].dates, r"2023")
+        self.assertEqual(titles[1], "Purchaser")
+        self.assertIn("Bouygues", orgs[1])
+        self.assertRegex(parsed.experience[1].dates, r"2020")
+        self.assertIn("Imports Coordinator", titles)
+        blob = " ".join(titles)
+        self.assertNotIn("CONTINUED", blob.upper())
+        self.assertNotIn("HIRAMIS CASTILLO BARRAZA | 2", blob)
+
 
 class PdfTests(unittest.TestCase):
     def test_round_trip(self) -> None:

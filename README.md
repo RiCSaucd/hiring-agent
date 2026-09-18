@@ -52,6 +52,9 @@ python3 -m job_agent search --query "python fastapi" --no-live
 python3 -m job_agent prepare fieldnote-python
 python3 -m job_agent apply 1 --confirm
 
+# Prepare and mark the top 50 matching catalog jobs (still does not POST to employer ATS)
+python3 -m job_agent apply-batch --limit 50 --min-score 40 --no-live --confirm
+
 # Local UI
 python3 -m job_agent serve --port 8765
 ```
