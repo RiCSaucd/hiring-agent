@@ -249,9 +249,9 @@ _MONTH = (
     r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?"
 )
 _DATE_SPAN_RE = re.compile(
-    r"((?:19|20)\d{2}|"
+    r"(\b(?:19|20)\d{2}\b|"
     rf"\b(?:{_MONTH})\b)"
-    r".{0,24}(present|(?:19|20)\d{2})",
+    r".{0,24}(present|\b(?:19|20)\d{2}\b)",
     re.IGNORECASE,
 )
 
