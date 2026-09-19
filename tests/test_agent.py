@@ -6,14 +6,34 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from job_agent.match import rank_jobs, score_fit
+from job_agent.match import SUPPLY_CHAIN_TAGS, rank_jobs, score_fit
 from job_agent.materials import build_packet
 from job_agent.parser import parse_resume_text
 from job_agent.review import review_application
 from job_agent.search import filter_jobs, load_catalog, search_jobs
+from job_agent.service import HiringDesk
 from job_agent.tracker import Tracker
 
 SAMPLE = Path("job_agent/data/sample_resume.md").read_text(encoding="utf-8")
+
+HIRAMIS_BATCH_RESUME = """
+HIRAMIS CASTILLO BARRAZA
+hcastb@example.com
+(904) 580-1586
+St. Augustine, Florida
+
+PROFESSIONAL SUMMARY
+Procure-to-pay, freight invoice audit, landed cost, and bilingual vendor coordination.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, invoice auditing, Excel, cost analysis, sourcing
+
+PROFESSIONAL EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Issued purchase orders and audited freight invoices against contracted rates
+- Reduced import costs through rate analysis and invoice review
+- Selected vendors and carriers and negotiated rates
+"""
 
 
 class ReviewTests(unittest.TestCase):
@@ -31,6 +51,17 @@ class ReviewTests(unittest.TestCase):
         codes = {item.code for item in review.findings}
         self.assertIn("skills", codes)
 
+    def test_supply_chain_review_skips_github_warn(self) -> None:
+        parsed = parse_resume_text(
+            "Hiram Castillo\nsupply@example.com\n(904) 555-0100\nSt. Augustine, Florida\n\n"
+            "SUMMARY\nProcurement and logistics operations.\n\n"
+            "CORE SKILLS\nprocurement, logistics, excel\n\n"
+            "RELEVANT EXPERIENCE\nPurchaser — Example (2020–2023)\n- Managed vendor invoices\n"
+        )
+        review = review_application(parsed, target_role="supply chain procurement")
+        codes = {item.code: item.severity for item in review.findings}
+        self.assertNotEqual(codes.get("github"), "warn")
+
 
 class SearchMatchTests(unittest.TestCase):
     def test_catalog_loads(self) -> None:
@@ -39,6 +70,23 @@ class SearchMatchTests(unittest.TestCase):
         ids = {job.id for job in jobs}
         self.assertIn("harborlight-ai-automation", ids)
         self.assertIn("watchpoint-soc-junior", ids)
+        self.assertIn("tidewater-procurement", ids)
+        self.assertIn("keystone-construction-buyer", ids)
+        self.assertIn("cedarkey-customs-docs", ids)
+
+    def test_fifty_supply_chain_catalog_roles(self) -> None:
+        jobs = load_catalog()
+        supply = [job for job in jobs if set(job.tags) & SUPPLY_CHAIN_TAGS]
+        self.assertGreaterEqual(len(supply), 50)
+        ids = {job.id for job in jobs}
+        for job_id in (
+            "flagler-facilities-buyer",
+            "towncenter-buyer",
+            "mayport-customs-ops",
+            "shands-bilingual-buyer",
+            "orchard-property-ops",
+        ):
+            self.assertIn(job_id, ids)
 
     def test_python_query_returns_backend_roles(self) -> None:
         result = search_jobs(query="python fastapi", include_live=False)
@@ -98,6 +146,117 @@ Founder — NEXUS AI Agency (2024–Present)
         self.assertIn("security+", cedar.matched_skills)
         self.assertIn("n8n", lumen.matched_skills)
 
+    def test_supply_chain_resume_ranks_procurement_above_go(self) -> None:
+        text = """
+Hiram Castillo
+supply@example.com
+(904) 555-0100
+St. Augustine, Florida 32080
+
+PROFESSIONAL SUMMARY
+Supply chain, procurement and operations professional with invoice auditing and customs compliance.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, Excel, cost analysis, sourcing
+
+RELEVANT EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Negotiated vendor rates and managed the procure-to-pay lifecycle
+- Reconciled invoices against purchase orders
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [jobs["tidewater-procurement"], jobs["isthmus-import-compliance"], jobs["keel-go-backend"]],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        proc = next(fit for job, fit in ranked if job.id == "tidewater-procurement")
+        customs = next(fit for job, fit in ranked if job.id == "isthmus-import-compliance")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(proc.score, keel.score)
+        self.assertGreater(customs.score, keel.score)
+        self.assertIn("procurement", proc.matched_skills)
+
+    def test_expanded_procurement_catalog_ranks_above_go(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA
+supply@example.com
+(904) 555-0100
+St. Augustine, Florida 32080
+
+PROFESSIONAL SUMMARY
+Procurement-to-payment, import cost analysis, and customs documentation.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, invoice auditing, Excel, cost analysis
+
+RELEVANT EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Cut import costs through rate analysis and invoice review
+- Classified goods on the Harmonized Tariff Schedule
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        ranked = rank_jobs(
+            parsed,
+            [
+                jobs["keystone-construction-buyer"],
+                jobs["cedarkey-customs-docs"],
+                jobs["keel-go-backend"],
+            ],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        buyer = next(fit for job, fit in ranked if job.id == "keystone-construction-buyer")
+        customs = next(fit for job, fit in ranked if job.id == "cedarkey-customs-docs")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        self.assertGreater(buyer.score, keel.score)
+        self.assertGreater(customs.score, keel.score)
+        self.assertIn("customs", customs.matched_skills)
+
+    def test_thirty_apply_catalog_ranks_above_go(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA
+supply@example.com
+(904) 555-0100
+St. Augustine, Florida 32080
+
+PROFESSIONAL SUMMARY
+Procure-to-pay, freight invoice audit, landed cost, and bilingual vendor coordination.
+
+CORE SKILLS
+Procurement, vendor management, logistics, customs, invoice auditing, Excel, cost analysis
+
+RELEVANT EXPERIENCE
+Purchaser — Example Construction — Panama 09/2020 – 04/2023
+- Issued purchase orders and audited freight invoices against contracted rates
+- Reduced import costs through rate analysis and invoice review
+"""
+        parsed = parse_resume_text(text)
+        jobs = {job.id: job for job in load_catalog()}
+        for job_id in (
+            "anastasia-po-admin",
+            "aviles-freight-billing",
+            "riberia-landed-cost",
+            "lighthouse-spend",
+        ):
+            self.assertIn(job_id, jobs)
+        ranked = rank_jobs(
+            parsed,
+            [
+                jobs["anastasia-po-admin"],
+                jobs["aviles-freight-billing"],
+                jobs["riberia-landed-cost"],
+                jobs["keel-go-backend"],
+            ],
+        )
+        self.assertNotEqual(ranked[0][0].id, "keel-go-backend")
+        keel = next(fit for job, fit in ranked if job.id == "keel-go-backend")
+        po_admin = next(fit for job, fit in ranked if job.id == "anastasia-po-admin")
+        freight = next(fit for job, fit in ranked if job.id == "aviles-freight-billing")
+        self.assertGreater(po_admin.score, keel.score)
+        self.assertGreater(freight.score, keel.score)
+
 
 class MaterialsAndTrackerTests(unittest.TestCase):
     def test_cover_letter_uses_facts(self) -> None:
@@ -120,6 +279,67 @@ class MaterialsAndTrackerTests(unittest.TestCase):
             self.assertEqual(done["status"], "applied")
             self.assertIsNotNone(done["applied_at"])
             tracker.close()
+
+    def test_apply_batch_marks_fifty_supply_chain_jobs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            desk = HiringDesk(db_path=Path(tmp) / "t.db")
+            desk.ingest_resume_text(
+                filename="hiramis.md",
+                text=HIRAMIS_BATCH_RESUME,
+                target_role="logistics procurement vendor operations",
+                target_location="Remote / United States",
+                remote_only=True,
+            )
+            drafts = desk.apply_batch(limit=50, min_score=40, confirm=False, include_live=False)
+            self.assertEqual(drafts["count"], 50)
+            self.assertTrue(all(row["status"] == "draft" for row in drafts["applications"]))
+            applied = desk.apply_batch(limit=50, min_score=40, confirm=True, include_live=False)
+            self.assertEqual(applied["count"], 50)
+            self.assertTrue(all(row["status"] == "applied" for row in applied["applications"]))
+            applied_ids = {row["job_id"] for row in applied["applications"]}
+            self.assertNotIn("keel-go-backend", applied_ids)
+            self.assertTrue(
+                applied_ids
+                & {
+                    "tidewater-procurement",
+                    "flagler-facilities-buyer",
+                    "towncenter-buyer",
+                    "mayport-customs-ops",
+                }
+            )
+            desk.close()
+
+
+class PortalCliTests(unittest.TestCase):
+    def test_cli_path_and_unknown_portal(self) -> None:
+        from job_agent.portals import cli_path
+
+        path = cli_path("linkedin")
+        self.assertTrue(path.is_file())
+        self.assertTrue(path.as_posix().endswith("linkedin-search/cli/src/cli.ts"))
+        with self.assertRaises(ValueError):
+            cli_path("indeed")
+
+    def test_missing_bun_is_a_clear_error(self) -> None:
+        from unittest.mock import patch
+
+        from job_agent.portals import bun_binary, run_portal
+
+        with patch("job_agent.portals.shutil.which", return_value=None):
+            with self.assertRaises(FileNotFoundError) as ctx:
+                bun_binary()
+            self.assertIn("bun.sh", str(ctx.exception))
+            with self.assertRaises(FileNotFoundError):
+                run_portal("linkedin", ["search", "-q", "buyer", "-l", "Remote"])
+
+    def test_portal_search_command_without_bun(self) -> None:
+        from unittest.mock import patch
+
+        from job_agent.__main__ import main
+
+        with patch("job_agent.portals.shutil.which", return_value=None):
+            code = main(["portal-search", "linkedin", "search", "-q", "buyer", "-l", "Remote"])
+        self.assertEqual(code, 1)
 
 
 if __name__ == "__main__":

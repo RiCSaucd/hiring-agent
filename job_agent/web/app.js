@@ -253,6 +253,30 @@ $("jobs").addEventListener("click", (event) => {
 $("prepare-btn").addEventListener("click", () => preparePacket().catch((err) => alert(err.message)));
 $("apply-btn").addEventListener("click", () => confirmApply().catch((err) => alert(err.message)));
 
+async function batchApply() {
+  const ok = window.confirm(
+    "This marks up to 50 matching jobs applied in your local ledger and prepares packets. It does not POST to Greenhouse, Lever, or LinkedIn. Continue?"
+  );
+  if (!ok) return;
+  const result = await api("/api/applications/batch", {
+    method: "POST",
+    body: JSON.stringify({
+      limit: 50,
+      min_score: 40,
+      confirm: true,
+      include_live: false,
+      query: $("query").value,
+    }),
+  });
+  const note = $("batch-note");
+  note.textContent = `Logged ${result.count} applications locally (min fit ${result.min_score}). Employer forms were not auto-submitted.`;
+  $("apply-note").textContent = note.textContent;
+  await refreshLedger();
+  await searchJobs();
+}
+
+$("batch-apply-btn").addEventListener("click", () => batchApply().catch((err) => alert(err.message)));
+
 $("paste-btn").addEventListener("click", async () => {
   const payload = await api("/api/jobs/paste", {
     method: "POST",

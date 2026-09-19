@@ -2,6 +2,11 @@
 var/
 uploads/
 
+# Job-portal CLIs (Bun)
+.agents/skills/**/cli/node_modules/
+.agents/skills/**/cli/bun.lock
+.agents/skills/**/cli/package-lock.json
+
 # Project Specific Files
 
 **/*.pyc
