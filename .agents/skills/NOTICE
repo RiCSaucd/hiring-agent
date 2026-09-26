@@ -1,0 +1,18 @@
+Job portal CLIs in this directory are copied from
+https://github.com/MadsLorentzen/ai-job-search (MIT License, 2026 Mads Lorentzen).
+
+linkedin-search uses LinkedIn's public jobs-guest pages. Automated access is against
+LinkedIn's Terms of Service; keep volume low and personal-use only.
+
+The four Danish portals (jobbank, jobdanmark, jobindex, jobnet) search Denmark.
+linkedin-search and freehire-search are country-agnostic.
+
+Install (Linux/macOS), from the repo root, after Bun is on PATH:
+
+  for tool in jobbank-search jobdanmark-search jobindex-search jobnet-search linkedin-search freehire-search; do
+    (cd ".agents/skills/$tool/cli" && bun install)
+  done
+
+linkedin-search and freehire-search have zero runtime dependencies; bun install only
+pulls TypeScript types. The Danish CLIs need bun install for @bunli/core, zod, and
+node-html-parser.

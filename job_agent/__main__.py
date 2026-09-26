@@ -53,8 +53,35 @@ def build_parser() -> argparse.ArgumentParser:
     apply.add_argument("--confirm", action="store_true", help="Required. Refuses without this flag.")
     apply.add_argument("--notes", default="")
 
+    batch = sub.add_parser(
+        "apply-batch",
+        parents=[shared],
+        help="Prepare (and optionally mark applied) the top matching jobs",
+    )
+    batch.add_argument("--limit", type=int, default=50, help="How many matching jobs (max 100)")
+    batch.add_argument("--min-score", type=int, default=40, dest="min_score")
+    batch.add_argument("--query", default="", help="Keywords (defaults to saved target role)")
+    batch.add_argument("--no-live", action="store_true", help="Skip live job APIs")
+    batch.add_argument("--confirm", action="store_true", help="Required to mark the ledger applied")
+    batch.add_argument("--notes", default="")
+
     paste = sub.add_parser("paste-job", parents=[shared], help="Add a job from JSON file")
     paste.add_argument("json_path")
+
+    portal = sub.add_parser(
+        "portal-search",
+        help="Run a vendored Bun job-portal CLI (linkedin, freehire, or a Danish board)",
+    )
+    portal.add_argument(
+        "portal",
+        choices=["jobbank", "jobdanmark", "jobindex", "jobnet", "linkedin", "freehire"],
+        help="linkedin and freehire are country-agnostic; the others search Denmark",
+    )
+    portal.add_argument(
+        "cli_args",
+        nargs=argparse.REMAINDER,
+        help="Arguments forwarded to the portal CLI, e.g. search -q buyer -l 'Jacksonville, Florida'",
+    )
 
     serve = sub.add_parser("serve", parents=[shared], help="Run the local hiring desk UI")
     serve.add_argument("--host", default="0.0.0.0")
@@ -65,6 +92,16 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.command == "portal-search":
+        from job_agent.portals import run_portal
+
+        try:
+            proc = run_portal(args.portal, list(args.cli_args or []), check=False)
+        except (ValueError, FileNotFoundError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        return int(proc.returncode or 0)
+
     desk = HiringDesk(db_path=args.db)
     try:
         if args.command == "review":
@@ -116,6 +153,33 @@ def main(argv: list[str] | None = None) -> int:
             application = desk.apply(args.application_id, confirm=args.confirm, notes=args.notes)
             print(f"Marked applied: #{application['id']} {application['job_id']}")
             print("Open:", application["job"].get("apply_url"))
+            return 0
+        if args.command == "apply-batch":
+            result = desk.apply_batch(
+                limit=args.limit,
+                min_score=args.min_score,
+                confirm=args.confirm,
+                query=args.query,
+                include_live=not args.no_live,
+                notes=args.notes,
+            )
+            verb = "Marked applied" if result["confirm"] else "Drafted"
+            print(
+                f"{verb} {result['count']} jobs "
+                f"(min_score={result['min_score']}; skipped family={result['skipped_family']}; "
+                f"skipped score={result['skipped_score']})"
+            )
+            if not result["confirm"]:
+                print("Re-run with --confirm to mark them applied in the local ledger.")
+            for application in result["applications"]:
+                job = application.get("job") or {}
+                fit = application.get("fit") or {}
+                score = fit.get("score")
+                score_label = f"{score:>3}" if score is not None else "  -"
+                print(
+                    f"[{score_label}] #{application['id']} {application['job_id']}  "
+                    f"{job.get('title')} @ {job.get('company')}"
+                )
             return 0
         if args.command == "paste-job":
             payload = json.loads(Path(args.json_path).read_text(encoding="utf-8"))

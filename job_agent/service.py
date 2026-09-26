@@ -6,12 +6,12 @@ import base64
 from pathlib import Path
 from typing import Any
 
-from job_agent.match import JobFit, rank_jobs, score_fit
+from job_agent.match import JobFit, job_matches_target_family, rank_jobs, score_fit
 from job_agent.materials import build_packet
 from job_agent.parser import ParsedResume, parse_resume_text
 from job_agent.pdfutil import load_resume_text
 from job_agent.review import review_application
-from job_agent.search import Job, job_from_dict, load_catalog, search_jobs
+from job_agent.search import Job, fetch_live_jobs, filter_jobs, job_from_dict, load_catalog, search_jobs
 from job_agent.tracker import Tracker
 
 DEFAULT_DB = Path("var") / "hiring_agent.db"
@@ -165,6 +165,78 @@ class HiringDesk:
 
     def apply(self, application_id: int, confirm: bool, notes: str = "") -> dict[str, Any]:
         return self.tracker.mark_applied(application_id, confirm=confirm, notes=notes)
+
+    def apply_batch(
+        self,
+        *,
+        limit: int = 50,
+        min_score: int = 40,
+        confirm: bool = False,
+        query: str = "",
+        include_live: bool = False,
+        notes: str = "",
+    ) -> dict[str, Any]:
+        """Prepare packets for the top matching jobs; mark applied only with confirm=True."""
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
+        if limit > 100:
+            raise ValueError("limit cannot exceed 100")
+        parsed = self._parsed_from_profile()
+        profile = self.tracker.get_profile()
+        target = query or profile["target_role"]
+        live: list[Job] = []
+        if include_live:
+            live, _skipped = fetch_live_jobs(query=target)
+        combined: dict[str, Job] = {}
+        for job in list(live) + load_catalog(self.catalog_path):
+            combined.setdefault(job.id, job)
+            self._remember_job(job)
+        # Token-filter only when the caller passed an explicit query; otherwise
+        # rank the remote-friendly catalog so a 50-apply slate is reachable.
+        filtered = filter_jobs(
+            combined.values(),
+            query=query,
+            remote_only=profile["remote_only"],
+            location=profile["target_location"],
+        )
+        ranked = rank_jobs(parsed, filtered, target_role=target)
+        selected: list[Job] = []
+        skipped_family = 0
+        skipped_score = 0
+        for job, fit in ranked:
+            if not job_matches_target_family(job, target, fit):
+                skipped_family += 1
+                continue
+            if fit.score < min_score:
+                skipped_score += 1
+                continue
+            selected.append(job)
+            if len(selected) >= limit:
+                break
+        if not selected:
+            raise ValueError(
+                f"No matching jobs met min_score={min_score} for this resume and brief."
+            )
+        apply_notes = notes or (
+            "Batch apply from the hiring desk. Cover letter packed locally; "
+            "employer ATS was not auto-submitted."
+        )
+        applications: list[dict[str, Any]] = []
+        for job in selected:
+            application = self.prepare(job.id)
+            if confirm:
+                application = self.apply(application["id"], confirm=True, notes=apply_notes)
+            applications.append(application)
+        return {
+            "count": len(applications),
+            "limit": limit,
+            "min_score": min_score,
+            "confirm": confirm,
+            "query": target,
+            "skipped_family": skipped_family,
+            "skipped_score": skipped_score,
+            "applications": applications,
+        }
 
     def applications(self) -> list[dict[str, Any]]:
         return self.tracker.list_applications()

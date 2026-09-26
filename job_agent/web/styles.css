@@ -312,6 +312,12 @@ button.linkish {
   margin-top: 12px;
 }
 
+.actions.compact {
+  margin-top: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .ledger {
   margin-top: 28px;
 }

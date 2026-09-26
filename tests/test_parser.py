@@ -58,6 +58,10 @@ class SkillTests(unittest.TestCase):
             "demand planning",
         ):
             self.assertIn(expected, skills)
+        self.assertIn(
+            "customs",
+            extract_skills("Classified goods on the Harmonized Tariff Schedule and HTS line items."),
+        )
 
     def test_cpsm_in_progress_is_not_held(self) -> None:
         self.assertNotIn(
@@ -169,6 +173,79 @@ Logistics Specialist — Example Builders — Panama
         self.assertIn("2018", parsed.experience[1].dates)
         self.assertIn("procurement", parsed.skills)
         self.assertTrue(parsed.summary)
+
+    def test_references_are_not_jobs(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA
+hcastb@example.com | (904) 555-0100
+St. Augustine, Florida 32080
+
+RELEVANT EXPERIENCE
+Purchaser — Example Builders — Panama 09/2020 – 04/2023
+- Managed the full procurement-to-payment lifecycle
+
+Logistics Specialist — Example Builders — Panama 06/2018 – 09/2020
+- Coordinated shipments and audited invoices
+
+REFERENCES
+Carolina Sanchez — professional reference; contact details available upon request
+Michelle Guleth — professional reference; contact details available upon request
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.email, "hcastb@example.com")
+        self.assertEqual(len(parsed.experience), 2)
+        blob = " ".join(
+            f"{item.title} {item.organization} {item.raw}" for item in parsed.experience
+        )
+        self.assertNotIn("Sanchez", blob)
+        self.assertNotIn("Guleth", blob)
+        self.assertNotIn("Carolina", blob)
+
+    def test_stacked_title_company_dates_and_continued_heading(self) -> None:
+        text = """
+HIRAMIS CASTILLO BARRAZA | 1
+HIRAMIS CASTILLO BARRAZA
+hcastb@icloud.com | 904-580-1586 | St. Augustine, FL
+
+PROFESSIONAL SUMMARY
+Bilingual logistics and procurement professional.
+
+CORE SKILLS
+Procure-to-pay, vendor negotiation, customs compliance, Microsoft Excel
+
+PROFESSIONAL EXPERIENCE
+Property Manager | Promoted from Sales
+Isla Antigua | St. Augustine, FL | 2023 - Present
+- Coordinate vendor relationships and purchasing needs
+- Combined customer-facing sales experience with vendor communication
+
+Purchaser
+Bouygues Bâtiment International | Panama | Sep 2020 - Apr 2023
+- Selected vendors and carriers and negotiated rates
+
+HIRAMIS CASTILLO BARRAZA | 2
+PROFESSIONAL EXPERIENCE CONTINUED
+Imports Coordinator
+Office Depot Panama | Panama | Oct 2017 - Jun 2018
+- Reduced import costs by up to 50% through supplier negotiations
+"""
+        parsed = parse_resume_text(text)
+        self.assertEqual(parsed.name, "HIRAMIS CASTILLO BARRAZA")
+        self.assertEqual(parsed.email, "hcastb@icloud.com")
+        self.assertEqual(parsed.phone, "(904) 580-1586")
+        self.assertIn("Augustine", parsed.location)
+        titles = [item.title for item in parsed.experience]
+        orgs = [item.organization for item in parsed.experience]
+        self.assertEqual(titles[0], "Property Manager")
+        self.assertEqual(orgs[0], "Isla Antigua")
+        self.assertRegex(parsed.experience[0].dates, r"2023")
+        self.assertEqual(titles[1], "Purchaser")
+        self.assertIn("Bouygues", orgs[1])
+        self.assertRegex(parsed.experience[1].dates, r"2020")
+        self.assertIn("Imports Coordinator", titles)
+        blob = " ".join(titles)
+        self.assertNotIn("CONTINUED", blob.upper())
+        self.assertNotIn("HIRAMIS CASTILLO BARRAZA | 2", blob)
 
 
 class PdfTests(unittest.TestCase):
