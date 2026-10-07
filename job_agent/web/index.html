@@ -56,7 +56,10 @@
       <section class="panel listings" aria-labelledby="listings-title">
         <div class="panel-head">
           <h2 id="listings-title">Listings</h2>
-          <button type="button" id="search-btn">Find jobs</button>
+          <div class="actions compact">
+            <button type="button" id="search-btn">Find jobs</button>
+            <button type="button" id="batch-apply-btn" class="danger">Apply top 50</button>
+          </div>
         </div>
         <input id="query" placeholder="python fastapi  ·  or leave blank to use your brief" />
         <p id="search-meta" class="meta"></p>
@@ -93,7 +96,10 @@
     </main>
 
     <section class="ledger" aria-labelledby="ledger-title">
-      <h2 id="ledger-title">Application ledger</h2>
+      <div class="panel-head">
+        <h2 id="ledger-title">Application ledger</h2>
+        <p id="batch-note" class="meta"></p>
+      </div>
       <table>
         <thead>
           <tr>

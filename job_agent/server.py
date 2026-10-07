@@ -182,6 +182,24 @@ class DeskHandler(BaseHTTPRequestHandler):
                     raise ValueError("job_id is required")
                 self._send(*json_bytes(self.desk.prepare(job_id)))
                 return
+            if path == "/api/applications/batch":
+                limit = int(body.get("limit") or 50)
+                min_score = int(body.get("min_score") or 40)
+                if not body.get("confirm"):
+                    raise ValueError("Refusing to batch-apply without confirm=true")
+                self._send(
+                    *json_bytes(
+                        self.desk.apply_batch(
+                            limit=limit,
+                            min_score=min_score,
+                            confirm=True,
+                            query=str(body.get("query") or ""),
+                            include_live=bool(body.get("include_live", False)),
+                            notes=str(body.get("notes") or ""),
+                        )
+                    )
+                )
+                return
             if path.startswith("/api/applications/") and path.endswith("/apply"):
                 raw_id = path[len("/api/applications/") : -len("/apply")]
                 application_id = int(raw_id)

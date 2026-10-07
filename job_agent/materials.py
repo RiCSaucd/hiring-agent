@@ -10,6 +10,15 @@ from job_agent.parser import ParsedResume
 from job_agent.search import Job
 
 
+def _headline_title(resume: ParsedResume) -> str:
+    """First role title without pipe annotations; never default to 'software'."""
+    for job in resume.experience:
+        title = (job.title or "").split("|", 1)[0].strip()
+        if title:
+            return title
+    return "procurement and logistics"
+
+
 @dataclass
 class ApplicationPacket:
     cover_letter: str
@@ -83,7 +92,9 @@ def build_packet(resume: ParsedResume, job: Job, fit: JobFit) -> ApplicationPack
     highlights = _best_highlights(resume, fit.matched_skills + job.tags)
     letter = _optional_llm_cover_letter(resume, job)
     if not letter:
-        highlight_lines = "\n".join(f"- {item}" for item in highlights[:3]) or "- Built and shipped production software."
+        highlight_lines = "\n".join(f"- {item}" for item in highlights[:3]) or (
+            "- Ran procure-to-pay, vendor coordination, and invoice reconciliation."
+        )
         gap_line = ""
         if fit.missing_skills:
             gap_line = (
@@ -92,8 +103,8 @@ def build_packet(resume: ParsedResume, job: Job, fit: JobFit) -> ApplicationPack
             )
         letter = (
             f"Dear {job.company} hiring team,\n\n"
-            f"I am applying for the {job.title} role. I am a {resume.experience[0].title if resume.experience else 'software'} "
-            f"candidate with experience across {', '.join(resume.skills[:6]) or 'software delivery'}. "
+            f"I am applying for the {job.title} role. I am a {_headline_title(resume)} "
+            f"candidate with experience across {', '.join(resume.skills[:6]) or 'procurement, logistics, and vendor operations'}. "
             f"{resume.summary or ''}\n\n"
             f"A few facts from my work that map to this posting:\n{highlight_lines}\n\n"
             f"I am especially interested in {job.company} because the role focuses on "

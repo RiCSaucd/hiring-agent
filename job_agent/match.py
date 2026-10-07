@@ -9,6 +9,36 @@ from job_agent.parser import ParsedResume, resume_plain_text
 from job_agent.search import Job
 from job_agent.skills import extract_skills, skill_overlap, tokenize
 
+SUPPLY_CHAIN_TAGS = frozenset(
+    {
+        "procurement",
+        "logistics",
+        "customs",
+        "sourcing",
+        "vendor management",
+        "supply chain",
+        "invoice auditing",
+        "contract management",
+        "cost analysis",
+        "demand planning",
+    }
+)
+
+PROCUREMENT_ROLE_HINTS = (
+    "procur",
+    "logistic",
+    "supply chain",
+    "supply-chain",
+    "customs",
+    "purchas",
+    "vendor",
+    "buyer",
+    "import",
+    "freight",
+    "expedit",
+    "traffic",
+)
+
 
 @dataclass
 class JobFit:
@@ -74,6 +104,19 @@ def score_fit(resume: ParsedResume, job: Job, target_role: str = "") -> JobFit:
         reasons=reasons,
         risks=risks,
     )
+
+
+def job_matches_target_family(job: Job, target_role: str, fit: JobFit | None = None) -> bool:
+    """Keep procurement briefs off software listings when the catalog is mixed."""
+    role = (target_role or "").lower()
+    if not any(hint in role for hint in PROCUREMENT_ROLE_HINTS):
+        return True
+    tags = {tag.lower() for tag in job.tags}
+    matched = {skill.lower() for skill in (fit.matched_skills if fit else [])}
+    blob = f"{job.title} {' '.join(job.tags)}".lower()
+    if tags & SUPPLY_CHAIN_TAGS or matched & SUPPLY_CHAIN_TAGS:
+        return True
+    return any(hint in blob for hint in PROCUREMENT_ROLE_HINTS)
 
 
 def rank_jobs(resume: ParsedResume, jobs: list[Job], target_role: str = "") -> list[tuple[Job, JobFit]]:

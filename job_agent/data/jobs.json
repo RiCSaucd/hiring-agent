@@ -3,12 +3,19 @@
     "id": "northstar-backend-python",
     "title": "Senior Backend Engineer",
     "company": "Northstar Health",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/1001",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1001",
     "seniority": "senior",
-    "tags": ["python", "fastapi", "postgresql", "aws", "docker", "kubernetes"],
+    "tags": [
+      "python",
+      "fastapi",
+      "postgresql",
+      "aws",
+      "docker",
+      "kubernetes"
+    ],
     "how_to_apply": "Use the Greenhouse apply URL. Paste the cover letter in Additional Information.",
     "description": "Northstar Health is hiring a Senior Backend Engineer to own FastAPI services that sit in front of clinical and billing data. You will design PostgreSQL schemas, put Redis in front of hot paths, and run the stack on AWS with Docker and Kubernetes. We care about pytest coverage, CI/CD, and Grafana-quality observability. Experience with Kafka or event-driven billing is a plus. This is a remote United States role."
   },
@@ -21,7 +28,13 @@
     "url": "https://jobs.lever.co/example/2002",
     "apply_url": "https://jobs.lever.co/example/2002",
     "seniority": "mid",
-    "tags": ["python", "django", "react", "typescript", "postgresql"],
+    "tags": [
+      "python",
+      "django",
+      "react",
+      "typescript",
+      "postgresql"
+    ],
     "how_to_apply": "Apply on Lever with resume and the generated letter.",
     "description": "Lumen Freight needs a Full Stack Engineer to extend our Django REST APIs and a React TypeScript dashboard used by dispatchers. You will ship product weekly, write SQL against PostgreSQL, and collaborate with ops on workflow bugs. Docker-based local dev is required. Redis caching and pytest are part of the daily toolkit."
   },
@@ -29,12 +42,19 @@
     "id": "atlas-data-platform",
     "title": "Data Engineer",
     "company": "Atlas Metrics",
-    "location": "Remote — North America",
+    "location": "Remote \u2014 North America",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/1003",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1003",
     "seniority": "mid",
-    "tags": ["python", "kafka", "spark", "airflow", "sql", "aws"],
+    "tags": [
+      "python",
+      "kafka",
+      "spark",
+      "airflow",
+      "sql",
+      "aws"
+    ],
     "how_to_apply": "Greenhouse form. Attach resume; paste letter in cover letter field.",
     "description": "Atlas Metrics is building a warehouse-centric analytics platform. The Data Engineer will write Python and SQL, operate Airflow DAGs, and stream events through Kafka into Spark jobs on AWS. Experience modeling facts and dimensions, plus dbt or Snowflake, is helpful. We want people who have backfilled messy historical data without downtime."
   },
@@ -42,12 +62,19 @@
     "id": "harbor-platform",
     "title": "Platform Engineer",
     "company": "Harbor Cloud",
-    "location": "Remote — Worldwide",
+    "location": "Remote \u2014 Worldwide",
     "remote": true,
     "url": "https://jobs.lever.co/example/2004",
     "apply_url": "https://jobs.lever.co/example/2004",
     "seniority": "senior",
-    "tags": ["kubernetes", "terraform", "aws", "docker", "python", "ci/cd"],
+    "tags": [
+      "kubernetes",
+      "terraform",
+      "aws",
+      "docker",
+      "python",
+      "ci/cd"
+    ],
     "how_to_apply": "Lever apply. Do not submit without reviewing the packet.",
     "description": "Harbor Cloud is hiring a Platform Engineer to own Terraform, Kubernetes, and GitHub Actions for 20+ microservices. You will improve CI/CD, cut AWS spend, and make Docker builds reproducible. Python is the glue language for internal tools. Grafana, Prometheus, and on-call hygiene are part of the job."
   },
@@ -60,7 +87,13 @@
     "url": "https://boards.greenhouse.io/example/jobs/1005",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1005",
     "seniority": "mid",
-    "tags": ["react", "typescript", "css", "javascript", "vite"],
+    "tags": [
+      "react",
+      "typescript",
+      "css",
+      "javascript",
+      "vite"
+    ],
     "how_to_apply": "Greenhouse. Portfolio or GitHub required.",
     "description": "Pixel & Form wants a Frontend Engineer fluent in React and TypeScript. You will rebuild a design-system-heavy dashboard, improve CSS performance, and work in Vite. GraphQL experience is useful. This role is on-site in New York several days a week."
   },
@@ -68,12 +101,18 @@
     "id": "vector-ml-eng",
     "title": "Machine Learning Engineer",
     "company": "Vector Labs",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2006",
     "apply_url": "https://jobs.lever.co/example/2006",
     "seniority": "mid",
-    "tags": ["python", "pytorch", "machine learning", "aws", "docker"],
+    "tags": [
+      "python",
+      "pytorch",
+      "machine learning",
+      "aws",
+      "docker"
+    ],
     "how_to_apply": "Lever. Include GitHub and a short note on a model you shipped.",
     "description": "Vector Labs ships ranking models used in production search. The ML Engineer will train PyTorch models, wrap them in Python services, and deploy with Docker on AWS. We value people who have owned evaluation, not only notebooks. Hugging Face, RAG, or LLM fine-tuning experience is welcome but not required."
   },
@@ -86,7 +125,12 @@
     "url": "https://boards.greenhouse.io/example/jobs/1007",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1007",
     "seniority": "intern",
-    "tags": ["python", "react", "git", "sql"],
+    "tags": [
+      "python",
+      "react",
+      "git",
+      "sql"
+    ],
     "how_to_apply": "Greenhouse intern form. Use the generated letter.",
     "description": "Summer intern role helping the product squad. You will write Python services, a little React, and SQL against PostgreSQL. Mentorship is structured. Git fluency and a public GitHub with class or side projects is enough. Seattle office."
   },
@@ -94,12 +138,18 @@
     "id": "ember-security",
     "title": "Application Security Engineer",
     "company": "Ember Pay",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2008",
     "apply_url": "https://jobs.lever.co/example/2008",
     "seniority": "senior",
-    "tags": ["security", "python", "oauth", "aws", "kubernetes"],
+    "tags": [
+      "security",
+      "python",
+      "oauth",
+      "aws",
+      "kubernetes"
+    ],
     "how_to_apply": "Lever. Do not include secrets in the letter.",
     "description": "Ember Pay is a payments company hiring AppSec. You will threat-model FastAPI and Django services, review OAuth and JWT flows, and partner with platform on Kubernetes hardening in AWS. Python scripting for scanners is expected. PCI experience is a plus."
   },
@@ -112,7 +162,13 @@
     "url": "https://boards.greenhouse.io/example/jobs/1009",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1009",
     "seniority": "mid",
-    "tags": ["python", "fastapi", "postgresql", "redis", "pytest"],
+    "tags": [
+      "python",
+      "fastapi",
+      "postgresql",
+      "redis",
+      "pytest"
+    ],
     "how_to_apply": "Greenhouse. Paste tailored bullets into the resume if you rewrite it.",
     "description": "Fieldnote builds field-ops software for contractors. We need a Python Engineer to grow FastAPI modules, keep PostgreSQL migrations honest, and use Redis for job queues. Pytest is non-negotiable. Celery or similar async workers would help. Remote in the US; Austin office optional."
   },
@@ -120,12 +176,19 @@
     "id": "nimbus-sre",
     "title": "Site Reliability Engineer",
     "company": "Nimbus Mail",
-    "location": "Remote — EU",
+    "location": "Remote \u2014 EU",
     "remote": true,
     "url": "https://jobs.lever.co/example/2010",
     "apply_url": "https://jobs.lever.co/example/2010",
     "seniority": "mid",
-    "tags": ["linux", "kubernetes", "prometheus", "grafana", "python", "terraform"],
+    "tags": [
+      "linux",
+      "kubernetes",
+      "prometheus",
+      "grafana",
+      "python",
+      "terraform"
+    ],
     "how_to_apply": "Lever EU entity. Confirm work authorization yourself.",
     "description": "Nimbus Mail is hiring an SRE to run Kubernetes clusters, Terraform, and alerting in Prometheus and Grafana. Python is used for operators and runbooks. Linux production experience required. On-call is shared. Remote within the EU."
   },
@@ -138,7 +201,12 @@
     "url": "https://boards.greenhouse.io/example/jobs/1011",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1011",
     "seniority": "mid",
-    "tags": ["react", "typescript", "javascript", "swift"],
+    "tags": [
+      "react",
+      "typescript",
+      "javascript",
+      "swift"
+    ],
     "how_to_apply": "Greenhouse. Link to App Store or Play build if you have one.",
     "description": "Cobalt Ride wants a Mobile Engineer comfortable in React Native with TypeScript. Native Swift knowledge helps for performance work. You will ship weekly to riders in Los Angeles. This is not a remote role."
   },
@@ -146,12 +214,18 @@
     "id": "quill-docs",
     "title": "Developer Experience Engineer",
     "company": "Quill Docs",
-    "location": "Remote — Worldwide",
+    "location": "Remote \u2014 Worldwide",
     "remote": true,
     "url": "https://jobs.lever.co/example/2012",
     "apply_url": "https://jobs.lever.co/example/2012",
     "seniority": "mid",
-    "tags": ["python", "javascript", "git", "ci/cd", "react"],
+    "tags": [
+      "python",
+      "javascript",
+      "git",
+      "ci/cd",
+      "react"
+    ],
     "how_to_apply": "Lever. A docs PR or public guide is a strong extra.",
     "description": "Quill Docs makes API documentation products. The DX Engineer will write Python and JavaScript tooling, improve CI/CD for preview docs, and build small React examples. You should enjoy turning confusing APIs into copy-paste guides. Remote worldwide."
   },
@@ -164,7 +238,14 @@
     "url": "https://boards.greenhouse.io/example/jobs/1013",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1013",
     "seniority": "staff",
-    "tags": ["python", "java", "kafka", "postgresql", "system design", "aws"],
+    "tags": [
+      "python",
+      "java",
+      "kafka",
+      "postgresql",
+      "system design",
+      "aws"
+    ],
     "how_to_apply": "Greenhouse. Expect a system-design interview.",
     "description": "Marble Bank is hiring Staff Backend to lead system design for ledger services. Python and Java both appear in the stack. Kafka, PostgreSQL, and AWS are daily tools. You will mentor senior engineers and set the bar for production incidents. Hybrid New York."
   },
@@ -172,12 +253,18 @@
     "id": "orchid-data-science",
     "title": "Data Scientist",
     "company": "Orchid Climate",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2014",
     "apply_url": "https://jobs.lever.co/example/2014",
     "seniority": "mid",
-    "tags": ["python", "pandas", "sql", "scikit-learn", "machine learning"],
+    "tags": [
+      "python",
+      "pandas",
+      "sql",
+      "scikit-learn",
+      "machine learning"
+    ],
     "how_to_apply": "Lever. A short write-up of an analysis is welcome.",
     "description": "Orchid Climate needs a Data Scientist who can move between pandas, SQL, and scikit-learn without getting stuck in slides. You will build features, evaluate models, and partner with engineers to ship Python jobs. Climate domain interest helps; production instinct helps more."
   },
@@ -185,12 +272,18 @@
     "id": "keel-go-backend",
     "title": "Backend Engineer (Go)",
     "company": "Keel Networks",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/1015",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1015",
     "seniority": "mid",
-    "tags": ["go", "kubernetes", "grpc", "postgresql", "linux"],
+    "tags": [
+      "go",
+      "kubernetes",
+      "grpc",
+      "postgresql",
+      "linux"
+    ],
     "how_to_apply": "Greenhouse. Go samples on GitHub preferred.",
     "description": "Keel Networks writes control-plane software in Go. gRPC, PostgreSQL, and Kubernetes are the core. Linux networking curiosity is useful. Python shows up only in tests and glue. If your strongest language is Python, this will be a stretch."
   },
@@ -198,12 +291,17 @@
     "id": "paperboat-support-eng",
     "title": "Support Engineer",
     "company": "Paperboat",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2016",
     "apply_url": "https://jobs.lever.co/example/2016",
     "seniority": "junior",
-    "tags": ["sql", "python", "linux", "git"],
+    "tags": [
+      "sql",
+      "python",
+      "linux",
+      "git"
+    ],
     "how_to_apply": "Lever. Keep the letter short; this team reads every one.",
     "description": "Paperboat is a SaaS company hiring a Support Engineer. You will reproduce bugs, write SQL, read Python stack traces, and file clean GitHub issues. Linux comfort matters. This is a junior-friendly remote US role with a path onto the product team."
   },
@@ -216,7 +314,14 @@
     "url": "https://boards.greenhouse.io/example/jobs/1017",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1017",
     "seniority": "mid",
-    "tags": ["aws", "terraform", "docker", "ci/cd", "python", "linux"],
+    "tags": [
+      "aws",
+      "terraform",
+      "docker",
+      "ci/cd",
+      "python",
+      "linux"
+    ],
     "how_to_apply": "Greenhouse civic tech form.",
     "description": "Redwood Civic needs DevOps for public-interest software. Terraform, AWS, Docker, and GitHub Actions are the backbone. Python automates the boring glue. Hybrid Portland. You should enjoy explaining infrastructure to developers who do not live in YAML."
   },
@@ -224,12 +329,18 @@
     "id": "zinc-nextjs",
     "title": "Web Engineer",
     "company": "Zinc Media",
-    "location": "Remote — United Kingdom",
+    "location": "Remote \u2014 United Kingdom",
     "remote": true,
     "url": "https://jobs.lever.co/example/2018",
     "apply_url": "https://jobs.lever.co/example/2018",
     "seniority": "mid",
-    "tags": ["next.js", "react", "typescript", "node.js", "css"],
+    "tags": [
+      "next.js",
+      "react",
+      "typescript",
+      "node.js",
+      "css"
+    ],
     "how_to_apply": "Lever UK. Confirm right to work in the UK yourself.",
     "description": "Zinc Media publishes news products on Next.js. We need a Web Engineer strong in React, TypeScript, Node.js, and CSS. Python is not used on this team. Remote in the United Kingdom."
   },
@@ -242,9 +353,16 @@
     "url": "https://boards.greenhouse.io/example/jobs/1019",
     "apply_url": "https://boards.greenhouse.io/example/jobs/1019",
     "seniority": "mid",
-    "tags": ["python", "fastapi", "postgresql", "oauth", "aws", "redis"],
+    "tags": [
+      "python",
+      "fastapi",
+      "postgresql",
+      "oauth",
+      "aws",
+      "redis"
+    ],
     "how_to_apply": "Greenhouse. Never paste card data into the letter.",
-    "description": "Boulder Payments is hiring an API Engineer for FastAPI services that issue OAuth tokens and move money metadata — never raw cards — through PostgreSQL and Redis on AWS. Idempotency, pytest, and careful logging matter. Remote US with a Denver office."
+    "description": "Boulder Payments is hiring an API Engineer for FastAPI services that issue OAuth tokens and move money metadata \u2014 never raw cards \u2014 through PostgreSQL and Redis on AWS. Idempotency, pytest, and careful logging matter. Remote US with a Denver office."
   },
   {
     "id": "maple-newgrad",
@@ -255,7 +373,12 @@
     "url": "https://jobs.lever.co/example/2020",
     "apply_url": "https://jobs.lever.co/example/2020",
     "seniority": "junior",
-    "tags": ["python", "sql", "git", "react"],
+    "tags": [
+      "python",
+      "sql",
+      "git",
+      "react"
+    ],
     "how_to_apply": "Lever new-grad form.",
     "description": "Maple Analytics hires new graduates onto a Python and SQL team with a small React UI. You will pair daily, learn Git workflows, and ship well-tested changes. Boston office. Internships or substantial GitHub projects are the bar."
   },
@@ -263,12 +386,21 @@
     "id": "harborlight-ai-automation",
     "title": "AI Automation Specialist",
     "company": "Harborlight Ops",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2101",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2101",
     "seniority": "mid",
-    "tags": ["workflow automation", "prompt engineering", "crm", "salesforce", "llm", "compliance", "n8n", "zapier"],
+    "tags": [
+      "workflow automation",
+      "prompt engineering",
+      "crm",
+      "salesforce",
+      "llm",
+      "compliance",
+      "n8n",
+      "zapier"
+    ],
     "how_to_apply": "Greenhouse. Paste a short note on one workflow you automated.",
     "description": "Harborlight Ops is hiring an AI Automation Specialist to audit manual processes, design Claude and ChatGPT workflows, and document SOPs so sales and ops teams can run them. You will integrate CRM tools such as Salesforce, keep a human in the loop on customer-facing messages, and treat customer data as PII. Prompt engineering and workflow automation matter more than shipping backend services. Remote United States."
   },
@@ -276,12 +408,18 @@
     "id": "northline-revops-automation",
     "title": "Revenue Operations Automation Analyst",
     "company": "Northline Revenue",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2102",
     "apply_url": "https://jobs.lever.co/example/2102",
     "seniority": "mid",
-    "tags": ["salesforce", "crm", "workflow automation", "zapier", "prompt engineering"],
+    "tags": [
+      "salesforce",
+      "crm",
+      "workflow automation",
+      "zapier",
+      "prompt engineering"
+    ],
     "how_to_apply": "Lever. Describe a CRM follow-up workflow you improved.",
     "description": "Northline Revenue wants a RevOps Automation Analyst to cut manual outreach and cleanup Salesforce hygiene. You will map the sales pipeline, build workflow automation, and write SOPs. Experience with AI-assisted follow-up, Zapier-style tools, and explaining process changes to non-technical sellers is the bar. Remote US."
   },
@@ -289,12 +427,20 @@
     "id": "cedar-it-support-security",
     "title": "IT Support Analyst (Security-Aware)",
     "company": "Cedar Helpdesk",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2103",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2103",
     "seniority": "junior",
-    "tags": ["help desk", "comptia", "network+", "security+", "ticketing", "security awareness", "iam"],
+    "tags": [
+      "help desk",
+      "comptia",
+      "network+",
+      "security+",
+      "ticketing",
+      "security awareness",
+      "iam"
+    ],
     "how_to_apply": "Greenhouse. Name your CompTIA exam if you have one.",
     "description": "Cedar Helpdesk is hiring an IT Support Analyst. CompTIA-style troubleshooting, ticket hygiene, and security awareness are required. You will reset access with least privilege, document repeatable fixes, and escalate suspected phishing. Help desk experience with CRM or line-of-business systems is welcome. Remote US."
   },
@@ -302,12 +448,19 @@
     "id": "watchpoint-soc-junior",
     "title": "Junior SOC Analyst",
     "company": "Watchpoint Security",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2104",
     "apply_url": "https://jobs.lever.co/example/2104",
     "seniority": "junior",
-    "tags": ["soc", "siem", "incident response", "security", "security+", "ticketing"],
+    "tags": [
+      "soc",
+      "siem",
+      "incident response",
+      "security",
+      "security+",
+      "ticketing"
+    ],
     "how_to_apply": "Lever. Be honest about SIEM time; we train tools.",
     "description": "Watchpoint Security is hiring a Junior SOC Analyst for alert triage, SIEM investigations, and incident response notes. CompTIA Security+ or equivalent foundations help. You will work a ticket queue, escalate true positives, and write clear incident documentation. This is an operations role, not a software engineering role. Remote US."
   },
@@ -315,12 +468,18 @@
     "id": "fairharbor-grc",
     "title": "GRC and Compliance Coordinator",
     "company": "Fair Harbor",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2105",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2105",
     "seniority": "junior",
-    "tags": ["grc", "compliance", "pii", "security", "documentation"],
+    "tags": [
+      "grc",
+      "compliance",
+      "pii",
+      "security",
+      "documentation"
+    ],
     "how_to_apply": "Greenhouse. Attach a sample SOP if you have one.",
     "description": "Fair Harbor needs a GRC and Compliance Coordinator to keep policies, vendor reviews, and evidence folders current. You will document how customer PII is handled, gather audit artifacts, and turn messy tribal knowledge into SOPs. Insurance, finance, or other regulated-industry documentation experience is a plus. Remote US."
   },
@@ -328,12 +487,21 @@
     "id": "lumen-ai-ops",
     "title": "AI Operations Specialist",
     "company": "Lumen Workflows",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2106",
     "apply_url": "https://jobs.lever.co/example/2106",
     "seniority": "mid",
-    "tags": ["llm", "prompt engineering", "workflow automation", "n8n", "zapier", "neon", "supabase", "crm"],
+    "tags": [
+      "llm",
+      "prompt engineering",
+      "workflow automation",
+      "n8n",
+      "zapier",
+      "neon",
+      "supabase",
+      "crm"
+    ],
     "how_to_apply": "Lever. Include one prompt or SOP excerpt with secrets removed.",
     "description": "Lumen Workflows runs AI operations for service businesses. The AI Operations Specialist designs agentic workflows, prompt libraries, and n8n-style automations on top of CRMs. You must know when not to send customer data to a public model and how to keep a human approval step. Remote US."
   },
@@ -341,12 +509,18 @@
     "id": "ridge-security-coordinator",
     "title": "Security Operations Coordinator",
     "company": "Ridge Controls",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2107",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2107",
     "seniority": "junior",
-    "tags": ["security", "iam", "compliance", "ticketing", "security awareness"],
+    "tags": [
+      "security",
+      "iam",
+      "compliance",
+      "ticketing",
+      "security awareness"
+    ],
     "how_to_apply": "Greenhouse. No exploit write-ups; this is a controls job.",
     "description": "Ridge Controls is hiring a Security Operations Coordinator to run access reviews, phishing-awareness follow-up, and vendor questionnaire answers. You will use a ticketing system, document exceptions, and partner with IT on identity and access. Clear writing matters more than offensive security. Remote US."
   },
@@ -354,25 +528,987 @@
     "id": "orbit-business-systems",
     "title": "Business Systems and Automation Analyst",
     "company": "Orbit Field Services",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2108",
     "apply_url": "https://jobs.lever.co/example/2108",
     "seniority": "mid",
-    "tags": ["crm", "salesforce", "workflow automation", "help desk", "compliance"],
+    "tags": [
+      "crm",
+      "salesforce",
+      "workflow automation",
+      "help desk",
+      "compliance"
+    ],
     "how_to_apply": "Lever. Walk through one process you mapped.",
     "description": "Orbit Field Services wants a Business Systems and Automation Analyst to own CRM process, workflow automation, and operator SOPs. You will sit between sales, IT, and vendors. Help desk instincts and compliance documentation from a regulated or high-volume customer environment are useful. Remote US."
+  },
+  {
+    "id": "tidewater-procurement",
+    "title": "Procurement Specialist",
+    "company": "Tidewater Build",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2201",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2201",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "vendor management",
+      "sourcing",
+      "contract management",
+      "cost analysis",
+      "excel"
+    ],
+    "how_to_apply": "Greenhouse. Name one vendor negotiation and the savings you can document.",
+    "description": "Tidewater Build is hiring a Procurement Specialist to run the procure-to-pay cycle on construction and facilities spend. You will evaluate suppliers, negotiate rates, manage purchase orders, and keep audit-ready files. Excel cost analysis and vendor performance tracking matter more than ERP programming. Remote US; Spanish is useful for Latin America vendors."
+  },
+  {
+    "id": "gulfstream-supply-chain",
+    "title": "Supply Chain Analyst",
+    "company": "Gulfstream Commerce",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2202",
+    "apply_url": "https://jobs.lever.co/example/2202",
+    "seniority": "mid",
+    "tags": [
+      "supply chain",
+      "logistics",
+      "cost analysis",
+      "excel",
+      "demand planning"
+    ],
+    "how_to_apply": "Lever. Attach a sample spend or rate analysis with secrets removed.",
+    "description": "Gulfstream Commerce wants a Supply Chain Analyst to map inbound freight, compare carrier rates, and flag margin leaks. You will reconcile invoices to purchase orders, report in Excel, and partner with operations on forecast vs actual. Jacksonville hub with remote US option. Construction or retail import experience is a plus."
+  },
+  {
+    "id": "isthmus-import-compliance",
+    "title": "Import and Customs Compliance Coordinator",
+    "company": "Isthmus Trade",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2203",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2203",
+    "seniority": "mid",
+    "tags": [
+      "customs",
+      "compliance",
+      "logistics",
+      "invoice auditing",
+      "procurement"
+    ],
+    "how_to_apply": "Greenhouse. Describe how you caught a billing or classification error.",
+    "description": "Isthmus Trade is hiring an Import and Customs Compliance Coordinator. You will review commercial invoices against shipment records, keep Harmonized Tariff and customs files audit-ready, and stop incorrect charges before payment. International construction, retail, or logistics documentation is the bar. Remote US. Bilingual Spanish/English is valued."
+  },
+  {
+    "id": "coral-logistics-ops",
+    "title": "Logistics Operations Coordinator",
+    "company": "Coral Lane Logistics",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2204",
+    "apply_url": "https://jobs.lever.co/example/2204",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "vendor management",
+      "excel",
+      "supply chain"
+    ],
+    "how_to_apply": "Lever. Walk through a shipment exception you closed.",
+    "description": "Coral Lane Logistics needs a Logistics Operations Coordinator to track shipments, resolve carrier discrepancies, and keep delivery records organized. You will work purchase orders, communicate status in English and Spanish when needed, and protect on-time delivery without extra freight spend. Remote US."
+  },
+  {
+    "id": "palmetto-purchasing",
+    "title": "Purchasing and Vendor Manager",
+    "company": "Palmetto Materials",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2205",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2205",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "vendor management",
+      "cost analysis",
+      "contract management",
+      "sourcing"
+    ],
+    "how_to_apply": "Greenhouse. Quantify a rate or import-cost win.",
+    "description": "Palmetto Materials is hiring a Purchasing and Vendor Manager to select vendors and carriers, negotiate rates, and settle orders. Invoice auditing against contracted tariffs is daily work. Experience cutting import or freight cost with documented analysis is the signal. Remote US."
+  },
+  {
+    "id": "bayfront-ops-coordinator",
+    "title": "Operations Coordinator (Supply Chain)",
+    "company": "Bayfront Field Services",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2206",
+    "apply_url": "https://jobs.lever.co/example/2206",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "procurement",
+      "excel",
+      "compliance",
+      "vendor management"
+    ],
+    "how_to_apply": "Lever. Show how you coordinated finance and logistics on one close.",
+    "description": "Bayfront Field Services wants an Operations Coordinator to sit between finance, logistics, and vendors. You will audit invoices, keep spend inside contract terms, and document processes so handoffs are not tribal knowledge. Northeast Florida presence is useful; remote US is allowed. Construction or import operations preferred."
+  },
+  {
+    "id": "keystone-construction-buyer",
+    "title": "Construction Buyer",
+    "company": "Keystone Field Build",
+    "location": "Remote \u2014 Florida / United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2207",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2207",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "sourcing",
+      "vendor management",
+      "contract management",
+      "cost analysis"
+    ],
+    "how_to_apply": "Greenhouse. Name construction vendors you selected and how you settled the PO.",
+    "description": "Keystone Field Build is hiring a Construction Buyer to run procure-to-pay on project materials. You will select vendors and carriers, negotiate rates, issue purchase orders, and keep audit-ready files. International or Caribbean construction purchasing is welcome. Remote Florida or remote US. Spanish is useful."
+  },
+  {
+    "id": "suncoast-import-coordinator",
+    "title": "Import Coordinator",
+    "company": "Suncoast Retail Import",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2208",
+    "apply_url": "https://jobs.lever.co/example/2208",
+    "seniority": "mid",
+    "tags": [
+      "customs",
+      "logistics",
+      "invoice auditing",
+      "procurement",
+      "cost analysis"
+    ],
+    "how_to_apply": "Lever. Quantify an import-cost or rate-analysis win.",
+    "description": "Suncoast Retail Import needs an Import Coordinator to negotiate supplier and carrier rates, reconcile statements to shipment and customs records, and stop billing errors before payment. Retail or construction import documentation is the bar. Remote US. Bilingual Spanish/English valued."
+  },
+  {
+    "id": "harborline-invoice-audit",
+    "title": "Invoice Audit and Payables Analyst",
+    "company": "Harborline Spend Control",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2209",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2209",
+    "seniority": "mid",
+    "tags": [
+      "invoice auditing",
+      "procurement",
+      "cost analysis",
+      "excel",
+      "contract management"
+    ],
+    "how_to_apply": "Greenhouse. Walk through an invoice you matched to a PO and contracted rate.",
+    "description": "Harborline Spend Control is hiring an Invoice Audit and Payables Analyst to match vendor and carrier invoices to purchase orders and tariff schedules. You will flag discrepancies, protect margin, and keep Excel reconciliations audit-ready. Construction or import invoice work transfers. Remote US."
+  },
+  {
+    "id": "tradewind-traffic",
+    "title": "Traffic and Freight Coordinator",
+    "company": "Tradewind Carriers Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2210",
+    "apply_url": "https://jobs.lever.co/example/2210",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "customs",
+      "vendor management",
+      "cost analysis",
+      "procurement"
+    ],
+    "how_to_apply": "Lever. Describe how you used a carrier relationship to keep a critical shipment on time.",
+    "description": "Tradewind Carriers Desk wants a Traffic and Freight Coordinator to manage inbound freight, landed-cost checks, and accurate freight billing. You will work carriers, customs files, and cost/margin reports. Import operations experience is required; a named TMS is not. Remote US."
+  },
+  {
+    "id": "lasolas-bilingual-buyer",
+    "title": "Bilingual Purchasing Specialist",
+    "company": "Las Olas Sourcing",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2211",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2211",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "vendor management",
+      "sourcing",
+      "excel",
+      "logistics"
+    ],
+    "how_to_apply": "Greenhouse. Write one paragraph in English; mention Spanish vendor work if you have it.",
+    "description": "Las Olas Sourcing is hiring a Bilingual Purchasing Specialist to buy from Latin America and Caribbean suppliers and keep US operations informed. Spanish/English communication, purchase-order accuracy, and vendor files matter more than a specific ERP. Remote US."
+  },
+  {
+    "id": "cedarkey-customs-docs",
+    "title": "Customs Documentation Specialist",
+    "company": "Cedar Key Trade Files",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2212",
+    "apply_url": "https://jobs.lever.co/example/2212",
+    "seniority": "mid",
+    "tags": [
+      "customs",
+      "compliance",
+      "invoice auditing",
+      "logistics",
+      "excel"
+    ],
+    "how_to_apply": "Lever. Give one Harmonized Tariff or line-item classification catch.",
+    "description": "Cedar Key Trade Files needs a Customs Documentation Specialist to classify goods on the Harmonized Tariff Schedule, cross-check commercial invoices line by line, and keep import files audit-ready. You will work with brokers and carriers. Remote US. Spanish/English is a plus."
+  },
+  {
+    "id": "pineisland-supplier-perf",
+    "title": "Supplier Performance Analyst",
+    "company": "Pine Island Vendors",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2213",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2213",
+    "seniority": "mid",
+    "tags": [
+      "vendor management",
+      "cost analysis",
+      "excel",
+      "procurement",
+      "supply chain"
+    ],
+    "how_to_apply": "Greenhouse. Show how you scored or replaced an underperforming vendor.",
+    "description": "Pine Island Vendors wants a Supplier Performance Analyst to score vendors, compare rates, and feed savings back to purchasing. Excel cost and vendor-performance analysis is the daily tool. Northeast Florida or remote US. Construction or logistics supplier evaluation is preferred."
+  },
+  {
+    "id": "anastasia-po-admin",
+    "title": "Purchase Order Administrator",
+    "company": "Anastasia PO Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2214",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2214",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "contract management",
+      "excel",
+      "invoice auditing",
+      "vendor management"
+    ],
+    "how_to_apply": "Greenhouse. Walk through how you issued a PO and closed it against an invoice.",
+    "description": "Anastasia PO Desk is hiring a Purchase Order Administrator to issue, track, and close purchase orders. You will match invoices to POs and contracted terms, keep vendor files audit-ready, and resolve billing discrepancies with finance. Excel is the tool of record. A named ERP is not required. Remote US. Construction or import PO work transfers."
+  },
+  {
+    "id": "matanzas-expeditor",
+    "title": "Construction Materials Expeditor",
+    "company": "Matanzas Field Supply",
+    "location": "Remote \u2014 Florida / United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2215",
+    "apply_url": "https://jobs.lever.co/example/2215",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "logistics",
+      "vendor management",
+      "sourcing",
+      "excel"
+    ],
+    "how_to_apply": "Lever. Describe how you tracked a late shipment and kept the project moving.",
+    "description": "Matanzas Field Supply wants a Construction Materials Expeditor to track purchase orders, chase vendor and carrier delivery dates, and keep project teams informed. You will work construction materials, shipment status, and exception calls. International or Caribbean construction purchasing is welcome. Remote Florida or remote US. Spanish is useful."
+  },
+  {
+    "id": "aviles-freight-billing",
+    "title": "Freight Billing Analyst",
+    "company": "Aviles Freight Audit",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2216",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2216",
+    "seniority": "mid",
+    "tags": [
+      "invoice auditing",
+      "logistics",
+      "cost analysis",
+      "excel",
+      "customs"
+    ],
+    "how_to_apply": "Greenhouse. Show an invoice you matched to a contracted freight rate.",
+    "description": "Aviles Freight Audit is hiring a Freight Billing Analyst to audit carrier invoices against contracted tariffs and shipment records. You will flag accessorials, protect margin, and keep Excel reconciliations audit-ready. Import or construction freight billing transfers. A named TMS is not required. Remote US."
+  },
+  {
+    "id": "sanmarco-intl-sourcing",
+    "title": "International Sourcing Coordinator",
+    "company": "San Marco Sourcing",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2217",
+    "apply_url": "https://jobs.lever.co/example/2217",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "sourcing",
+      "vendor management",
+      "logistics",
+      "customs"
+    ],
+    "how_to_apply": "Lever. Name Latin America or Caribbean suppliers you bought from.",
+    "description": "San Marco Sourcing needs an International Sourcing Coordinator to buy from Latin America and Caribbean suppliers, compare rates, and keep US operations informed. Purchase-order accuracy, vendor files, and customs-aware shipping notes matter more than a specific ERP. Remote US. Spanish/English is required in practice."
+  },
+  {
+    "id": "vilano-proc-ops",
+    "title": "Procurement Operations Coordinator",
+    "company": "Vilano Procure Ops",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2218",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2218",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "excel",
+      "compliance",
+      "vendor management",
+      "invoice auditing"
+    ],
+    "how_to_apply": "Greenhouse. Show how you sat between finance and vendors on one close.",
+    "description": "Vilano Procure Ops wants a Procurement Operations Coordinator to run intake-to-pay administration: requisitions, purchase orders, vendor onboarding files, and invoice questions. You will keep process documentation so handoffs are not tribal knowledge. Northeast Florida presence is useful; remote US is allowed."
+  },
+  {
+    "id": "riberia-landed-cost",
+    "title": "Landed Cost Analyst",
+    "company": "Riberia Cost Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2219",
+    "apply_url": "https://jobs.lever.co/example/2219",
+    "seniority": "mid",
+    "tags": [
+      "cost analysis",
+      "customs",
+      "logistics",
+      "excel",
+      "invoice auditing"
+    ],
+    "how_to_apply": "Lever. Quantify an import-cost or duty reduction you can document.",
+    "description": "Riberia Cost Desk is hiring a Landed Cost Analyst to roll freight, duty, and vendor charges into a landed unit cost. You will use rate analysis, invoice review, and Harmonized Tariff classification notes. The documented bar is an import-cost cut through analysis, not a named costing system. Remote US."
+  },
+  {
+    "id": "kingstreet-bilingual-ops",
+    "title": "Bilingual Operations Coordinator",
+    "company": "King Street Ops",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2220",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2220",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "procurement",
+      "vendor management",
+      "excel",
+      "compliance"
+    ],
+    "how_to_apply": "Greenhouse. Write in English; mention Spanish vendor or carrier work.",
+    "description": "King Street Ops is hiring a Bilingual Operations Coordinator to keep vendors, carriers, and internal teams aligned in Spanish and English. You will track shipments, resolve discrepancies, and keep delivery and purchase-order files organized. Remote US. Native/bilingual Spanish and full professional English are the language bar."
+  },
+  {
+    "id": "us1-carrier-rel",
+    "title": "Carrier Relations Coordinator",
+    "company": "US1 Carrier Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2221",
+    "apply_url": "https://jobs.lever.co/example/2221",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "vendor management",
+      "cost analysis",
+      "customs",
+      "procurement"
+    ],
+    "how_to_apply": "Lever. Describe a carrier relationship you used to keep a critical shipment on time.",
+    "description": "US1 Carrier Desk wants a Carrier Relations Coordinator to manage inbound carrier communication, rate checks, and exception calls. You will reconcile freight billing questions and keep customs-aware shipment files. Import or construction logistics experience is required; a named TMS is not. Remote US."
+  },
+  {
+    "id": "lighthouse-spend",
+    "title": "Spend and Rate Analyst",
+    "company": "Lighthouse Spend",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2222",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2222",
+    "seniority": "mid",
+    "tags": [
+      "cost analysis",
+      "excel",
+      "procurement",
+      "vendor management",
+      "invoice auditing"
+    ],
+    "how_to_apply": "Greenhouse. Attach a sample rate or spend comparison with secrets removed.",
+    "description": "Lighthouse Spend is hiring a Spend and Rate Analyst to compare vendor and carrier rates, flag outliers, and feed savings back to purchasing. Excel rate and spend analysis is daily work. Invoice-to-PO checks are in scope. Jacksonville-area remote is a fit. Construction or import cost analysis is preferred."
+  },
+  {
+    "id": "flagler-facilities-buyer",
+    "title": "Facilities Purchasing Specialist",
+    "company": "Flagler Facilities Buy",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2223",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2223",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "vendor management",
+      "contract management",
+      "excel",
+      "sourcing"
+    ],
+    "how_to_apply": "Greenhouse. Name a facilities or property vendor you coordinated.",
+    "description": "Flagler Facilities Buy is hiring a Facilities Purchasing Specialist to buy maintenance, grounds, and property-operations supplies. You will issue purchase orders, coordinate vendors, and keep invoice files audit-ready. Excel is the tool of record; a named ERP is not required. Northeast Florida or remote US. Spanish is useful."
+  },
+  {
+    "id": "oldcity-vendor-coord",
+    "title": "Property Vendor Coordinator",
+    "company": "Old City Vendor Desk",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2224",
+    "apply_url": "https://jobs.lever.co/example/2224",
+    "seniority": "mid",
+    "tags": [
+      "vendor management",
+      "procurement",
+      "logistics",
+      "excel",
+      "compliance"
+    ],
+    "how_to_apply": "Lever. Walk through a vendor you onboarded for property operations.",
+    "description": "Old City Vendor Desk wants a Property Vendor Coordinator to sit between property operations, vendors, and invoices. You will schedule work, check rates against contracted terms, and keep vendor files current. Sales-to-operations promotion stories are welcome. Remote US with St. Augustine presence useful."
+  },
+  {
+    "id": "jaxport-inbound",
+    "title": "Inbound Logistics Coordinator",
+    "company": "JAXPORT Inbound Lane",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2225",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2225",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "customs",
+      "procurement",
+      "vendor management",
+      "excel"
+    ],
+    "how_to_apply": "Greenhouse. Describe an inbound shipment exception you closed.",
+    "description": "JAXPORT Inbound Lane is hiring an Inbound Logistics Coordinator to track ocean and truck inbound, keep customs files with the shipment, and chase carriers. Jacksonville hub with remote US option. Import documentation and status communication matter more than a named TMS."
+  },
+  {
+    "id": "durbin-three-way-match",
+    "title": "Three-Way Match Analyst",
+    "company": "Durbin Match Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2226",
+    "apply_url": "https://jobs.lever.co/example/2226",
+    "seniority": "mid",
+    "tags": [
+      "invoice auditing",
+      "procurement",
+      "contract management",
+      "excel",
+      "cost analysis"
+    ],
+    "how_to_apply": "Lever. Show a PO, receipt, and invoice you matched and a discrepancy you caught.",
+    "description": "Durbin Match Desk needs a Three-Way Match Analyst to compare purchase orders, receipts, and vendor invoices before payment. You will flag quantity and rate errors, protect margin, and keep Excel reconciliations audit-ready. Construction or import three-way match transfers. Remote US."
+  },
+  {
+    "id": "ponce-rfq",
+    "title": "RFQ and Bid Coordinator",
+    "company": "Ponce RFQ Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2227",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2227",
+    "seniority": "mid",
+    "tags": [
+      "sourcing",
+      "procurement",
+      "vendor management",
+      "cost analysis",
+      "excel"
+    ],
+    "how_to_apply": "Greenhouse. Attach a redacted bid comparison if you have one.",
+    "description": "Ponce RFQ Desk is hiring an RFQ and Bid Coordinator to send requests for quote, compare vendor and carrier rates, and recommend awards. Excel rate analysis is daily work. International or construction bidding is a plus. Remote US. Spanish/English helps with Latin America suppliers."
+  },
+  {
+    "id": "nocatee-subcontract-po",
+    "title": "Construction Subcontract Administrator",
+    "company": "Nocatee Subcontracts",
+    "location": "Remote \u2014 Florida / United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2228",
+    "apply_url": "https://jobs.lever.co/example/2228",
+    "seniority": "mid",
+    "tags": [
+      "contract management",
+      "procurement",
+      "vendor management",
+      "invoice auditing",
+      "excel"
+    ],
+    "how_to_apply": "Lever. Name how you settled a subcontract invoice against the PO.",
+    "description": "Nocatee Subcontracts wants a Construction Subcontract Administrator to issue and close subcontract purchase orders, audit invoices against contracted rates, and keep files audit-ready. International or Caribbean construction purchasing is welcome. Remote Florida or remote US."
+  },
+  {
+    "id": "sawgrass-demand",
+    "title": "Demand Planning Coordinator",
+    "company": "Sawgrass Demand",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2229",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2229",
+    "seniority": "mid",
+    "tags": [
+      "demand planning",
+      "supply chain",
+      "excel",
+      "logistics",
+      "procurement"
+    ],
+    "how_to_apply": "Greenhouse. Show how you compared forecast vs actual or tracked inbound.",
+    "description": "Sawgrass Demand is hiring a Demand Planning Coordinator to compare forecast vs actual, flag inbound gaps, and feed numbers back to purchasing. Excel is the planning surface. A named APS tool is not required. Jacksonville-area remote. Retail or construction inbound experience transfers."
+  },
+  {
+    "id": "a1a-ocean-freight",
+    "title": "Ocean Freight Coordinator",
+    "company": "A1A Ocean Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2230",
+    "apply_url": "https://jobs.lever.co/example/2230",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "customs",
+      "cost analysis",
+      "vendor management",
+      "procurement"
+    ],
+    "how_to_apply": "Lever. Quantify a freight-rate or accessorial catch.",
+    "description": "A1A Ocean Desk needs an Ocean Freight Coordinator to book and track ocean shipments, check freight invoices against contracted rates, and keep customs-aware files. Import operations experience is required; a named TMS is not. Remote US. Spanish is useful for origin agents."
+  },
+  {
+    "id": "millcreek-supplier-onboard",
+    "title": "Supplier Onboarding Specialist",
+    "company": "Mill Creek Supplier Files",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2231",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2231",
+    "seniority": "mid",
+    "tags": [
+      "vendor management",
+      "procurement",
+      "compliance",
+      "excel",
+      "sourcing"
+    ],
+    "how_to_apply": "Greenhouse. Walk through W-9, insurance, or vendor-master documents you collected.",
+    "description": "Mill Creek Supplier Files is hiring a Supplier Onboarding Specialist to collect vendor documents, open vendor masters, and keep files audit-ready. You will work purchasing and finance. A named ERP is not required. Remote US. Construction or import vendor files transfer."
+  },
+  {
+    "id": "riverside-contract-admin",
+    "title": "Purchasing Contract Administrator",
+    "company": "Riverside Contract Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2232",
+    "apply_url": "https://jobs.lever.co/example/2232",
+    "seniority": "mid",
+    "tags": [
+      "contract management",
+      "procurement",
+      "cost analysis",
+      "vendor management",
+      "excel"
+    ],
+    "how_to_apply": "Lever. Show how you kept spend inside contract terms.",
+    "description": "Riverside Contract Desk wants a Purchasing Contract Administrator to track vendor and carrier agreements, compare invoices to contracted rates, and flag expirations. Excel trackers are enough; CLM software is optional. Remote US. Construction or logistics contracts preferred."
+  },
+  {
+    "id": "southside-retail-import",
+    "title": "Retail Import Buyer",
+    "company": "Southside Import Buy",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2233",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2233",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "customs",
+      "sourcing",
+      "cost analysis",
+      "logistics"
+    ],
+    "how_to_apply": "Greenhouse. Quantify an import-cost reduction you can document.",
+    "description": "Southside Import Buy is hiring a Retail Import Buyer to source finished goods, negotiate supplier rates, and keep commercial invoices aligned with shipment records. Retail import documentation is the bar. Remote US. Bilingual Spanish/English valued."
+  },
+  {
+    "id": "atlantic-hts",
+    "title": "Tariff Classification Analyst",
+    "company": "Atlantic HTS Desk",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2234",
+    "apply_url": "https://jobs.lever.co/example/2234",
+    "seniority": "mid",
+    "tags": [
+      "customs",
+      "compliance",
+      "cost analysis",
+      "invoice auditing",
+      "excel"
+    ],
+    "how_to_apply": "Lever. Give one Harmonized Tariff classification catch.",
+    "description": "Atlantic HTS Desk needs a Tariff Classification Analyst to classify goods on the Harmonized Tariff Schedule, cross-check commercial invoices, and reduce duty where the classification is honest. Import documentation experience is required. Remote US."
+  },
+  {
+    "id": "mandarin-materials",
+    "title": "Materials Coordinator",
+    "company": "Mandarin Materials",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2235",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2235",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "logistics",
+      "excel",
+      "vendor management",
+      "sourcing"
+    ],
+    "how_to_apply": "Greenhouse. Describe how you tracked a late material and kept the job moving.",
+    "description": "Mandarin Materials wants a Materials Coordinator to track construction and facilities materials, chase vendors, and keep project teams informed. Purchase-order accuracy matters more than a named ERP. Jacksonville or remote US. Spanish is useful."
+  },
+  {
+    "id": "baymeadows-ap-audit",
+    "title": "Accounts Payable Audit Specialist",
+    "company": "Baymeadows AP Audit",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2236",
+    "apply_url": "https://jobs.lever.co/example/2236",
+    "seniority": "mid",
+    "tags": [
+      "invoice auditing",
+      "procurement",
+      "excel",
+      "contract management",
+      "cost analysis"
+    ],
+    "how_to_apply": "Lever. Walk through a vendor statement you reconciled before payment.",
+    "description": "Baymeadows AP Audit is hiring an Accounts Payable Audit Specialist to reconcile vendor and carrier statements to purchase orders and shipment records. You will stop billing errors before payment. Construction or import AP work transfers. Remote US."
+  },
+  {
+    "id": "stjohns-expedite",
+    "title": "Project Expeditor",
+    "company": "St Johns Expedite",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2237",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2237",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "procurement",
+      "vendor management",
+      "excel",
+      "sourcing"
+    ],
+    "how_to_apply": "Greenhouse. Show how you chased a delivery date across vendor and carrier.",
+    "description": "St Johns Expedite needs a Project Expeditor to chase purchase orders, vendor ship dates, and carrier ETAs for construction and property work. Exception calls are the job. Northeast Florida presence is useful; remote US is allowed. International construction expediting is welcome."
+  },
+  {
+    "id": "julington-3pl",
+    "title": "3PL Vendor Manager",
+    "company": "Julington 3PL",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2238",
+    "apply_url": "https://jobs.lever.co/example/2238",
+    "seniority": "mid",
+    "tags": [
+      "vendor management",
+      "logistics",
+      "cost analysis",
+      "procurement",
+      "excel"
+    ],
+    "how_to_apply": "Lever. Show how you scored or replaced an underperforming 3PL or carrier.",
+    "description": "Julington 3PL wants a 3PL Vendor Manager to score warehouses and carriers, compare rates, and keep service levels honest. Invoice audits against contracted tariffs are in scope. Remote US. Import or construction logistics vendor work transfers."
+  },
+  {
+    "id": "arlington-traffic",
+    "title": "International Traffic Manager",
+    "company": "Arlington Traffic Lane",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2239",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2239",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "customs",
+      "procurement",
+      "cost analysis",
+      "vendor management"
+    ],
+    "how_to_apply": "Greenhouse. Describe import procurement and carrier coordination you owned.",
+    "description": "Arlington Traffic Lane is hiring an International Traffic Manager to run inbound freight, carrier coordination, and freight cost reports. You will work customs files and landed-cost notes. Import operations experience is required; a named TMS is not. Remote US."
+  },
+  {
+    "id": "sanjose-caribbean",
+    "title": "Caribbean Sourcing Specialist",
+    "company": "San Jose Caribbean Buy",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2240",
+    "apply_url": "https://jobs.lever.co/example/2240",
+    "seniority": "mid",
+    "tags": [
+      "sourcing",
+      "procurement",
+      "logistics",
+      "customs",
+      "vendor management"
+    ],
+    "how_to_apply": "Lever. Name Caribbean or Latin America suppliers you bought from.",
+    "description": "San Jose Caribbean Buy needs a Caribbean Sourcing Specialist to buy from Caribbean and Latin America suppliers, compare rates, and keep US operations informed. Purchase-order accuracy and customs-aware shipping notes matter more than a specific ERP. Remote US. Spanish/English is required in practice."
+  },
+  {
+    "id": "orchard-property-ops",
+    "title": "Property Operations Purchaser",
+    "company": "Orchard Park Ops Buy",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2241",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2241",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "vendor management",
+      "excel",
+      "contract management",
+      "logistics"
+    ],
+    "how_to_apply": "Greenhouse. Combine a sales-to-operations story with a vendor PO you ran.",
+    "description": "Orchard Park Ops Buy is hiring a Property Operations Purchaser for day-to-day purchasing that keeps a property running: vendors, supplies, and invoice checks. Customer-facing operations experience plus vendor coordination is the mix. St. Augustine or remote US."
+  },
+  {
+    "id": "beachblvd-carrier-audit",
+    "title": "Carrier Invoice Auditor",
+    "company": "Beach Blvd Freight Audit",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2242",
+    "apply_url": "https://jobs.lever.co/example/2242",
+    "seniority": "mid",
+    "tags": [
+      "invoice auditing",
+      "logistics",
+      "cost analysis",
+      "excel",
+      "customs"
+    ],
+    "how_to_apply": "Lever. Show an accessorial or rate error you caught on a freight bill.",
+    "description": "Beach Blvd Freight Audit wants a Carrier Invoice Auditor to match freight bills to contracted tariffs and shipment records. You will flag accessorials and keep Excel reconciliations audit-ready. Import or construction freight billing transfers. Remote US."
+  },
+  {
+    "id": "towncenter-buyer",
+    "title": "Buyer",
+    "company": "Town Center Purchasing",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2243",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2243",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "sourcing",
+      "vendor management",
+      "excel",
+      "cost analysis"
+    ],
+    "how_to_apply": "Greenhouse. Name vendors you selected and how you settled the PO.",
+    "description": "Town Center Purchasing is hiring a Buyer to run procure-to-pay on materials and services. You will evaluate suppliers, negotiate rates, issue purchase orders, and keep audit-ready files. Excel cost analysis matters more than ERP programming. Jacksonville or remote US. Spanish is useful."
+  },
+  {
+    "id": "northside-spend-ops",
+    "title": "Procurement Spend Coordinator",
+    "company": "Northside Spend Ops",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2244",
+    "apply_url": "https://jobs.lever.co/example/2244",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "cost analysis",
+      "excel",
+      "invoice auditing",
+      "vendor management"
+    ],
+    "how_to_apply": "Lever. Attach a sample spend or rate comparison with secrets removed.",
+    "description": "Northside Spend Ops needs a Procurement Spend Coordinator to roll vendor and carrier charges, flag outliers, and feed savings back to buyers. Invoice-to-PO checks are in scope. Remote US. Construction or import spend work preferred."
+  },
+  {
+    "id": "craig-field-supply",
+    "title": "Field Supply Coordinator",
+    "company": "Craig Field Supply",
+    "location": "Remote \u2014 Florida / United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2245",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2245",
+    "seniority": "mid",
+    "tags": [
+      "logistics",
+      "procurement",
+      "vendor management",
+      "sourcing",
+      "excel"
+    ],
+    "how_to_apply": "Greenhouse. Describe a field shortage you closed with a vendor or carrier.",
+    "description": "Craig Field Supply is hiring a Field Supply Coordinator to get materials to construction sites on time. You will work purchase orders, vendor calls, and delivery records. International or Caribbean field supply is welcome. Remote Florida or remote US."
+  },
+  {
+    "id": "palencia-vendor-files",
+    "title": "Vendor File Administrator",
+    "company": "Palencia Vendor Files",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2246",
+    "apply_url": "https://jobs.lever.co/example/2246",
+    "seniority": "mid",
+    "tags": [
+      "vendor management",
+      "procurement",
+      "excel",
+      "compliance",
+      "contract management"
+    ],
+    "how_to_apply": "Lever. Show how you kept vendor files audit-ready.",
+    "description": "Palencia Vendor Files wants a Vendor File Administrator to keep supplier records, insurance, and purchase-order files complete. You will work with purchasing and finance on missing documents. Remote US. Construction or import vendor administration transfers."
+  },
+  {
+    "id": "worldgolf-import-docs",
+    "title": "Import Documentation Coordinator",
+    "company": "World Golf Import Docs",
+    "location": "St. Augustine, FL / remote US",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2247",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2247",
+    "seniority": "mid",
+    "tags": [
+      "customs",
+      "logistics",
+      "invoice auditing",
+      "compliance",
+      "excel"
+    ],
+    "how_to_apply": "Greenhouse. Describe commercial invoices you matched to the shipment.",
+    "description": "World Golf Import Docs is hiring an Import Documentation Coordinator to assemble commercial invoices, packing lists, and customs files, then reconcile them to the shipment before payment. Northeast Florida or remote US. Bilingual Spanish/English is valued."
+  },
+  {
+    "id": "bartola-rate-desk",
+    "title": "Freight Rate Analyst",
+    "company": "Bartram Rate Desk",
+    "location": "Jacksonville, FL (remote OK)",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2248",
+    "apply_url": "https://jobs.lever.co/example/2248",
+    "seniority": "mid",
+    "tags": [
+      "cost analysis",
+      "logistics",
+      "excel",
+      "procurement",
+      "invoice auditing"
+    ],
+    "how_to_apply": "Lever. Attach a redacted rate comparison.",
+    "description": "Bartram Rate Desk needs a Freight Rate Analyst to compare carrier quotes, flag outliers, and check invoices against the awarded rate. Excel rate analysis is daily work. Jacksonville-area remote. Import or construction freight analysis preferred."
+  },
+  {
+    "id": "shands-bilingual-buyer",
+    "title": "Bilingual Buyer",
+    "company": "Shands Bilingual Buy",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://boards.greenhouse.io/example/jobs/2249",
+    "apply_url": "https://boards.greenhouse.io/example/jobs/2249",
+    "seniority": "mid",
+    "tags": [
+      "procurement",
+      "vendor management",
+      "sourcing",
+      "excel",
+      "logistics"
+    ],
+    "how_to_apply": "Greenhouse. Write in English; mention Spanish supplier work.",
+    "description": "Shands Bilingual Buy is hiring a Bilingual Buyer to purchase from Spanish-speaking suppliers and keep US stakeholders informed. Native/bilingual Spanish and full professional English are the language bar. Purchase-order accuracy matters more than a named ERP. Remote US."
+  },
+  {
+    "id": "mayport-customs-ops",
+    "title": "Customs Operations Coordinator",
+    "company": "Mayport Customs Ops",
+    "location": "Remote \u2014 United States",
+    "remote": true,
+    "url": "https://jobs.lever.co/example/2250",
+    "apply_url": "https://jobs.lever.co/example/2250",
+    "seniority": "mid",
+    "tags": [
+      "customs",
+      "logistics",
+      "compliance",
+      "invoice auditing",
+      "procurement"
+    ],
+    "how_to_apply": "Lever. Describe how you stopped an incorrect duty or brokerage charge.",
+    "description": "Mayport Customs Ops wants a Customs Operations Coordinator to keep entries, commercial invoices, and broker files aligned with the shipment. You will catch billing and classification errors before payment. Remote US. International construction or retail import documentation is the bar."
   },
   {
     "id": "pinecrest-customer-support",
     "title": "Customer Support Specialist",
     "company": "Pinecrest Service Co",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2301",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2301",
     "seniority": "mid",
-    "tags": ["customer service", "crm", "salesforce", "client communication", "pii"],
+    "tags": [
+      "customer service",
+      "crm",
+      "salesforce",
+      "client communication",
+      "pii"
+    ],
     "how_to_apply": "Greenhouse. Walk through one customer follow-up you owned in a CRM.",
     "description": "Pinecrest Service Co is hiring a remote Customer Support Specialist to own inbound and outbound customer questions in a CRM. You will keep records accurate, explain products and process in plain language, and follow documented communication rules when customer data is involved. Salesforce or similar CRM experience matters more than a call-center platform name. Remote US."
   },
@@ -380,12 +1516,17 @@
     "id": "seaboard-cx-specialist",
     "title": "Customer Experience Specialist",
     "company": "Seaboard Retail Ops",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2302",
     "apply_url": "https://jobs.lever.co/example/2302",
     "seniority": "mid",
-    "tags": ["customer service", "crm", "client communication", "compliance"],
+    "tags": [
+      "customer service",
+      "crm",
+      "client communication",
+      "compliance"
+    ],
     "how_to_apply": "Lever. Describe how you handled a customer from first contact through delivery.",
     "description": "Seaboard Retail Ops wants a Customer Experience Specialist for a high-volume customer book. You will manage the customer lifecycle in a CRM, answer product and financing questions, and keep required documentation complete. Automotive, retail, or other in-person-to-remote customer experience is welcome. Remote US."
   },
@@ -393,12 +1534,18 @@
     "id": "harbor-policy-service",
     "title": "Insurance Policy Service Representative",
     "company": "Harbor Policy Group",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2303",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2303",
     "seniority": "mid",
-    "tags": ["customer service", "insurance", "salesforce", "crm", "client communication"],
+    "tags": [
+      "customer service",
+      "insurance",
+      "salesforce",
+      "crm",
+      "client communication"
+    ],
     "how_to_apply": "Greenhouse. Name the insurance licenses you hold and one Salesforce hygiene habit.",
     "description": "Harbor Policy Group is hiring a remote Insurance Policy Service Representative. You will answer B2B and B2C policy questions, keep quotes and binds documented in Salesforce, and translate policy language into decisions customers can act on. Life & Health or Property & Casualty licensing is a plus. Remote US."
   },
@@ -406,12 +1553,18 @@
     "id": "northwind-customer-success",
     "title": "Customer Success Associate",
     "company": "Northwind Accounts",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2304",
     "apply_url": "https://jobs.lever.co/example/2304",
     "seniority": "mid",
-    "tags": ["customer success", "customer service", "crm", "salesforce", "client communication"],
+    "tags": [
+      "customer success",
+      "customer service",
+      "crm",
+      "salesforce",
+      "client communication"
+    ],
     "how_to_apply": "Lever. Show one retention or follow-up system you ran.",
     "description": "Northwind Accounts wants a Customer Success Associate to keep a book of customers informed, scheduled, and documented in Salesforce. You will run proactive follow-up, write simple SOPs so handoffs are not tribal knowledge, and escalate only after you have the facts. Remote US. This is client operations, not software engineering."
   },
@@ -419,12 +1572,17 @@
     "id": "lantern-remote-csr",
     "title": "Remote Customer Service Representative",
     "company": "Lantern Help Line",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2305",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2305",
     "seniority": "junior",
-    "tags": ["customer service", "crm", "client communication", "pii"],
+    "tags": [
+      "customer service",
+      "crm",
+      "client communication",
+      "pii"
+    ],
     "how_to_apply": "Greenhouse. Give one example of cutting follow-up time without dropping customers.",
     "description": "Lantern Help Line is hiring a Remote Customer Service Representative to handle a high-volume queue of customer questions. You will use a CRM, keep PII handling documented, and turn repeat questions into a short written process. Experience reducing daily follow-up grind with a still-human review step is useful. Remote US."
   },
@@ -432,12 +1590,18 @@
     "id": "ridgeway-client-ops",
     "title": "Client Operations Coordinator",
     "company": "Ridgeway Client Ops",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2306",
     "apply_url": "https://jobs.lever.co/example/2306",
     "seniority": "mid",
-    "tags": ["customer service", "crm", "salesforce", "workflow automation", "client communication"],
+    "tags": [
+      "customer service",
+      "crm",
+      "salesforce",
+      "workflow automation",
+      "client communication"
+    ],
     "how_to_apply": "Lever. Walk through a CRM or follow-up process you documented.",
     "description": "Ridgeway Client Ops needs a Client Operations Coordinator to keep customer records clean, run follow-up queues, and document how client messages go out. Salesforce CRM and a human-in-the-loop habit on customer-facing communication matter more than engineering. Zapier-style workflow automation is a plus. Remote US."
   },
@@ -445,12 +1609,18 @@
     "id": "bayshore-healthcare-csr",
     "title": "Healthcare Customer Service Representative",
     "company": "Bayshore Patient Line",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2401",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2401",
     "seniority": "mid",
-    "tags": ["customer service", "crm", "salesforce", "client communication", "consultative selling"],
+    "tags": [
+      "customer service",
+      "crm",
+      "salesforce",
+      "client communication",
+      "consultative selling"
+    ],
     "how_to_apply": "Greenhouse. Name one retention or follow-up result you can document.",
     "description": "Bayshore Patient Line is hiring a remote Healthcare Customer Service Representative to answer patient and clinic questions with consultative, plain-language selling skills. Salesforce CRM follow-up and high-volume customer books from auto, insurance, or retail are welcome; medical product training is provided. Remote US."
   },
@@ -458,25 +1628,38 @@
     "id": "meridian-med-inside-sales",
     "title": "Medical Inside Sales Representative",
     "company": "Meridian Clinical Supply",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2402",
     "apply_url": "https://jobs.lever.co/example/2402",
     "seniority": "mid",
-    "tags": ["inside sales", "medical sales", "consultative selling", "salesforce", "crm", "pipeline"],
+    "tags": [
+      "inside sales",
+      "medical sales",
+      "consultative selling",
+      "salesforce",
+      "crm",
+      "pipeline"
+    ],
     "how_to_apply": "Lever. Quantify closes and revenue from your current book. Be honest if medical product experience is new.",
-    "description": "Meridian Clinical Supply wants a remote Medical Inside Sales Representative for prescription and clinical supply accounts. You will run a Salesforce pipeline, negotiate contracts, and close by consultative needs analysis. Prior medical device tenure is not required; documented high-ticket closing and CRM retention from another industry is the bar. Targeting $60k–$90k+ OTE. Remote US."
+    "description": "Meridian Clinical Supply wants a remote Medical Inside Sales Representative for prescription and clinical supply accounts. You will run a Salesforce pipeline, negotiate contracts, and close by consultative needs analysis. Prior medical device tenure is not required; documented high-ticket closing and CRM retention from another industry is the bar. Targeting $60k\u2013$90k+ OTE. Remote US."
   },
   {
     "id": "palisade-dme-inside-sales",
-    "title": "Inside Sales — Prescription and DME Supplies",
+    "title": "Inside Sales \u2014 Prescription and DME Supplies",
     "company": "Palisade Rx Supply",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2403",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2403",
     "seniority": "mid",
-    "tags": ["inside sales", "medical sales", "consultative selling", "crm", "contract negotiation"],
+    "tags": [
+      "inside sales",
+      "medical sales",
+      "consultative selling",
+      "crm",
+      "contract negotiation"
+    ],
     "how_to_apply": "Greenhouse. Walk through one complex deal you structured, including financing if relevant.",
     "description": "Palisade Rx Supply hires inside sellers for prescription and durable medical equipment supplies. You will prospect, quote, and close over phone and CRM, then keep accounts. Auto or insurance outside sales that already used Salesforce and consultative closing transfers. Remote US."
   },
@@ -484,12 +1667,17 @@
     "id": "lakeview-patient-support",
     "title": "Patient Support Specialist",
     "company": "Lakeview Care Hub",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://jobs.lever.co/example/2404",
     "apply_url": "https://jobs.lever.co/example/2404",
     "seniority": "mid",
-    "tags": ["customer service", "client communication", "crm", "salesforce"],
+    "tags": [
+      "customer service",
+      "client communication",
+      "crm",
+      "salesforce"
+    ],
     "how_to_apply": "Lever. Describe a time you explained a complex product or financing decision to a customer.",
     "description": "Lakeview Care Hub needs a remote Patient Support Specialist to explain process, document CRM notes, and keep patients moving. High-volume consultative conversations (for example automotive delivery or insurance) matter more than clinical credentials. Remote US."
   },
@@ -497,12 +1685,17 @@
     "id": "cinder-pharma-order-support",
     "title": "Pharmaceutical Order Support Specialist",
     "company": "Cinder Rx Ops",
-    "location": "Remote — United States",
+    "location": "Remote \u2014 United States",
     "remote": true,
     "url": "https://boards.greenhouse.io/example/jobs/2405",
     "apply_url": "https://boards.greenhouse.io/example/jobs/2405",
     "seniority": "mid",
-    "tags": ["customer service", "inside sales", "crm", "contract negotiation"],
+    "tags": [
+      "customer service",
+      "inside sales",
+      "crm",
+      "contract negotiation"
+    ],
     "how_to_apply": "Greenhouse. Include an on-time fulfillment or delay-reduction result if you have one.",
     "description": "Cinder Rx Ops is hiring a remote Pharmaceutical Order Support Specialist to resolve order issues, keep CRM records clean, and work with warehouse or fulfillment partners.  A documented on-time fulfillment rate and cross-functional delay reduction from another industry is useful. Remote US."
   }
