@@ -294,7 +294,6 @@ SKILL_ALIASES: dict[str, tuple[str, ...]] = {
         "solution selling",
         "consultative sales",
         "solution-selling",
-        "client communication",
     ),
     "outside sales": (
         "field sales",

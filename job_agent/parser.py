@@ -93,6 +93,11 @@ ACTION_VERBS = (
     "mapped",
     "managed",
     "maintained",
+    "applied",
+    "deployed",
+    "identified",
+    "rebuilt",
+    "wrote",
     "analyzed",
     "conducted",
     "coordinated",
@@ -205,18 +210,20 @@ def _format_phone(raw: str) -> str:
 
 
 def _heading_key(line: str) -> str | None:
-    cleaned = line.strip().rstrip(":").strip().lower()
+    stripped = BULLET_RE.sub("", line).strip(" -:•")
+    cleaned = re.sub(r"[^a-z& ]+", " ", stripped.lower())
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
     if cleaned in SECTION_ALIASES:
         return SECTION_ALIASES[cleaned]
-    if HEADING_RE.match(line.strip()):
-        return SECTION_ALIASES.get(cleaned, cleaned.split()[0] if cleaned else None)
+    if HEADING_RE.match(stripped):
+        return SECTION_ALIASES.get(cleaned)
     return None
 
 
 def _clean_lines(text: str) -> list[str]:
     lines: list[str] = []
     for raw in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
-        line = raw.strip()
+        line = re.sub(r"[ \t]+", " ", raw).strip()
         if line:
             lines.append(line)
     return lines
